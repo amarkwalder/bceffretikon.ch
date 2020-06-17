@@ -1,0 +1,26 @@
+{
+    "name": "@bceffretikon-frontend/website",
+    "version": "0.0.1",
+    "license": "MIT",
+    "scripts": {
+        "clean": "rimraf node_modules __sapper__ src/node_modules",
+        "dev": "sapper dev",
+        "build": "sapper build --legacy",
+        "export": "sapper export --legacy",
+        "start": "node __sapper__/build",
+        "fonts": "get-google-fonts -i https://fonts.googleapis.com/icon?family=Material+Icons -b -o src/styles/fonts -c fonts.scss"
+    },
+    "dependencies": {
+        "compression": "^1.7.1",
+        "polka": "next",
+        "sirv": "^0.4.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^9.8.0",
+        "get-google-fonts": "^1.2.2",
+        "node-sass": "^4.14.1",
+        "postcss": "^7.0.32",
+        "postcss-load-config": "^2.1.0",
+        "svelte-preprocess": "^3.9.8"
+    }
+}

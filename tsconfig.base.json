@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "experimentalDecorators": true,
+        "declaration": true,
+        "strict": true,
+        "sourceMap": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": true
+    },
+    "exclude": ["./node_modules/**/*"]
+}

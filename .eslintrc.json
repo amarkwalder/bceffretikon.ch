@@ -1,0 +1,36 @@
+{
+    "root": true,
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:react/recommended", "plugin:jest"],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "prettier/prettier": "error"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx"],
+            "plugins": ["@typescript-eslint"],
+            "extends": ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint"]
+        },
+        {
+            "files": ["**/*.svelte"],
+            "plugins": ["svelte3"],
+            "processor": "svelte3/svelte3"
+        }
+    ]
+}
