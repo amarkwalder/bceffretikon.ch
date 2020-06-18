@@ -4,7 +4,7 @@ import grayMatter from 'gray-matter';
 
 const getAllPosts = () => {
     try {
-        return fs.readdirSync('static/posts/').map((fileName) => {
+        return fs.readdirSync('packages/website/static/posts/').map((fileName) => {
             const post = fs.readFileSync(path.resolve('static/posts', fileName), 'utf-8');
             return grayMatter(post).data;
         });

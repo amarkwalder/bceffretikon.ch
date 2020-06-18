@@ -1,4 +1,4 @@
-<style lang="scss" global>
+<style type="text/scss" global>
     @import '../styles/global.scss';
 </style>
 
@@ -42,7 +42,7 @@
     ></script>
 </svelte:head>
 
-<Header {segment}></Header>
+<Header></Header>
 
 <main>
     <slot {segment}></slot>

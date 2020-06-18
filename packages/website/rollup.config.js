@@ -8,13 +8,6 @@ import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import sveltePreprocess from 'svelte-preprocess';
 
-const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
-const legacy = !!process.env.SAPPER_LEGACY_BUILD;
-
-const onwarn = (warning, onwarn) =>
-    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
-
 const preprocess = sveltePreprocess({
     scss: {
         includePaths: ['src'],
@@ -23,6 +16,13 @@ const preprocess = sveltePreprocess({
         plugins: [require('autoprefixer')],
     },
 });
+
+const mode = process.env.NODE_ENV;
+const dev = mode === 'development';
+const legacy = !!process.env.SAPPER_LEGACY_BUILD;
+
+const onwarn = (warning, onwarn) =>
+    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
 
 export default {
     client: {
@@ -49,7 +49,7 @@ export default {
                 babel({
                     extensions: ['.js', '.mjs', '.html', '.svelte'],
                     babelHelpers: 'runtime',
-                    exclude: ['../../../node_modules/@babel/**'],
+                    exclude: ['node_modules/@babel/**'],
                     presets: [
                         [
                             '@babel/preset-env',

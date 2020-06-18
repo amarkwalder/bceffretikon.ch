@@ -1,4 +1,4 @@
 {
-    "*.{ts,tsx,js,jsx}": "yarn eslint --fix",
-    "*.{json,md,html,css,yml,yaml}": "yarn prettier --write"
+    "*.{js,svelte}": "echo TODO -- yarn eslint --fix",
+    "*.{json,md,html,css,scss,yml,yaml}": "echo TODO -- yarn prettier --write"
 }

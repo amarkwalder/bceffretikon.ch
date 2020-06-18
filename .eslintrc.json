@@ -8,20 +8,17 @@
     "extends": ["eslint:recommended", "plugin:prettier/recommended"],
     "parserOptions": {
         "ecmaVersion": 2020,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
+        "sourceType": "module"
     },
+    "plugins": ["svelte3"],
+    "overrides": [
+        {
+            "files": ["*.svelte"],
+            "processor": "svelte3/svelte3"
+        }
+    ],
     "rules": {
         "prettier/prettier": "error"
     },
-    "settings": {},
-    "overrides": [
-        {
-            "files": ["**/*.svelte"],
-            "plugins": ["svelte3"],
-            "processor": "svelte3/svelte3"
-        }
-    ]
+    "settings": {}
 }
