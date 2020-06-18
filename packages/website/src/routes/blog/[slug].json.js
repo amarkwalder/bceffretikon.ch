@@ -11,7 +11,7 @@ export function get(req, res) {
     const { slug } = req.params;
     const post = getPost(slug);
     const renderer = new marked.Renderer();
-    const { data, content } = grayMatter(post).data;
+    const { data, content } = grayMatter(post);
     const html = marked(content, { renderer });
     if (html) {
         res.writeHead(200, {

@@ -22,7 +22,7 @@
                         <a rel="prefetch" href="blog/{post.slug}">{post.title}</a>
                     </h4>
                     <p class="light">
-                        Blog Description
+                        {post.abstract}
                     </p>
                 </div>
             </div>

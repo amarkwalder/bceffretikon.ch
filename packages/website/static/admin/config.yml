@@ -14,4 +14,5 @@ collections:
       fields: # The fields for each document
           - { label: 'Slug', name: 'slug', widget: 'string' }
           - { label: 'Title', name: 'title', widget: 'string' }
+          - { label: 'Abstract', name: 'abstract', widget: 'string' }
           - { label: 'Body', name: 'body', widget: 'markdown' }

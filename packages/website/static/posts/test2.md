@@ -1,7 +1,9 @@
 ---
-slug: test
-title: This is my first blog
+slug: test2
+title: Test 2
+abstract: This is a second test.
 ---
+
 ## Hello World!
 
 This is a test...
