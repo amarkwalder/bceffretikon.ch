@@ -1,0 +1,17 @@
+{
+    "name": "bceffretikon-website",
+    "profile": "bceffretikon.ch",
+    "regions": ["us-east-1"],
+    "type": "static",
+    "static": {
+        "dir": "__sapper__/export"
+    },
+    "hooks": {
+        "build": "yarn export"
+    },
+    "stages": {
+        "staging": {
+            "domain": "bceffretikon.test.markwalder.eu"
+        }
+    }
+}

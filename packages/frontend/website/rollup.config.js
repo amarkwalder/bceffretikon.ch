@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
@@ -13,7 +14,9 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
-    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+    (warning.code === 'CIRCULAR_DEPENDENCY' && /src\/components\/index\.js/.test(warning.message)) ||
+    onwarn(warning);
 
 const preprocess = sveltePreprocess({
     scss: {
@@ -44,12 +47,13 @@ export default {
                 dedupe: ['svelte'],
             }),
             commonjs(),
+            json(),
 
             legacy &&
                 babel({
                     extensions: ['.js', '.mjs', '.html', '.svelte'],
                     babelHelpers: 'runtime',
-                    exclude: ['node_modules/@babel/**'],
+                    exclude: ['../../../node_modules/@babel/**'],
                     presets: [
                         [
                             '@babel/preset-env',
@@ -96,10 +100,11 @@ export default {
                 dedupe: ['svelte'],
             }),
             commonjs(),
+            json(),
         ],
-        external: Object.keys(pkg.dependencies).concat(
-            require('module').builtinModules || Object.keys(process.binding('natives')),
-        ),
+        external: Object.keys(pkg.dependencies)
+            .filter((i) => !i.match(/@bceffretikon-website/)) // https://github.com/sveltejs/sapper-template/blob/master/README.md#using-external-components
+            .concat(require('module').builtinModules || Object.keys(process.binding('natives'))),
 
         preserveEntrySignatures: 'strict',
         onwarn,

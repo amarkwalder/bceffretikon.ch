@@ -2,12 +2,23 @@
     @import '../styles/global.scss';
 </style>
 
+<script context="module">
+    import client, { defaultRequestConfig as reqConfig } from '../storyblokClient';
+
+    export async function preload(page, session) {
+        const response = await client.getAll('cdn/stories', reqConfig);
+
+        return { stories: response || [] };
+    }
+</script>
+
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, beforeUpdate, afterUpdate } from 'svelte';
 
     import Header from '../components/Header.svelte';
     import Footer from '../components/Footer.svelte';
 
+    export let stories = [];
     export let segment;
 
     let materializeCssReady = false;
@@ -16,20 +27,22 @@
     onMount(() => {
         mounted = true;
         if (materializeCssReady) {
-            initiMaterializeCss();
+            M.AutoInit();
         }
     });
 
     function materializeCssLoaded() {
         materializeCssReady = true;
         if (mounted) {
-            initiMaterializeCss();
+            M.AutoInit();
         }
     }
 
-    function initiMaterializeCss() {
-        M.AutoInit();
-    }
+    afterUpdate(() => {
+        if (materializeCssReady && mounted) {
+            M.AutoInit();
+        }
+    });
 </script>
 
 <svelte:head>
@@ -40,7 +53,7 @@
     ></script>
 </svelte:head>
 
-<Header></Header>
+<Header {segment} {stories}></Header>
 
 <main>
     <slot segment="{segment}"></slot>

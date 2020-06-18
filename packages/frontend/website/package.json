@@ -10,17 +10,19 @@
         "start": "node __sapper__/build",
         "fonts": "get-google-fonts -i https://fonts.googleapis.com/icon?family=Material+Icons -b -o src/styles/fonts -c fonts.scss"
     },
-    "dependencies": {
+    "dependencies": {},
+    "devDependencies": {
         "compression": "^1.7.1",
         "polka": "next",
-        "sirv": "^0.4.0"
-    },
-    "devDependencies": {
+        "sirv": "^0.4.0",
+        "@rollup/plugin-json": "^4.1.0",
         "autoprefixer": "^9.8.0",
         "get-google-fonts": "^1.2.2",
+        "materialize-css": "^1.0.0-rc.2",
         "node-sass": "^4.14.1",
         "postcss": "^7.0.32",
         "postcss-load-config": "^2.1.0",
+        "storyblok-js-client": "^2.5.0",
         "svelte-preprocess": "^3.9.8"
     }
 }
