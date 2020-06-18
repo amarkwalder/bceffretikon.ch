@@ -14,9 +14,7 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
-    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
-    (warning.code === 'CIRCULAR_DEPENDENCY' && /src\/components\/index\.js/.test(warning.message)) ||
-    onwarn(warning);
+    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
 
 const preprocess = sveltePreprocess({
     scss: {
@@ -102,9 +100,9 @@ export default {
             commonjs(),
             json(),
         ],
-        external: Object.keys(pkg.dependencies)
-            .filter((i) => !i.match(/@bceffretikon-website/)) // https://github.com/sveltejs/sapper-template/blob/master/README.md#using-external-components
-            .concat(require('module').builtinModules || Object.keys(process.binding('natives'))),
+        external: Object.keys(pkg.dependencies).concat(
+            require('module').builtinModules || Object.keys(process.binding('natives')),
+        ),
 
         preserveEntrySignatures: 'strict',
         onwarn,

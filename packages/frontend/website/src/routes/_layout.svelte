@@ -2,23 +2,12 @@
     @import '../styles/global.scss';
 </style>
 
-<script context="module">
-    import client, { defaultRequestConfig as reqConfig } from '../storyblokClient';
-
-    export async function preload(page, session) {
-        const response = await client.getAll('cdn/stories', reqConfig);
-
-        return { stories: response || [] };
-    }
-</script>
-
 <script>
     import { onMount, beforeUpdate, afterUpdate } from 'svelte';
 
     import Header from '../components/Header.svelte';
     import Footer from '../components/Footer.svelte';
 
-    export let stories = [];
     export let segment;
 
     let materializeCssReady = false;
@@ -53,10 +42,10 @@
     ></script>
 </svelte:head>
 
-<Header {segment} {stories}></Header>
+<Header {segment}></Header>
 
 <main>
-    <slot segment="{segment}"></slot>
+    <slot {segment}></slot>
 </main>
 
 <Footer></Footer>
