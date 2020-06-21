@@ -1,0 +1,19 @@
+title-de: Sommerferien
+title-en: Summer Holidays
+title-fr: xxx
+title-it: xxx
+from: 2020-05-31T23:45:41.728Z
+to: 2020-06-29T23:45:41.736Z
+holiday:
+  - from: 2020-05-31T23:49:38.510Z
+    to: 2020-06-29T23:49:38.521Z
+    title-de: Sommerferien
+    title-en: Summer Holidays
+    title-fr: xxx
+    title-it: yyy
+  - from: 2020-06-30T23:50:18.842Z
+    to: 2020-07-30T23:50:18.854Z
+    title-de: Herbstferien
+    title-en: Fall Holidays
+    title-fr: xxx
+    title-it: yyy
