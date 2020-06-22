@@ -3,11 +3,57 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="admin/config.yml" type="text/yaml" rel="cms-config-url" />
         <title>Content Manager</title>
     </head>
     <body>
         <!-- Include the script that builds the page and powers Netlify CMS -->
         <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
         <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+        <script>
+            CMS.registerPreviewStyle('/client/main.1957428468.css');
+
+            var BlogPreview = createClass({
+                render: function () {
+                    var entry = this.props.entry;
+                    return h(
+                        'div',
+                        {},
+                        h('h1', {}, entry.getIn(['data', 'title'])),
+                        h('p', { src: bg.toString() }),
+                        h('div', { className: 'text' }, this.props.widgetFor('body')),
+                    );
+                },
+            });
+            CMS.registerPreviewTemplate('blog', BlogPreview);
+
+            var HolidaysPreview = createClass({
+                render: function () {
+                    console.log('props', this.props.widgetsFor('holiday'));
+                    return h(
+                        'div',
+                        {},
+                        h('h4', {}, 'Holidays - Deutsch'),
+                        h(
+                            'table',
+                            {},
+
+                            this.props.widgetsFor('holiday').map(function (holiday, index) {
+                                console.log('holiday:', index, holiday);
+                                return h(
+                                    'tr',
+                                    { key: index },
+                                    h('td', {}, holiday.getIn(['data', 'title-de'])),
+                                    h('td', {}, holiday.getIn(['data', 'from'])),
+                                    // h('td', {}, holiday.getIn(['data', 'to'])),
+                                );
+                            }),
+                        ),
+                    );
+                },
+            });
+            CMS.registerPreviewTemplate('holidays', HolidaysPreview);
+        </script>
     </body>
 </html>
