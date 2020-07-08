@@ -8,6 +8,8 @@ import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import sveltePreprocess from 'svelte-preprocess';
 
+import json from '@rollup/plugin-json';
+
 const preprocess = sveltePreprocess({
     scss: {
         includePaths: ['src'],
@@ -22,7 +24,9 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
-    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+    (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+    warning.code === 'THIS_IS_UNDEFINED' ||
+    onwarn(warning);
 
 export default {
     client: {
@@ -44,6 +48,7 @@ export default {
                 dedupe: ['svelte'],
             }),
             commonjs(),
+            json(),
 
             legacy &&
                 babel({
@@ -96,6 +101,7 @@ export default {
                 dedupe: ['svelte'],
             }),
             commonjs(),
+            json(),
         ],
         external: Object.keys(pkg.dependencies).concat(
             require('module').builtinModules || Object.keys(process.binding('natives')),

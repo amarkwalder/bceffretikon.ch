@@ -3,49 +3,49 @@
 </style>
 
 <script>
-    import { onMount, beforeUpdate, afterUpdate } from 'svelte';
+    import Materialize from '../components/materialize/Materialize.svelte';
+    import I18n from '../components/I18n.svelte';
+    import CookieConsent from '../components/cookieconsent/CookieConsent.svelte';
+    import Analytics from '../components/Analytics.svelte';
 
-    import Header from '../components/Header.svelte';
+    import Navbar from '../components/Navbar.svelte';
     import Footer from '../components/Footer.svelte';
 
     export let segment;
 
-    let materializeCssReady = false;
-    let mounted = false;
+    let materializeLoaded = false;
+    let i18nLoaded = false;
+    $: isLoading = !materializeLoaded || !i18nLoaded;
 
-    onMount(() => {
-        mounted = true;
-        if (materializeCssReady) {
-            M.AutoInit();
-        }
-    });
-
-    function materializeCssLoaded() {
-        materializeCssReady = true;
-        if (mounted) {
-            M.AutoInit();
-        }
+    function onMaterializeLoaded() {
+        console.log('onMaterializeLoaded');
+        materializeLoaded = true;
     }
 
-    afterUpdate(() => {
-        if (materializeCssReady && mounted) {
-            M.AutoInit();
-        }
-    });
+    function onI18nLoaded() {
+        console.log('onI18nLoaded');
+        i18nLoaded = true;
+    }
 </script>
 
 <svelte:head>
     <title>Badminton Club Effretikon</title>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
-        on:load="{materializeCssLoaded}"
-    ></script>
 </svelte:head>
 
-<Header></Header>
+<Materialize on:loaded="{onMaterializeLoaded}"></Materialize>
+<I18n on:loaded="{onI18nLoaded}"></I18n>
+
+{#if isLoading}
+<p>Loading...</p>
+{:else}
+<CookieConsent></CookieConsent>
+<Analytics></Analytics>
+
+<Navbar {segment}></Navbar>
 
 <main>
     <slot {segment}></slot>
 </main>
 
 <Footer></Footer>
+{/if}

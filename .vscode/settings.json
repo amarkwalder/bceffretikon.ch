@@ -6,9 +6,6 @@
     "terminal.integrated.shell.osx": "/bin/zsh",
     "terminal.integrated.rendererType": "dom",
     "terminal.integrated.fontFamily": "MesloLGS NF",
-    "files.exclude": {
-        "**/node_modules": true
-    },
     "todo-tree.tree.showScanModeButton": false,
     "todo-tree.highlights.enabled": false,
     "todo-tree.filtering.useBuiltInExcludes": "file excludes",

@@ -1,3 +1,18 @@
+@charset "UTF-8";
+
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import './materialize/materialize.scss';
+
+@import './cookieconsent/main.scss';
+
+.parallax-container .container {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+}
+
 nav ul a,
 nav .brand-logo {
     color: #444;
@@ -12,13 +27,18 @@ p {
 }
 
 .parallax-container {
-    min-height: 380px;
+    min-height: 450px;
     line-height: 0;
     height: auto;
     color: rgba(255, 255, 255, 0.9);
 }
 .parallax-container .section {
     width: 100%;
+}
+
+// Correction of Sidenav (most probably a bug in Materialize CSS)
+.sidenav-overlay {
+    z-index: 996;
 }
 
 @media only screen and (max-width: 992px) {
@@ -46,4 +66,18 @@ p {
 
 footer.page-footer {
     margin: 0;
+}
+
+.map-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+.map-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }

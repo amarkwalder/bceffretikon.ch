@@ -1,0 +1,22 @@
+{
+    "site_title": "Badminton Club Effretikon",
+    "cookie_consent": {
+        "message": "This website uses cookies to improve your experience.",
+        "dismiss": "Got it!",
+        "link": "Learn more"
+    },
+    "error": {
+        "title": "Error"
+    },
+
+    "nav": {
+        "home": "Home",
+        "training": "Training",
+        "interclub": "Interclub",
+        "contact": "Contact",
+        "about": "About Us",
+        "blog": "Blog",
+        "login": "Login",
+        "logout": "Logout"
+    }
+}

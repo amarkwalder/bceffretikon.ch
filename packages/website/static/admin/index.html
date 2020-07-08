@@ -29,27 +29,35 @@
             CMS.registerPreviewTemplate('blog', BlogPreview);
 
             var HolidaysPreview = createClass({
-                render: function () {
-                    console.log('props', this.props.widgetsFor('holiday'));
+                holidaysEntry: function (title, lang) {
                     return h(
                         'div',
                         {},
-                        h('h4', {}, 'Holidays - Deutsch'),
+                        h('h5', {}, title),
                         h(
                             'table',
-                            {},
-
+                            { width: '100%', tableLayout: 'fixed' },
                             this.props.widgetsFor('holiday').map(function (holiday, index) {
-                                console.log('holiday:', index, holiday);
                                 return h(
                                     'tr',
                                     { key: index },
-                                    h('td', {}, holiday.getIn(['data', 'title-de'])),
-                                    h('td', {}, holiday.getIn(['data', 'from'])),
-                                    // h('td', {}, holiday.getIn(['data', 'to'])),
+                                    h('td', { width: '40%' }, holiday.getIn(['data', 'title-' + lang])),
+                                    h('td', { width: '30%' }, holiday.getIn(['data', 'from'])),
+                                    h('td', { width: '30%' }, holiday.getIn(['data', 'to'])),
                                 );
                             }),
                         ),
+                        h('br', {}),
+                    );
+                },
+                render: function () {
+                    return h(
+                        'div',
+                        {},
+                        this.holidaysEntry('Deutsch', 'de'),
+                        this.holidaysEntry('English', 'en'),
+                        this.holidaysEntry('Français', 'fr'),
+                        this.holidaysEntry('Italiano', 'it'),
                     );
                 },
             });

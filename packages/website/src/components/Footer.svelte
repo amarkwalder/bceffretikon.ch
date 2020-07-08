@@ -1,53 +1,45 @@
+<script>
+    import ParallaxContainerM from '../components/materialize/ParallaxContainer.svelte';
+    import ContainerM from '../components/materialize/Container.svelte';
+    import SectionM from '../components/materialize/grid/Section.svelte';
+    import RowM from '../components/materialize/grid/Row.svelte';
+    import ColM from '../components/materialize/grid/Col.svelte';
+</script>
+
 <footer class="page-footer teal">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Company Bio</h5>
-                <p class="grey-text text-lighten-4">
-                    We are a team of college students working on this project like it's our full time job. Any amount
-                    would help support and continue development on this project and is greatly appreciated.
+    <ContainerM>
+        <RowM>
+            <ColM clazz="l9 s12">
+                <img height="50" src="/img/logo-white.jpg" alt="Logo" />
+                <p>
+                    <a class="white-text" href="email:info@bceffretikon.ch">info@bceffretikon.ch</a>
                 </p>
-            </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">Settings</h5>
+            </ColM>
+            <ColM clazz="l3 s12">
+                <h5 class="white-text">Links</h5>
                 <ul>
-                    <li>
-                        <a class="white-text" href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 4</a>
-                    </li>
+                    <li><a class="white-text" href="/">Home</a></li>
+                    <li><a class="white-text" href="/training/">Training</a></li>
+                    <li><a class="white-text" href="/interclub/">Interclub</a></li>
+                    <li><a class="white-text" href="/about/">Über uns</a></li>
+                    <li><a class="white-text" href="/contact/">Kontakt</a></li>
+                    <li><a class="white-text" href="/login/">Login</a></li>
                 </ul>
-            </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">Connect</h5>
-                <ul>
-                    <li>
-                        <a class="white-text" href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+            </ColM>
+        </RowM>
+    </ContainerM>
     <div class="footer-copyright">
-        <div class="container">
-            Made by
-            <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-        </div>
+        <ContainerM>
+            <RowM>
+                <ColM clazz="s12 l9">
+                    Urheberrecht &copy; 2020 Badminton Club Effretikon. Alle Rechte vorbehalten.
+                </ColM>
+                <ColM clazz="s12 l3 white-text">
+                    <a class="white-text" href="/dataprotection/">Datenschutz</a>
+                    <br />
+                    <a class="white-text" href="/legalnotice/">Impressum</a>
+                </ColM>
+            </RowM>
+        </ContainerM>
     </div>
 </footer>
