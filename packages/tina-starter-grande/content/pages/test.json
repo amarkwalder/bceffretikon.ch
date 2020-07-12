@@ -3,15 +3,15 @@
   "path": "/test",
   "blocks": [
     {
-      "image": "../images/frame-harirak-UR_mNYmpwco-unsplash.jpg",
-      "_template": "ImageBlock",
-      "content": ""
-    },
-    {
       "title": "Test Title",
       "center": false,
       "underline": true,
       "_template": "TitleBlock",
+      "content": ""
+    },
+    {
+      "image": "../images/frame-harirak-UR_mNYmpwco-unsplash.jpg",
+      "_template": "ImageBlock",
       "content": ""
     },
     {
