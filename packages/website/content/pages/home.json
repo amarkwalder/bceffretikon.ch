@@ -1,0 +1,18 @@
+{
+  "path": "/",
+  "title": "Home",
+  "hero": {
+    "headline": "Home Page",
+    "textline": "This is the Home Page"
+  },
+  "blocks": [
+    {
+      "_template": "ContentBlock",
+      "content": "## Home Page Content Block 1"
+    },
+    {
+      "_template": "ContentBlock",
+      "content": "## Home Page Content Block 2"
+    }
+  ]
+}

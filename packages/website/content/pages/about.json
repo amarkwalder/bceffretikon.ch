@@ -1,0 +1,18 @@
+{
+  "path": "/about",
+  "title": "About",
+  "hero": {
+    "headline": "About Page",
+    "textline": "This is the About Page"
+  },
+  "blocks": [
+    {
+      "_template": "ContentBlock",
+      "content": "## About Page Content Block 1"
+    },
+    {
+      "_template": "ContentBlock",
+      "content": "## About Page Content Block 2"
+    }
+  ]
+}
