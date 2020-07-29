@@ -1,6 +1,16 @@
 {
   "menuItems": [
     {
+      "label": "My Page",
+      "link": "/mypage",
+      "subMenu": [
+        {
+          "label": "a",
+          "link": "/a"
+        }
+      ]
+    },
+    {
       "label": "Home",
       "link": "/"
     },
