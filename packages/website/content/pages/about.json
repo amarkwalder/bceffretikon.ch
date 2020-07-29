@@ -3,6 +3,12 @@
   "title": "About",
   "blocks": [
     {
+      "_template": "parallax",
+      "subtext": "xxxx",
+      "headline": "# Badminton Club Effretikon\n\n##### Der Club mit Tradition",
+      "image": "../images/badminton-net.jpg"
+    },
+    {
       "_template": "hero",
       "backgroundcolor": "#051e26",
       "textcolor": "black",
