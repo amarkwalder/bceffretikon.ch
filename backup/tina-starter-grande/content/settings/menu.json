@@ -5,12 +5,12 @@
       "link": "/mypage",
       "subMenu": [
         {
-          "label": "b",
-          "link": "/b"
-        },
-        {
           "label": "a",
           "link": "/a"
+        },
+        {
+          "label": "b",
+          "link": "/b"
         }
       ]
     },
