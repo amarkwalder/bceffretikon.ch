@@ -1,0 +1,41 @@
+{
+  "title": "My Page",
+  "path": "/mypage",
+  "blocks": [
+    {
+      "title": "",
+      "center": false,
+      "underline": true,
+      "_template": "TitleBlock",
+      "content": ""
+    },
+    {
+      "image": "../images/badminton-racket.jpg",
+      "_template": "ImageBlock",
+      "content": ""
+    },
+    {
+      "name": "Form",
+      "recipient": "",
+      "fields": [
+        {
+          "label": "Email",
+          "inputType": "text",
+          "autocomplete": "email",
+          "_template": "emailInputBlock"
+        },
+        {
+          "label": "Name",
+          "inputType": "text",
+          "autocomplete": "name",
+          "_template": "nameInputBlock"
+        }
+      ],
+      "_template": "FormBlock",
+      "content": ""
+    }
+  ],
+  "hero": {
+    "image": "../images/badminton-net.jpg"
+  }
+}
