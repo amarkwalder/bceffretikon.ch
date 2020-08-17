@@ -28,7 +28,7 @@ module.exports = {
                             defaultCommitMessage: 'Edited with TinaCMS',
                             defaultCommitName: 'TinaCMS',
                             defaultCommitEmail: 'git@tinacms.org',
-                            pushOnCommit: false,
+                            pushOnCommit: true,
                         },
                     },
                     `gatsby-tinacms-json`,
