@@ -9,16 +9,6 @@
     "todo-tree.tree.showScanModeButton": false,
     "todo-tree.highlights.enabled": false,
     "todo-tree.filtering.useBuiltInExcludes": "file excludes",
-    "browser-preview.chromeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "browser-preview.startUrl": "http://localhost:3000",
-    "liveSassCompile.settings.formats": [
-        {
-            "format": "compressed",
-            "extensionName": ".min.css",
-            "savePath": "/dist/css"
-        }
-    ],
-    "liveSassCompile.settings.generateMap": false,
     "color-highlight.markerType": "dot-before",
     "better-comments.tags": [
         {

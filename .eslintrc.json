@@ -1,24 +1,42 @@
 {
     "root": true,
-    "env": {
-        "es6": true,
-        "browser": true,
-        "node": true
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
+    ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     },
-    "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "plugins": ["@typescript-eslint", "react"],
     "parserOptions": {
-        "ecmaVersion": 2020,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": ["svelte3"],
+    "rules": {
+        "prettier/prettier": "error",
+        "react/prop-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "off"
+    },
     "overrides": [
         {
-            "files": ["*.svelte"],
-            "processor": "svelte3/svelte3"
+            "files": ["*.js"],
+            "rules": {
+                "@typescript-eslint/no-var-requires": "off" //
+            }
         }
-    ],
-    "rules": {
-        "prettier/prettier": "error"
-    },
-    "settings": {}
+    ]
 }

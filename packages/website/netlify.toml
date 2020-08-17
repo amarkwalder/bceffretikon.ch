@@ -1,4 +1,0 @@
-[build]
-  base = "packages/website"
-  publish = "__sapper__/export"
-  command = "yarn export"

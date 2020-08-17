@@ -1,0 +1,180 @@
+import * as React from 'react'
+import { graphql } from 'gatsby'
+
+import { Layout } from '../components/Layout'
+import { SEO } from '../components/SEO'
+
+import { Parallax, Section, Container, Row, Col } from 'react-materialize'
+
+import badmintonRacket from '../images/badminton-racket.jpg'
+import badmintonNet from '../images/badminton-net.jpg'
+import badmintonShuttles from '../images/badminton-shuttles.jpg'
+
+import { Headline } from '../components/Headline'
+
+import { usePlugin, useForm, useCMS } from 'tinacms'
+import { useJsonForm } from 'gatsby-tinacms-json'
+import { InlineForm } from 'react-tinacms-inline'
+
+import { InlineTextarea } from 'react-tinacms-inline'
+import { InlineWysiwyg } from 'react-tinacms-editor'
+import ReactMarkdown from 'react-markdown'
+
+export const pageQuery = graphql`
+    query HomePageQuery {
+        homeJson {
+            headline
+            subtext
+            rawJson
+            fileRelativePath
+        }
+    }
+`
+
+export const FormConfig = {
+    label: 'Home Page',
+    fields: [
+        {
+            label: 'Headline',
+            name: 'rawJson.headline',
+            description: 'Headline for the Home Page',
+            component: 'text',
+        },
+        {
+            label: 'Subtext',
+            name: 'rawJson.subtext',
+            description: 'Subtext of the Headline for the Home Page',
+            component: 'text',
+        },
+    ],
+}
+
+interface JsonNode {
+    id: string
+    rawJson: string
+    fileRelativePath: string
+    [key: string]: string
+}
+
+interface HomeProps {
+    data: {
+        homeJson: JsonNode
+    }
+}
+
+export const Home: React.FC<HomeProps> = ({ data }) => {
+    const cms = useCMS()
+
+    const [pageData, form] = useJsonForm(data.homeJson) //, FormConfig)
+    if (!form || !pageData) return <></>
+    usePlugin(form)
+
+    console.log('headline', pageData.headline)
+
+    return (
+        <Layout>
+            <SEO title="Home" />
+
+            <Parallax className="valign-wrapper" image={<img src={badmintonRacket} alt="Badminton Racket" />}>
+                <Section id="index-banner" className="no-pad-bot">
+                    <Container className="header center">
+                        {/* <h1 className="header center">Willkommen beim Badminton Club Effretikon</h1> */}
+                        <InlineForm form={form}>
+                            <InlineWysiwyg name="markdownBody" format="markdown">
+                                <ReactMarkdown source={pageData.headline} />
+                            </InlineWysiwyg>
+                            {/* <Headline {...pageData} /> */}
+                        </InlineForm>
+                    </Container>
+                </Section>
+            </Parallax>
+
+            <Container>
+                <Section>
+                    <Container>
+                        <Row>
+                            <Col className="s12 center">
+                                <h2>Badminton - Die schnellste Ballsportart der Welt</h2>
+                                <p className="left-align">
+                                    Badminton wird häufig mit dem landläufig bekannten Federball verwechselt, welches
+                                    gleichfalls mit Schlägern (Rackets) und einem Federball (Shuttle) gespielt wird.
+                                    Beim Badminton werden jedoch zusätzlich ein Netz und eine Spielfeldbezeichnung
+                                    benötigt. Im Gegensatz zum Federball, wo man versucht, den Ball möglichst lange im
+                                    Spiel zu halten, wird beim Badminton versucht, den Gegner raschmöglichst
+                                    auszuspielen und den Punkt zu machen, das heisst, den Shuttle auf den Boden des
+                                    gegnerischen Spielfelds zu bringen. Dazu braucht ein Spieler vielerlei Fähigkeiten.
+                                    Gute Reflexe, Kraft und Schnelligkeit, aber auch Ausdauer, Geschicklichkeit und
+                                    Phantasie sind notwendig, will man diesen schnellen, abwechslungsreichen und
+                                    anspruchsvollen Sport erfolgreich betreiben.
+                                </p>
+                                <p className="left-align">
+                                    Harte, gut platzierte Schläge - dabei kann der Shuttle Anfangsgeschwindigkeiten von
+                                    bis zu 300 km/h erreichen - wie auch sanft gespielte Bälle knapp übers Netz,
+                                    verlangen einen eingeübten Bewegungsablauf, viel Ballgefühl und eine hohe
+                                    Konzentrationsfähigkeit.
+                                </p>
+                                <p className="left-align">
+                                    Badminton kann als Einzel-, Doppel oder Mixed (gemischtes Doppel) gespielt werden
+                                    und gilt gemeinhin als sehr faire Sportart. In der Schweiz wird dieser Sport
+                                    mittlerweile von tausenden begeisterten aktiven Spielerinnen und Spielern betrieben.
+                                </p>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Section>
+            </Container>
+
+            <Parallax className="valign-wrapper" image={<img src={badmintonNet} alt="Badminton Net" />}>
+                <Section className="no-pad-bot">
+                    <Container>
+                        <Row className="center">
+                            <h5 className="header col s12">
+                                Seit über 50 Jahren smashen und dropen badmintonbegeisterte im Schulhaus Watt in
+                                Effretikon.
+                            </h5>
+                        </Row>
+                    </Container>
+                </Section>
+            </Parallax>
+
+            <Container>
+                <Section>
+                    <Container>
+                        <Row>
+                            <Col className="s12 center">
+                                <div className="icon-block">
+                                    <h2 className="center brown-text">
+                                        <i className="material-icons">send</i>
+                                    </h2>
+                                    <h5>Interessiert?</h5>
+                                    <p className="left-align light">
+                                        Wir sind stets an aufgestellten Leuten in unseren Reihen interessiert. Auch
+                                        Junioren und Jugendliche sind bei uns jederzeit herzlich willkommen.
+                                    </p>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Section>
+            </Container>
+
+            <Parallax className="valign-wrapper" image={<img src={badmintonShuttles} alt="Badminton Shuttles" />}>
+                <Section className="no-pad-bot">
+                    <Container>
+                        <Row className="center">
+                            <h5 className="header col s12 light">
+                                Melde Dich bei uns um ein Probetraining zu absolvieren.
+                            </h5>
+                        </Row>
+                        <Row className="center">
+                            <a href="/contact" id="download-button" className="btn-large waves-effect waves-light">
+                                Anmelden
+                            </a>
+                        </Row>
+                    </Container>
+                </Section>
+            </Parallax>
+        </Layout>
+    )
+}
+export default Home

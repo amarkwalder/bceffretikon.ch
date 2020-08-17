@@ -1,0 +1,39 @@
+yarn website add gatsby \
+gatsby-image \
+gatsby-plugin-google-analytics \
+gatsby-plugin-layout \
+gatsby-plugin-manifest \
+gatsby-plugin-offline \
+gatsby-plugin-react-helmet \
+gatsby-plugin-sass \
+gatsby-plugin-sharp \
+gatsby-plugin-tinacms \
+gatsby-plugin-typescript \
+gatsby-plugin-web-font-loader \
+gatsby-source-filesystem \
+gatsby-tinacms-git \
+gatsby-tinacms-json \
+gatsby-tinacms-remark \
+gatsby-transformer-json \
+gatsby-transformer-sharp \
+react-tinacms-editor \
+react-tinacms-inline \
+@babel/core \
+cookieconsent \
+materialize-css \
+node-sass \
+prop-types \
+react \
+react-dom \
+react-dropzone \
+react-helmet \
+react-is \
+react-markdown \
+react-materialize \
+styled-components \
+typescript \
+webpack
+
+tinacms gatsby-transformer-remark
+react-final-form final-form
+react-refresh

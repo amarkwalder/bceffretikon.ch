@@ -1,12 +1,8 @@
 {
-    "semi": true,
+    "semi": false,
+    "arrowParens": "avoid",
     "trailingComma": "all",
     "singleQuote": true,
     "printWidth": 120,
-    "tabWidth": 4,
-
-    "svelteSortOrder": "styles-scripts-markup",
-    "svelteStrictMode": true,
-    "svelteBracketNewLine": true,
-    "svelteAllowShorthand": false
+    "tabWidth": 4
 }
