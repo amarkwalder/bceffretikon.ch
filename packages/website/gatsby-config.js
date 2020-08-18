@@ -7,10 +7,6 @@ console.log('REPO_ABSOLUTE_PATH', REPO_ABSOLUTE_PATH)
 
 module.exports = {
     plugins: [
-        `gatsby-transformer-sharp`,
-        `gatsby-plugin-sharp`,
-        `gatsby-transformer-json`,
-
         `gatsby-plugin-typescript`,
         `gatsby-plugin-sass`,
         {
@@ -42,27 +38,15 @@ module.exports = {
             options: {
                 name: 'uploads',
                 path: `${__dirname}/static/images`,
+                plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`],
             },
         },
         {
             resolve: `gatsby-source-filesystem`,
             options: {
-                name: 'pages',
-                path: `${__dirname}/content/pages`,
-            },
-        },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: 'images',
-                path: `${__dirname}/content/images`,
-            },
-        },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: 'settings',
-                path: `${__dirname}/content/settings`,
+                name: 'content',
+                path: `${__dirname}/content`,
+                plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`, `gatsby-transformer-json`],
             },
         },
 

@@ -3,7 +3,7 @@ const path = require(`path`)
 exports.onCreateNode = ({ node, actions, createNodeId, createContentDigest }) => {
     const { createNode, createNodeField, createParentChildLink } = actions
 
-    //console.log('onCreateNode', node.internal)
+    console.log('onCreateNode', node.internal)
 
     // Check for the correct type to only affect this
     if (node.internal.type === `PagesJson`) {
@@ -69,10 +69,6 @@ exports.onCreateNode = ({ node, actions, createNodeId, createContentDigest }) =>
                 name: `markdownContent___NODE`, // Before the ___NODE: Name of the new fields
                 value: textNode.id, // Connects both nodes
             })
-        }
-
-        if (node.hero && node.hero.image) {
-            console.log('node.hero.image', node.hero.image)
         }
     }
 }

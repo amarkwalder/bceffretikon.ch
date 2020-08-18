@@ -75,8 +75,10 @@ const PageForm = {
                     uploadDir: (p: any) => `/content/images`,
                     previewSrc: (formValues: any, input: any) => {
                         console.log('previewSrc', formValues, input)
-                        if (!formValues?.jsonNode?.hero?.image?.childImageSharp?.fluid?.src) return ''
-                        return formValues.jsonNode.hero.image.childImageSharp.fluid.src
+                        // if (!formValues?.jsonNode?.hero?.image?.childImageSharp?.fluid?.src) return ''
+                        // return formValues.jsonNode.hero.image.childImageSharp.fluid.src
+                        if (!formValues?.jsonNode?.hero?.image?.publicURL) return ''
+                        return formValues.jsonNode.hero.image.publicURL
                     },
                 },
             ],
@@ -92,6 +94,14 @@ const PageForm = {
     ],
 }
 
+// image {
+//     childImageSharp {
+//         fluid(quality: 70, maxWidth: 1920) {
+//             ...GatsbyImageSharpFluid_withWebp
+//         }
+//     }
+// }
+
 export const pageQuery = graphql`
     query($path: String!) {
         page: pagesJson(path: { eq: $path }) {
@@ -100,11 +110,7 @@ export const pageQuery = graphql`
                 headline
                 textline
                 image {
-                    childImageSharp {
-                        fluid(quality: 70, maxWidth: 1920) {
-                            ...GatsbyImageSharpFluid_withWebp
-                        }
-                    }
+                    publicURL
                 }
             }
             blocks {
