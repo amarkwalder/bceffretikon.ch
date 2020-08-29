@@ -6,7 +6,7 @@
   "blocks": [
     {
       "_template": "hero",
-      "image": "../images/badminton-racket.jpg",
+      "image": "../images/badminton-shuttles.jpg",
       "background_color": "#051e26",
       "text_color": "#fffaf4",
       "headline": "Block in a Sunbeam",
