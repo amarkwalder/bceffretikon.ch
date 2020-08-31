@@ -7,7 +7,7 @@ authors:
   - amarkwalder
 draft: false
 hero:
-  image: ../images/badminton-racket.jpg
+  image: ../images/badminton-shuttles.jpg
   large: false
   overlay: true
 ---
