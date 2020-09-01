@@ -1,4 +1,5 @@
 import React from 'react'
+import styled, { css } from 'styled-components'
 
 interface ContentProps {
     data: any
@@ -6,25 +7,35 @@ interface ContentProps {
 }
 
 export const Content: React.FC<ContentProps> = ({ data, html }) => {
-    console.log('Content', data, html)
+    const centered = data.center ? data.center : false
     return (
-        <div className="container">
-            <div className="section">
-                <div className="container">
-                    <div className="row">
-                        <div className="col s12 center" dangerouslySetInnerHTML={{ __html: html }}></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <StyledContent
+            center={centered}
+            dangerouslySetInnerHTML={{
+                __html: html,
+            }}
+        ></StyledContent>
     )
 }
+
+const StyledContent = styled.div<{ center: boolean }>`
+    ${props =>
+        props.center &&
+        css`
+            text-align: center;
+        `};
+`
 
 export const ContentBlock = {
     label: 'Content',
     name: 'content',
+    key: 'test',
     defaultItem: {
         content: '',
+        center: false,
     },
-    fields: [{ name: 'content', label: 'Content', component: 'markdown' }],
+    fields: [
+        { name: 'content', label: 'Content', component: 'markdown' },
+        { name: 'center', label: 'Center', component: 'toggle' },
+    ],
 }

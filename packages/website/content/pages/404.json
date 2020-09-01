@@ -1,0 +1,33 @@
+{
+  "path": "/404.html",
+  "hero": {
+    "headline": "Page Not Found",
+    "textline": "Oops, we couldn't find this page!",
+    "ctas": [
+      {
+        "label": "Home",
+        "primary": true,
+        "link": "/",
+        "arrow": true
+      }
+    ],
+    "image": "../images/badminton-racket.jpg",
+    "large": false
+  },
+  "displayTitle": true,
+  "title": "Page Not Found",
+  "blocks": [
+    {
+      "title": "Something went wrong",
+      "center": false,
+      "underline": true,
+      "_template": "TitleBlock",
+      "content": ""
+    },
+    {
+      "content": "Please go back to the homepage and try again.",
+      "center": false,
+      "_template": "ContentBlock"
+    }
+  ]
+}

@@ -7,13 +7,11 @@ authors:
   - amarkwalder
 draft: false
 hero:
-  image: ../images/badminton-shuttles.jpg
+  image: ../images/coffee-beans.jpg
   large: false
   overlay: true
 ---
 > **Tina Grande** is a Gatsby starter with full TinaCMS integration. You can use Tina to add and remove pages, customize the theme, write content and more!
-
-yyyy
 
 ## Getting Started
 

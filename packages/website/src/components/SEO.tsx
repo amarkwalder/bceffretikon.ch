@@ -1,32 +1,18 @@
 import React from 'react'
-
-import { Helmet } from 'react-helmet'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
 
-type MetaItem1 = {
-    name: string
-    content: any
-    property?: undefined
-}
-
-type MetaItem2 = {
-    property: string
-    content: any
-    name?: undefined
-}
-
-type MetaItem = MetaItem1 | MetaItem2
-
 interface SEOProps {
-    title: string
     description?: string
     lang?: string
-    meta?: MetaItem[]
+    meta?: any
+    title: string
 }
 
 export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
-    const { site } = useStaticQuery(graphql`
-        query SEOQuery {
+    const data = useStaticQuery(graphql`
+        query SeoQuery {
             site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
                 title
                 description
@@ -34,6 +20,7 @@ export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
         }
     `)
 
+    const site = data.site
     const metaDescription = description || site.description
 
     return (
@@ -45,30 +32,51 @@ export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
             titleTemplate={`%s | ${site.title}`}
             meta={[
                 {
-                    name: 'description',
+                    name: `description`,
                     content: metaDescription,
                 },
                 {
-                    property: 'og:title',
+                    property: `og:title`,
                     content: title,
                 },
                 {
-                    property: 'og:description',
+                    property: `og:description`,
                     content: metaDescription,
                 },
                 {
-                    property: 'og:type',
-                    content: 'website',
+                    property: `og:type`,
+                    content: `website`,
                 },
-            ].concat(meta || [])}
+                {
+                    name: `twitter:card`,
+                    content: `summary`,
+                },
+                {
+                    name: `twitter:creator`,
+                    content: site.author,
+                },
+                {
+                    name: `twitter:title`,
+                    content: title,
+                },
+                {
+                    name: `twitter:description`,
+                    content: metaDescription,
+                },
+            ].concat(meta)}
         />
     )
 }
 
 SEO.defaultProps = {
-    description: '',
-    lang: 'de',
+    lang: `en`,
     meta: [],
+    description: ``,
 }
 
-export default SEO
+SEO.propTypes = {
+    description: PropTypes.string,
+    lang: PropTypes.string,
+    meta: PropTypes.arrayOf(PropTypes.object),
+    title: PropTypes.string.isRequired,
+}

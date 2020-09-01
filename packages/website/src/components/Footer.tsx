@@ -1,73 +1,26 @@
 import React from 'react'
+import styled from 'styled-components'
+import { transparentize } from 'polished'
 
-import * as MaterializeCss from 'react-materialize'
-import logo from '../images/logo-white.jpg'
+import { Wrapper } from './Style'
 
-export const Footer: React.FC = () => {
+export const Footer = styled(({ ...styleProps }) => {
     return (
-        <MaterializeCss.Footer
-            className="teal"
-            copyrights="&copy; 2020 Badminton Club Effretikon. Alle Rechte vorbehalten."
-            links={
-                <>
-                    <h5 className="white-text">Links</h5>
-                    <ul>
-                        <li>
-                            <a className="white-text" href="/">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a className="white-text" href="/training/">
-                                Training
-                            </a>
-                        </li>
-                        <li>
-                            <a className="white-text" href="/interclub/">
-                                Interclub
-                            </a>
-                        </li>
-                        <li>
-                            <a className="white-text" href="/about/">
-                                Über uns
-                            </a>
-                        </li>
-                        <li>
-                            <a className="white-text" href="/contact/">
-                                Kontakt
-                            </a>
-                        </li>
-                        <li>
-                            <a className="white-text" href="/login/">
-                                Login
-                            </a>
-                        </li>
-                    </ul>
-                </>
-            }
-            moreLinks={
-                <>
-                    &nbsp; &nbsp;
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                        <a className="white-text" href="/dataprotection/">
-                            Datenschutz
-                        </a>
-                        &nbsp; &nbsp;
-                        <a className="white-text" href="/legalnotice/">
-                            Impressum
-                        </a>
-                    </span>
-                </>
-            }
-        >
-            <img height="50" src={logo} alt="Logo" />
-            <p>
-                <a className="white-text" href="mailto:info@bceffretikon.ch">
-                    info@bceffretikon.ch
-                </a>
-            </p>
-        </MaterializeCss.Footer>
+        <footer {...styleProps}>
+            <Wrapper>
+                © {new Date().getFullYear()} – Built with
+                {` `}
+                <a href="https://www.gatsbyjs.org">Gatsby</a> and <a href="https://www.tinacms.org">Tina</a>{' '}
+                <span>by </span>
+                <a href="https://www.forestry.io">Forestry.io</a>
+            </Wrapper>
+        </footer>
     )
-}
-
-export default Footer
+})`
+    font-size: 0.8rem;
+    line-height: 3rem;
+    text-align: center;
+    height: 3rem;
+    background-color: ${props => transparentize(0.97, props.theme.color.foreground)};
+    box-shadow: inset 0 1px 0 ${props => transparentize(0.95, props.theme.color.foreground)};
+`

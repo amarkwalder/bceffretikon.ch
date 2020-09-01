@@ -1,20 +1,33 @@
 const path = require('path')
 const REPO_ABSOLUTE_PATH = path.join(process.cwd(), '../../')
 
+const theme = require('./content/settings/theme.json')
 const site = require('./content/settings/site.json')
-
-console.log('REPO_ABSOLUTE_PATH', REPO_ABSOLUTE_PATH)
 
 module.exports = {
     plugins: [
-        `gatsby-plugin-typescript`,
-        `gatsby-plugin-sass`,
+        `gatsby-transformer-sharp`,
+        `gatsby-plugin-sharp`,
+        `gatsby-tinacms-json`,
+        `gatsby-transformer-json`,
         {
             resolve: 'gatsby-plugin-tinacms',
             options: {
                 enabled: process.env.NODE_ENV !== 'production',
-                sidebar: true,
-                toolbar: false,
+                toolbar: true,
+                sidebar: {
+                    hidden: false,
+                    position: 'displace',
+                    theme: {
+                        color: {
+                            primary: {
+                                light: theme.color.primary,
+                                medium: theme.color.primary,
+                                dark: theme.color.primary,
+                            },
+                        },
+                    },
+                },
                 plugins: [
                     {
                         resolve: 'gatsby-tinacms-git',
@@ -27,35 +40,31 @@ module.exports = {
                             pushOnCommit: true,
                         },
                     },
-                    `gatsby-tinacms-json`,
                     'gatsby-tinacms-remark',
                 ],
             },
         },
-
         {
-            resolve: `gatsby-source-filesystem`,
+            resolve: 'gatsby-source-filesystem',
             options: {
-                name: 'uploads',
                 path: `${__dirname}/static/images`,
-                plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`],
+                name: `uploads`,
             },
         },
         {
             resolve: `gatsby-source-filesystem`,
             options: {
-                name: 'content',
+                name: `content`,
                 path: `${__dirname}/content`,
-                plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`, `gatsby-transformer-json`],
             },
         },
-
         {
             resolve: `gatsby-plugin-layout`,
             options: {
                 component: require.resolve(`./src/components/SiteLayout.tsx`),
             },
         },
+        `gatsby-plugin-styled-components`,
         `gatsby-plugin-react-helmet`,
         {
             resolve: `gatsby-plugin-manifest`,
@@ -63,6 +72,8 @@ module.exports = {
                 name: site.title,
                 short_name: site.title,
                 start_url: `/`,
+                background_color: theme.color.primary,
+                theme_color: theme.color.primary,
                 display: `minimal-ui`,
                 icon: `content/images/icon.png`,
             },
@@ -73,12 +84,6 @@ module.exports = {
             resolve: `gatsby-transformer-remark`,
             options: {
                 plugins: [
-                    {
-                        resolve: 'gatsby-remark-relative-images',
-                        options: {
-                            name: 'uploads',
-                        },
-                    },
                     {
                         resolve: `gatsby-remark-images`,
                         options: {
@@ -110,12 +115,11 @@ module.exports = {
                 ],
             },
         },
-
         {
             resolve: 'gatsby-plugin-web-font-loader',
             options: {
                 google: {
-                    families: ['Material Icons'],
+                    families: ['Lato:400,700'],
                 },
             },
         },
