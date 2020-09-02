@@ -1,6 +1,7 @@
 {
     "title": "Dummy",
     "path": "/dummy",
+    "lang": "de",
     "displayTitle": true,
     "content": "## root",
     "hero": {

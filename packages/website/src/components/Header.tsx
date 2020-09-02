@@ -12,22 +12,23 @@ import { EditToggle } from './EditToggle'
 
 interface HeaderProps {
     siteTitle?: string
+    lang: string
     theme?: any
 }
 
-export const Header = styled(({ siteTitle, ...styleProps }) => {
+export const Header = styled(({ siteTitle, lang, ...styleProps }) => {
     return (
         <ThemeContext.Consumer>
             {({ toggleDarkMode, isDarkMode, theme }) => (
                 <header {...styleProps}>
                     <HeaderWrapper>
                         <SiteTitle>
-                            <SiteLink to="/">
+                            <SiteLink to={'/' + lang}>
                                 <Coffee />
                                 {siteTitle}
                             </SiteLink>
                         </SiteTitle>
-                        <Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+                        <Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} lang={lang} />
                     </HeaderWrapper>
                     {process.env.NODE_ENV !== 'production' && <EditToggle />}
                 </header>

@@ -13,7 +13,7 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { Theme } from './Theme'
 
-const MasterLayout: React.FC = ({ children }) => {
+const MasterLayout: React.FC = ({ children, pageContext }) => {
     const data = useStaticQuery(graphql`
         query MasterLayoutQuery {
             site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
@@ -22,6 +22,9 @@ const MasterLayout: React.FC = ({ children }) => {
         }
     `)
 
+    const { lang } = pageContext
+    console.log('lang', lang)
+
     return (
         <>
             <Helmet>
@@ -29,7 +32,7 @@ const MasterLayout: React.FC = ({ children }) => {
             </Helmet>
             <Theme>
                 <Site>
-                    <Header siteTitle={data.site.title} />
+                    <Header siteTitle={data.site.title} lang={lang} />
                     {children}
                     <Footer />
                 </Site>

@@ -106,7 +106,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             pages: allPagesJson(filter: { path: { ne: null }, listType: { eq: null } }) {
                 edges {
                     node {
+                        title
                         path
+                        lang
                     }
                 }
             }
@@ -138,11 +140,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     }
 
     result.data.pages.edges.forEach(({ node }) => {
-        createPage({
-            path: node.path,
+        const removeTrailingSlash = path => (path === `/` ? path : path.replace(/\/$/, ``))
+        const pathPrefix = '' //node.lang ? '/' + node.lang : ''
+        const page = {
+            path: removeTrailingSlash(`${pathPrefix}${node.path}`),
             component: path.resolve(`src/templates/Page.tsx`),
-            context: {},
-        })
+            context: {
+                lang: node.lang || 'de',
+            },
+        }
+        console.log('createPage', page.path, page.context.lang, node.title)
+        createPage(page)
     })
 
     result.data.posts.edges.forEach(({ node }) => {

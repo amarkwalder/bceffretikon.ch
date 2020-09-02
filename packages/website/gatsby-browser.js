@@ -5,4 +5,7 @@ export const onClientEntry = () => {
         name: 'authors',
         Component: AuthorsField,
     })
+    // if (window.location.pathname === '/') {
+    //     window.location.pathname = `/de`
+    // }
 }

@@ -8,9 +8,10 @@ import { Link } from 'gatsby'
 interface NavProps {
     toggleDarkMode?: () => void
     isDarkMode?: boolean
+    lang: string
 }
 
-export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode }) => {
+export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode, lang }) => {
     const data = useStaticQuery(graphql`
         query navQuery {
             settingsJson(fileRelativePath: { eq: "/content/settings/menu.json" }) {
@@ -26,6 +27,8 @@ export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode }) => {
 
     const menu = data.settingsJson
 
+    const removeTrailingSlash = path => (path === `/` ? path : path.replace(/\/$/, ``))
+
     return (
         <>
             <StyledNavbar navOpen={navOpen} isDarkMode={isDarkMode}>
@@ -34,7 +37,7 @@ export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode }) => {
                         <NavLink
                             onClick={toggleNavOpen}
                             partiallyActive={item.link === '/' ? false : true}
-                            to={item.link}
+                            to={removeTrailingSlash('/' + lang + item.link)}
                         >
                             {item.label}
                         </NavLink>
