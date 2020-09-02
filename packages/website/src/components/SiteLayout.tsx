@@ -18,11 +18,14 @@ const MasterLayout: React.FC = ({ children, pageContext }) => {
         query MasterLayoutQuery {
             site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
                 title
+                languages {
+                    defaultLangKey
+                }
             }
         }
     `)
 
-    const { lang } = pageContext
+    const lang = pageContext.lang || data.site.languages.defaultLangKey
     console.log('lang', lang)
 
     return (

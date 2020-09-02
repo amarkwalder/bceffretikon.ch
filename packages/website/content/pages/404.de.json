@@ -1,0 +1,34 @@
+{
+    "title": "Seite nicht gefunden",
+    "path": "/de/404.html",
+    "lang": "de",
+    "hero": {
+        "headline": "Seite nicht gefunden",
+        "textline": "Oops, Wir können die Seite nicht finden!",
+        "ctas": [
+            {
+                "label": "Home",
+                "primary": true,
+                "link": "/de",
+                "arrow": true
+            }
+        ],
+        "image": "../images/badminton-racket.jpg",
+        "large": false
+    },
+    "blocks": [
+        {
+            "title": "Etwas ist schief gelaufen",
+            "center": false,
+            "underline": true,
+            "_template": "TitleBlock",
+            "content": ""
+        },
+        {
+            "content": "Bitte kehre zur Startseite zurück und versuche es erneut.",
+            "center": false,
+            "_template": "ContentBlock"
+        }
+    ],
+    "displayTitle": true
+}

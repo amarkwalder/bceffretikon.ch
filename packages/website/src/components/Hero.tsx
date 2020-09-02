@@ -11,44 +11,44 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ hero }) => {
     return (
-        <InlineGroup name="rawJson.hero">
-            <HeroWrapper>
-                <HeroBackground>
-                    {hero.overlay && <Overlay />}
-                    {hero.image && <HeroImage fluid={hero.image.childImageSharp.fluid}></HeroImage>}
-                </HeroBackground>
-                {(hero.headline || hero.textline || hero.ctas) && (
-                    <HeroContent large={hero.large}>
-                        <Wrapper>
-                            <Headline>
+        // <InlineGroup name="rawJson.hero">
+        <HeroWrapper>
+            <HeroBackground>
+                {hero.overlay && <Overlay />}
+                {hero.image && <HeroImage fluid={hero.image.childImageSharp.fluid}></HeroImage>}
+            </HeroBackground>
+            {(hero.headline || hero.textline || hero.ctas) && (
+                <HeroContent large={hero.large}>
+                    <Wrapper>
+                        {/* <Headline>
                                 <InlineText name="headline" />
                             </Headline>
                             <Textline>
                                 <InlineText name="textline" />
-                            </Textline>
-                            {/* {hero.headline && <Headline>{hero.headline}</Headline>}
-                        {hero.textline && <Textline>{hero.textline}</Textline>} */}
-                            {hero.ctas && (
-                                <Actions>
-                                    {Object.keys(hero.ctas).map(key => {
-                                        return (
-                                            <LinkButton
-                                                key={key}
-                                                primary={hero.ctas[key].primary}
-                                                to={hero.ctas[key].link}
-                                            >
-                                                {hero.ctas[key].label}
-                                                {hero.ctas[key].arrow && <span>&nbsp;&nbsp;→</span>}
-                                            </LinkButton>
-                                        )
-                                    })}
-                                </Actions>
-                            )}
-                        </Wrapper>
-                    </HeroContent>
-                )}
-            </HeroWrapper>
-        </InlineGroup>
+                            </Textline> */}
+                        {hero.headline && <Headline>{hero.headline}</Headline>}
+                        {hero.textline && <Textline>{hero.textline}</Textline>}
+                        {hero.ctas && (
+                            <Actions>
+                                {Object.keys(hero.ctas).map(key => {
+                                    return (
+                                        <LinkButton
+                                            key={key}
+                                            primary={hero.ctas[key].primary.toString()}
+                                            to={hero.ctas[key].link}
+                                        >
+                                            {hero.ctas[key].label}
+                                            {hero.ctas[key].arrow && <span>&nbsp;&nbsp;→</span>}
+                                        </LinkButton>
+                                    )
+                                })}
+                            </Actions>
+                        )}
+                    </Wrapper>
+                </HeroContent>
+            )}
+        </HeroWrapper>
+        // </InlineGroup>
     )
 }
 

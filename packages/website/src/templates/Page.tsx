@@ -26,34 +26,34 @@ export const Page: React.FC<PageProps> = ({ data }) => {
     const blocks: Block[] = page?.blocks ? page.blocks : []
 
     return (
-        <InlineForm form={form}>
-            <PageLayout page={page}>
-                <Paper>
-                    {blocks.map(({ _template, ...data }, i: number) => {
-                        switch (_template) {
-                            case 'TitleBlock':
-                                return <Title key={'block-' + i} page={page} data={data} />
-                            case 'ImageBlock':
-                                return <Image key={'block-' + i} data={data} />
-                            // case 'FormBlock':
-                            //     return <Form form={data} />
-                            case 'ContentBlock':
-                                if (data.content && page.childrenPagesJsonBlockMarkdown[i])
-                                    return (
-                                        <Content
-                                            key={'block-' + i}
-                                            data={data}
-                                            html={page.childrenPagesJsonBlockMarkdown[i].childMarkdownRemark.html}
-                                        />
-                                    )
-                                break
-                            default:
-                                return true
-                        }
-                    })}
-                </Paper>
-            </PageLayout>
-        </InlineForm>
+        // <InlineForm form={form}>
+        <PageLayout page={page}>
+            <Paper>
+                {blocks.map(({ _template, ...data }, i: number) => {
+                    switch (_template) {
+                        case 'TitleBlock':
+                            return <Title key={'block-' + i} page={page} data={data} />
+                        case 'ImageBlock':
+                            return <Image key={'block-' + i} data={data} />
+                        // case 'FormBlock':
+                        //     return <Form form={data} />
+                        case 'ContentBlock':
+                            if (data.content && page.childrenPagesJsonBlockMarkdown[i])
+                                return (
+                                    <Content
+                                        key={'block-' + i}
+                                        data={data}
+                                        html={page.childrenPagesJsonBlockMarkdown[i].childMarkdownRemark.html}
+                                    />
+                                )
+                            break
+                        default:
+                            return true
+                    }
+                })}
+            </Paper>
+        </PageLayout>
+        // </InlineForm>
     )
 }
 

@@ -1,6 +1,6 @@
 {
     "title": "Blog",
-    "path": "/blog",
+    "path": "/en/blog",
     "lang": "en",
     "pageType": "list",
     "listType": "post",
