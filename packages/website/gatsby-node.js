@@ -141,9 +141,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
     result.data.pages.edges.forEach(({ node }) => {
         const removeTrailingSlash = path => (path === `/` ? path : path.replace(/\/$/, ``))
-        const pathPrefix = '' //node.lang ? '/' + node.lang : ''
+        const pagePath = (node.lang ? '/' + node.lang : '') + node.path
         const page = {
-            path: removeTrailingSlash(`${pathPrefix}${node.path}`),
+            path: removeTrailingSlash(pagePath),
             component: path.resolve(`src/templates/Page.tsx`),
             context: {
                 lang: node.lang || 'de',
