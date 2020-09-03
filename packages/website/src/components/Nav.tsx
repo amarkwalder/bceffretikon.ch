@@ -14,8 +14,13 @@ interface NavProps {
 export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode, lang }) => {
     const data = useStaticQuery(graphql`
         query navQuery {
-            settingsJson(fileRelativePath: { eq: "/content/settings/menu.json" }) {
+            menu: settingsJson(fileRelativePath: { eq: "/content/settings/menu.json" }) {
                 ...nav
+            }
+            site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
+                languages {
+                    langs
+                }
             }
         }
     `)
@@ -25,20 +30,17 @@ export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode, lang }) =>
         setNavOpen(!navOpen)
     }
 
-    const menu = data.settingsJson
+    const menu = data.menu
+    const site = data.site
 
-    const removeTrailingSlash = path => (path === `/` ? path : path.replace(/\/$/, ``))
+    const removeTrailingSlash = (path: string) => (path === `/` ? path : path.replace(/\/$/, ``))
 
     return (
         <>
             <StyledNavbar navOpen={navOpen} isDarkMode={isDarkMode}>
-                {menu.menuItems.map((item: any) => (
+                {menu.menuItems.map((item: { label: string; link: string }) => (
                     <NavItem key={item.label}>
-                        <NavLink
-                            onClick={toggleNavOpen}
-                            partiallyActive={item.link === '/' ? false : true}
-                            to={removeTrailingSlash('/' + lang + item.link)}
-                        >
+                        <NavLink onClick={toggleNavOpen} to={removeTrailingSlash('/' + lang + item.link)}>
                             {item.label}
                         </NavLink>
                     </NavItem>
@@ -46,6 +48,14 @@ export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode, lang }) =>
                 <NavItem>
                     <DarkModeToggle aria-label="Toggle Dark Theme" onClick={toggleDarkMode} isDarkMode={isDarkMode} />
                 </NavItem>
+
+                {site.languages.langs.map((item: string) => (
+                    <NavItem key={item}>
+                        <NavLink partiallyActive={true} to={'/' + item.toLocaleLowerCase()}>
+                            {item.toUpperCase().toUpperCase()}
+                        </NavLink>
+                    </NavItem>
+                ))}
             </StyledNavbar>
             <NavToggle aria-label="Toggle Nav" onClick={toggleNavOpen} navOpen={navOpen}></NavToggle>
         </>
@@ -328,6 +338,7 @@ export const NavLink = styled(({ children, ...styleProps }) => (
         `}
 `
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const NavToggle = styled(({ menuOpen, navOpen, ...styleProps }) => {
     return (
         <button {...styleProps}>
@@ -384,6 +395,7 @@ export const NavToggle = styled(({ menuOpen, navOpen, ...styleProps }) => {
         `};
 `
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const DarkModeToggle = styled(({ isDarkMode, ...styleProps }) => {
     return (
         <button {...styleProps}>
@@ -411,6 +423,7 @@ export const DarkModeToggle = styled(({ isDarkMode, ...styleProps }) => {
         width: 1.5rem;
         height: 100%;
         margin-left: 1rem;
+        margin-right: 1rem;
     }
 
     svg {
@@ -477,7 +490,7 @@ export const NavForm = {
             label: 'Main Menu',
             name: 'rawJson.menuItems',
             component: 'group-list',
-            itemProps: (item: any) => ({
+            itemProps: (item: { label: string }): { label: string } => ({
                 label: item.label,
             }),
             fields: [
@@ -501,7 +514,11 @@ export const NavForm = {
                     label: 'Sub Menu',
                     name: 'subMenu',
                     component: 'group-list',
-                    itemProps: (item: any) => ({
+                    itemProps: (item: {
+                        key: string
+                        label: string
+                        link: string
+                    }): { key: string; label: string } => ({
                         key: item.link,
                         label: item.label,
                     }),
@@ -520,7 +537,11 @@ export const NavForm = {
                             label: 'Sub Menu',
                             name: 'subMenu',
                             component: 'group-list',
-                            itemProps: (item: any) => ({
+                            itemProps: (item: {
+                                key: string
+                                label: string
+                                link: string
+                            }): { key: string; label: string } => ({
                                 key: item.link,
                                 label: item.label,
                             }),

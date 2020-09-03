@@ -5,16 +5,20 @@
       "link": "/"
     },
     {
-      "label": "About",
-      "link": "/about"
+      "label": "Training",
+      "link": "/training"
     },
     {
-      "label": "Blog",
-      "link": "/blog"
+      "label": "Interclub",
+      "link": "/ic"
     },
     {
       "label": "Contact",
       "link": "/contact"
+    },
+    {
+      "label": "About",
+      "link": "/about"
     }
   ]
 }

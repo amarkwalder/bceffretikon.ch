@@ -13,7 +13,13 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { Theme } from './Theme'
 
-const MasterLayout: React.FC = ({ children, pageContext }) => {
+interface MasterLayoutProps {
+    pageContext: {
+        lang: string
+    }
+}
+
+const MasterLayout: React.FC<MasterLayoutProps> = ({ children, pageContext }) => {
     const data = useStaticQuery(graphql`
         query MasterLayoutQuery {
             site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
@@ -26,7 +32,6 @@ const MasterLayout: React.FC = ({ children, pageContext }) => {
     `)
 
     const lang = pageContext.lang || data.site.languages.defaultLangKey
-    console.log('lang', lang)
 
     return (
         <>
@@ -47,11 +52,11 @@ const MasterLayout: React.FC = ({ children, pageContext }) => {
 const CreatePostButton = createRemarkButton({
     label: 'New Post',
     filename(form) {
-        let slug = slugify(form.title.toLowerCase())
+        const slug = slugify(form.title.toLowerCase())
         return `content/posts/${slug}.md`
     },
     frontmatter(form) {
-        let slug = slugify(form.title.toLowerCase())
+        const slug = slugify(form.title.toLowerCase())
         return new Promise(resolve => {
             setTimeout(() => {
                 resolve({
@@ -73,7 +78,7 @@ const CreatePostButton = createRemarkButton({
 const CreatePageButton = new JsonCreatorPlugin({
     label: 'New Page',
     filename(form) {
-        let slug = slugify(form.title.toLowerCase())
+        const slug = slugify(form.title.toLowerCase())
         return `content/pages/${slug}.json`
     },
     fields: [
