@@ -7,10 +7,10 @@
   },
   "easing": "cubic-bezier(0.215, 0.610, 0.355, 1.000)",
   "breakpoints": {
-    "small": "576px",
-    "medium": "768px",
-    "large": "992px",
-    "huge": "1200px"
+    "small": "1000px",
+    "medium": "1200px",
+    "large": "1600px",
+    "huge": "2200px"
   },
   "radius": {
     "small": "3px"
@@ -32,6 +32,6 @@
     "uppercaseH2": false
   },
   "menu": {
-    "style": "glow"
+    "style": "pill"
   }
 }
