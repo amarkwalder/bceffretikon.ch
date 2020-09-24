@@ -1,6 +1,6 @@
 {
-  "title": "Startseite",
-  "path": "/de",
+  "title": "Datenschutz",
+  "path": "/de/dataprotection",
   "lang": "de",
   "blocks": [
     {
@@ -10,24 +10,9 @@
     }
   ],
   "hero": {
-    "headline": "Willkommen beim Badminton Club Effretikon",
-    "textline": "Der Club mit Tradition",
-    "ctas": [
-      {
-        "label": "Blog lesen",
-        "link": "/de/blog",
-        "primary": true,
-        "arrow": true
-      },
-      {
-        "label": "Kontakt",
-        "link": "/de/contact",
-        "arrow": false,
-        "primary": false
-      }
-    ],
+    "headline": "Datenschutz",
     "image": "../images/badminton-racket.jpg",
-    "large": true
+    "large": false
   },
   "displayTitle": false
 }

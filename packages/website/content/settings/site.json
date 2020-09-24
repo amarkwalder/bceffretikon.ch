@@ -1,15 +1,13 @@
 {
-  "logo": "logo-white",
-  "title": "BC Effretikon",
+  "logo": "../images/logo-white.jpg",
+  "title": "Badminton Club Effretikon",
   "description": "Badminton Club Effretikon - Der Club mit Tradition",
   "author": "TinaCMS",
   "languages": {
-    "langs": [
+    "defaultLanguage": "de",
+    "availableLanguages": [
       "de",
-      "en",
-      "fr",
-      "it"
-    ],
-    "defaultLangKey": "de"
+      "en"
+    ]
   }
 }

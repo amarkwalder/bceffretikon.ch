@@ -8,6 +8,6 @@ export const onClientEntry = () => {
         Component: AuthorsField,
     })
     if (window.location.pathname === '/') {
-        window.location.pathname = `/${site.languages.defaultLangKey}`
+        window.location.pathname = `/${site.languages.defaultLanguage}`
     }
 }

@@ -1,0 +1,38 @@
+{
+  "acceptButton": [
+    {
+      "label": "Akzeptieren (DE)",
+      "title": "Akzeptieren",
+      "language": "de"
+    },
+    {
+      "label": "Accept (EN)",
+      "title": "Accept",
+      "language": "en"
+    }
+  ],
+  "declineButton": [
+    {
+      "label": "Ablehnen (D",
+      "title": "Ablehnen",
+      "language": "de"
+    },
+    {
+      "label": "Decline (EN)",
+      "title": "Decline",
+      "language": "en"
+    }
+  ],
+  "consentText": [
+    {
+      "label": "Diese Website nutzt Cookies ... (DE)",
+      "title": "Diese Website nutzt Cookies um bestmögliche Funktionalität bieten zu können.",
+      "language": "de"
+    },
+    {
+      "label": "This website uses cookies ... (EN)",
+      "title": "This website uses cookies to ensure you get the best experience on our website.",
+      "language": "en"
+    }
+  ]
+}

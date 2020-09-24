@@ -1,61 +1,72 @@
 import React, { useState } from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+
 import { Moon, Sun } from 'styled-icons/boxicons-regular'
+import { Menu, MenuOpen } from 'styled-icons/material-outlined'
+
 import styled, { css } from 'styled-components'
 import { mix, transparentize } from 'polished'
-import { Link } from 'gatsby'
 
-interface NavProps {
+import { MenuItem } from '../../plugins/Menu'
+
+import { NavLink } from './NavLink'
+import { NavSelect } from './NavSelect'
+
+import { navigate } from 'gatsby'
+
+type NavProps = {
     toggleDarkMode?: () => void
     isDarkMode?: boolean
-    lang: string
+    currentLanguage: string
+    availableLanguages: string[]
+    location: Location
+    menuItems: MenuItem[]
 }
 
-export const Nav: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode, lang }) => {
-    const data = useStaticQuery(graphql`
-        query navQuery {
-            menu: settingsJson(fileRelativePath: { eq: "/content/settings/menu.json" }) {
-                ...nav
-            }
-            site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
-                languages {
-                    langs
-                }
-            }
-        }
-    `)
-
+export const Navbar: React.FC<NavProps> = ({
+    toggleDarkMode,
+    isDarkMode,
+    currentLanguage,
+    availableLanguages,
+    location,
+    menuItems,
+}) => {
     const [navOpen, setNavOpen] = useState(false)
     const toggleNavOpen = () => {
         setNavOpen(!navOpen)
     }
 
-    const menu = data.menu
-    const site = data.site
-
     const removeTrailingSlash = (path: string) => (path === `/` ? path : path.replace(/\/$/, ``))
+
+    const onLanguageChange = (language: string) => {
+        const { pathname } = location
+        const pathSuffix = pathname.length > 3 ? pathname.substr(3) : ''
+        setNavOpen(false)
+        navigate(removeTrailingSlash('/' + language.toLowerCase() + pathSuffix))
+    }
 
     return (
         <>
             <StyledNavbar navOpen={navOpen} isDarkMode={isDarkMode}>
-                {menu.menuItems.map((item: { label: string; link: string }) => (
-                    <NavItem key={item.label}>
-                        <NavLink onClick={toggleNavOpen} to={removeTrailingSlash('/' + lang + item.link)}>
-                            {item.label}
-                        </NavLink>
-                    </NavItem>
-                ))}
+                {menuItems
+                    .filter(menuItem => menuItem.language === currentLanguage)
+                    .map(menuItem => (
+                        <NavItem key={menuItem.title}>
+                            <StyledNavLink onClick={toggleNavOpen} to={removeTrailingSlash(menuItem.link)}>
+                                {menuItem.title}
+                            </StyledNavLink>
+                        </NavItem>
+                    ))}
                 <NavItem>
                     <DarkModeToggle aria-label="Toggle Dark Theme" onClick={toggleDarkMode} isDarkMode={isDarkMode} />
                 </NavItem>
-
-                {site.languages.langs.map((item: string) => (
-                    <NavItem key={item}>
-                        <NavLink partiallyActive={true} to={'/' + item.toLocaleLowerCase()}>
-                            {item.toUpperCase().toUpperCase()}
-                        </NavLink>
-                    </NavItem>
-                ))}
+                <NavItem>
+                    <StyledNavSelect
+                        items={availableLanguages.map(item => item.toUpperCase())}
+                        selected={currentLanguage.toUpperCase()}
+                        isDarkMode={isDarkMode}
+                        onClick={onLanguageChange}
+                    />
+                </NavItem>
             </StyledNavbar>
             <NavToggle aria-label="Toggle Nav" onClick={toggleNavOpen} navOpen={navOpen}></NavToggle>
         </>
@@ -103,31 +114,6 @@ export const StyledNavbar = styled.ul<{ isDarkMode?: boolean; navOpen: boolean }
     }
 `
 
-export const MenuItem = {
-    name: 'menuItem',
-    key: 'label',
-    label: 'Menu Item',
-    component: 'group',
-    fields: [
-        { name: 'label', label: 'Label', component: 'text' },
-        { name: 'link', label: 'Path', component: 'text' },
-    ],
-}
-
-export const MenuForm = {
-    label: 'Menu',
-    fields: [
-        {
-            label: 'Menu Items',
-            name: 'rawJson.menuItems',
-            component: 'blocks',
-            templates: {
-                MenuItem,
-            },
-        },
-    ],
-}
-
 export const NavItem = styled.li`
     flex: 0 0 auto;
     display: flex;
@@ -140,11 +126,7 @@ export const NavItem = styled.li`
     }
 `
 
-export const NavLink = styled(({ children, ...styleProps }) => (
-    <Link activeClassName="active" {...styleProps}>
-        <span>{children}</span>
-    </Link>
-))`
+export const StyledNavItemMixin = css`
     flex: 1 0 auto;
     line-height: ${props => props.theme.header.height};
     padding: 0 0.75rem;
@@ -178,7 +160,8 @@ export const NavLink = styled(({ children, ...styleProps }) => (
     &.active {
     }
 
-    span {
+    span,
+    div {
         display: block;
         width: 100%;
     }
@@ -338,12 +321,25 @@ export const NavLink = styled(({ children, ...styleProps }) => (
         `}
 `
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const NavToggle = styled(({ menuOpen, navOpen, ...styleProps }) => {
+const StyledNavLink = styled(({ children, ...styleProps }) => (
+    <NavLink activeClassName="active" {...styleProps}>
+        <span>{children}</span>
+    </NavLink>
+))`
+    ${StyledNavItemMixin};
+`
+
+const StyledNavSelect = styled(({ items, selected, isDarkMode, ...styledProps }) => (
+    <NavSelect items={items} selected={selected} isDarkMode={isDarkMode} {...styledProps} />
+))`
+    ${StyledNavItemMixin};
+`
+
+const NavToggle = styled(({ navOpen, ...styleProps }) => {
     return (
         <button {...styleProps}>
-            <span className="closed">Open Menu</span>
-            <span className="open">Close Menu</span>
+            {navOpen && <MenuOpen />}
+            {!navOpen && <Menu />}
         </button>
     )
 })`
@@ -361,46 +357,45 @@ export const NavToggle = styled(({ menuOpen, navOpen, ...styleProps }) => {
     color: inherit;
     opacity: 0.5;
     overflow: visible;
-    transition: all 150ms ${p => p.theme.easing};
-
-    .open {
-        display: none;
-    }
-    .closed {
-        display: block;
-    }
-
-    &:focus {
-        opacity: 1;
-        text-decoration: underline;
-    }
-
-    &:hover {
-        opacity: 1;
-    }
+    transition: all 150ms ${props => props.theme.easing};
 
     @media (min-width: ${props => props.theme.breakpoints.small}) {
         display: none;
     }
 
-    ${props =>
-        props.navOpen &&
-        css`
-            .open {
-                display: block;
-            }
-            .closed {
-                display: none;
-            }
-        `};
+    svg {
+        position: absolute;
+        top: calc(50% - 0.75rem);
+        left: calc(50% - 0.75rem);
+        width: 1.5rem;
+        height: auto;
+        fill: currentColor;
+        &:first-child {
+            opacity: 0;
+        }
+        &:last-child {
+            opacity: 1;
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        opacity: 1;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
 `
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const DarkModeToggle = styled(({ isDarkMode, ...styleProps }) => {
+const DarkModeToggle = styled(({ isDarkMode, ...styleProps }) => {
     return (
         <button {...styleProps}>
-            <Sun />
-            <Moon />
+            {isDarkMode && <Sun />}
+            {!isDarkMode && <Moon />}
         </button>
     )
 })`
@@ -457,110 +452,4 @@ export const DarkModeToggle = styled(({ isDarkMode, ...styleProps }) => {
     &:hover {
         opacity: 1;
     }
-
-    ${props =>
-        props.theme.isDarkMode &&
-        css`
-            svg {
-                &:first-child {
-                    opacity: 1;
-                    transform: rotate(0deg);
-                }
-                &:last-child {
-                    opacity: 0;
-                    transform: rotate(90deg);
-                }
-            }
-        `};
 `
-
-export const navFragment = graphql`
-    fragment nav on SettingsJson {
-        menuItems {
-            link
-            label
-        }
-    }
-`
-
-export const NavForm = {
-    label: 'Menu',
-    fields: [
-        {
-            label: 'Main Menu',
-            name: 'rawJson.menuItems',
-            component: 'group-list',
-            itemProps: (item: { label: string }): { label: string } => ({
-                label: item.label,
-            }),
-            fields: [
-                {
-                    label: 'Label',
-                    name: 'label',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-                {
-                    label: 'Link',
-                    name: 'link',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-                {
-                    label: 'Sub Menu',
-                    name: 'subMenu',
-                    component: 'group-list',
-                    itemProps: (item: {
-                        key: string
-                        label: string
-                        link: string
-                    }): { key: string; label: string } => ({
-                        key: item.link,
-                        label: item.label,
-                    }),
-                    fields: [
-                        {
-                            label: 'Label',
-                            name: 'label',
-                            component: 'text',
-                        },
-                        {
-                            label: 'Link',
-                            name: 'link',
-                            component: 'text',
-                        },
-                        {
-                            label: 'Sub Menu',
-                            name: 'subMenu',
-                            component: 'group-list',
-                            itemProps: (item: {
-                                key: string
-                                label: string
-                                link: string
-                            }): { key: string; label: string } => ({
-                                key: item.link,
-                                label: item.label,
-                            }),
-                            fields: [
-                                {
-                                    label: 'Label',
-                                    name: 'label',
-                                    component: 'text',
-                                },
-                                {
-                                    label: 'Link',
-                                    name: 'link',
-                                    component: 'text',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    ],
-}

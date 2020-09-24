@@ -1,41 +1,51 @@
-import React, { WeakValidationMap } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'gatsby'
 
-import { Coffee } from 'styled-icons/boxicons-regular'
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
+import Img from 'gatsby-image'
 
 import { Wrapper } from './Style'
-import { Nav } from './Nav'
+import { Navbar } from './navbar/Navbar'
 import { ThemeContext } from './Theme'
+import { MenuItem } from '../plugins/Menu'
+
 import { EditToggle } from './EditToggle'
 
-interface HeaderProps {
-    siteTitle?: string
-    lang: string
-    theme?: any
+type HeaderProps = {
+    currentLanguage: string
+    availableLanguages: string[]
+    location: Location
+    menuItems: MenuItem[]
+    logo: any
 }
 
-export const Header = styled(({ siteTitle, lang, ...styleProps }) => {
-    return (
-        <ThemeContext.Consumer>
-            {({ toggleDarkMode, isDarkMode, theme }) => (
-                <header {...styleProps}>
-                    <HeaderWrapper>
-                        <SiteTitle>
-                            <SiteLink to={'/' + lang}>
-                                <Coffee />
-                                {siteTitle}
-                            </SiteLink>
-                        </SiteTitle>
-                        <Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} lang={lang} />
-                    </HeaderWrapper>
-                    {process.env.NODE_ENV !== 'production' && <EditToggle />}
-                </header>
-            )}
-        </ThemeContext.Consumer>
-    )
-})`
+export const Header = styled(
+    ({ currentLanguage, availableLanguages, location, menuItems, logo, ...styleProps }: HeaderProps) => {
+        const { toggleDarkMode, isDarkMode } = useContext(ThemeContext)
+
+        return (
+            <header {...styleProps}>
+                <HeaderWrapper>
+                    <SiteTitle>
+                        <SiteLink to={'/' + currentLanguage}>
+                            <Img fadeIn={false} fixed={logo.childImageSharp.fixed} />
+                        </SiteLink>
+                    </SiteTitle>
+                    <Navbar
+                        toggleDarkMode={toggleDarkMode}
+                        isDarkMode={isDarkMode}
+                        currentLanguage={currentLanguage}
+                        availableLanguages={availableLanguages}
+                        location={location}
+                        menuItems={menuItems}
+                    />
+                </HeaderWrapper>
+                {process.env.NODE_ENV !== 'production' && <EditToggle />}
+            </header>
+        )
+    },
+)`
     position: absolute;
     z-index: 100;
     width: 100%;
@@ -65,7 +75,7 @@ export const Header = styled(({ siteTitle, lang, ...styleProps }) => {
         `};
 `
 
-export const SiteLink = styled(Link)`
+const SiteLink = styled(Link)`
     position: relative;
     line-height: 3rem;
     display: flex;
@@ -103,7 +113,7 @@ export const SiteLink = styled(Link)`
     }
 `
 
-export const SiteTitle = styled.h1`
+const SiteTitle = styled.h1`
     margin: 0;
     flex: 0 0 auto;
     font-size: 1rem;
@@ -111,7 +121,7 @@ export const SiteTitle = styled.h1`
     display: flex;
 `
 
-export const HeaderWrapper = styled(Wrapper)`
+const HeaderWrapper = styled(Wrapper)`
     display: flex;
     align-self: stretch;
     justify-content: space-between;

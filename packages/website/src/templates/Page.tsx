@@ -9,7 +9,7 @@ import { Image, ImageBlock } from '../blocks/Image'
 import { Content, ContentBlock } from '../blocks/Content'
 
 import { useLocalJsonForm } from 'gatsby-tinacms-json'
-import { InlineForm } from 'react-tinacms-inline'
+//import { InlineForm } from 'react-tinacms-inline'
 import { Form } from 'tinacms'
 
 interface PageProps {
@@ -147,7 +147,7 @@ const PageForm = {
 
 export const pageQuery = graphql`
     query($path: String!) {
-        page: pagesJson(path: { eq: $path }) {
+        page: pagesJson(resolvedPath: { eq: $path }) {
             title
             displayTitle
             hero {

@@ -1,101 +1,69 @@
 import React from 'react'
 
-import { useStaticQuery, graphql } from 'gatsby'
 import styled, { css } from 'styled-components'
-import Helmet from 'react-helmet'
-import slugify from 'react-slugify'
 
-import { createRemarkButton } from 'gatsby-tinacms-remark'
-import { JsonCreatorPlugin } from 'gatsby-tinacms-json'
-import { withPlugin } from 'tinacms'
+import Helmet from 'react-helmet'
+
+import { CookieConsent } from './CookieConsent'
 
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { Theme } from './Theme'
+import { Theme, ThemeContext } from './Theme'
 
-interface MasterLayoutProps {
+import { registerFormPlugins, withPlugin } from '../plugins'
+
+type SiteLayoutProps = {
+    children: React.ReactNode
+    location: Location
     pageContext: {
         lang: string
     }
 }
 
-const MasterLayout: React.FC<MasterLayoutProps> = ({ children, pageContext }) => {
-    const data = useStaticQuery(graphql`
-        query MasterLayoutQuery {
-            site: settingsJson(fileRelativePath: { eq: "/content/settings/site.json" }) {
-                title
-                languages {
-                    defaultLangKey
-                }
-            }
-        }
-    `)
+const SiteLayout: React.FC<SiteLayoutProps> = ({ children, location, pageContext }) => {
+    const { siteData, menuData, footerData, themeData, cookieConsentData } = registerFormPlugins()
 
-    const lang = pageContext.lang || data.site.languages.defaultLangKey
+    const site = siteData.site
+    const menu = menuData.menu
+    const footer = footerData.footer
+    const theme = themeData.theme
+    const cookieConsent = cookieConsentData.cookieconsent
+
+    const currentLanguage = pageContext.lang || site.languages.defaultLanguage
 
     return (
         <>
             <Helmet>
-                <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.1.0/dist/focus-visible.min.js"></script>
             </Helmet>
-            <Theme>
-                <Site>
-                    <Header siteTitle={data.site.title} lang={lang} />
-                    {children}
-                    <Footer />
-                </Site>
+
+            <Theme theme={theme}>
+                <ThemeContext.Consumer>
+                    {({ theme }) => (
+                        <>
+                            <CookieConsent currentLanguage={currentLanguage} settings={cookieConsent} />
+                            <Site>
+                                <Header
+                                    currentLanguage={currentLanguage}
+                                    availableLanguages={site.languages.availableLanguages}
+                                    location={location}
+                                    menuItems={menu.menuItems}
+                                    logo={site.logo}
+                                />
+                                {children}
+                                <Footer title={footer.title} links={footer.links} currentLanguage={currentLanguage} />
+                            </Site>
+                        </>
+                    )}
+                </ThemeContext.Consumer>
             </Theme>
         </>
     )
 }
 
-const CreatePostButton = createRemarkButton({
-    label: 'New Post',
-    filename(form) {
-        const slug = slugify(form.title.toLowerCase())
-        return `content/posts/${slug}.md`
-    },
-    frontmatter(form) {
-        const slug = slugify(form.title.toLowerCase())
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({
-                    title: form.title,
-                    date: new Date(),
-                    type: 'post',
-                    path: `/blog/${slug}`,
-                    draft: true,
-                })
-            }, 1000)
-        })
-    },
-    body({ title }) {
-        return `## ${title}`
-    },
-    fields: [{ name: 'title', label: 'Title', component: 'text', required: true }],
-})
+export default withPlugin(SiteLayout)
 
-const CreatePageButton = new JsonCreatorPlugin({
-    label: 'New Page',
-    filename(form) {
-        const slug = slugify(form.title.toLowerCase())
-        return `content/pages/${slug}.json`
-    },
-    fields: [
-        { name: 'title', label: 'Title', component: 'text' },
-        { name: 'path', label: 'Path', component: 'text' },
-    ],
-    data(form) {
-        return {
-            title: form.title,
-            path: form.path,
-        }
-    },
-})
-
-export default withPlugin(MasterLayout, [CreatePostButton, CreatePageButton])
-
-export const Site = styled.div`
+const Site = styled.div`
     position: relative;
     display: flex;
     min-height: 100vh;

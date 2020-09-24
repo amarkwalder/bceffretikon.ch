@@ -641,6 +641,10 @@ const ButtonStyles = css<{ primary?: string }>`
         `};
 `
 
+export const ButtonDiv = styled.div`
+    ${ButtonStyles}
+`
+
 export const Button = styled.button`
     ${ButtonStyles}
 `

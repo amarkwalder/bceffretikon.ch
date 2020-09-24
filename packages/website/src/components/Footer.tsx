@@ -2,17 +2,24 @@ import React from 'react'
 import styled from 'styled-components'
 import { transparentize } from 'polished'
 
-import { Wrapper } from './Style'
+import { Link } from 'gatsby'
 
-export const Footer = styled(({ ...styleProps }) => {
+import { Wrapper } from './Style'
+import { FooterLink } from '../plugins/Footer'
+
+export const Footer = styled(({ title, links, currentLanguage, ...styleProps }) => {
     return (
         <footer {...styleProps}>
             <Wrapper>
-                © {new Date().getFullYear()} – Built with
-                {` `}
-                <a href="https://www.gatsbyjs.org">Gatsby</a> and <a href="https://www.tinacms.org">Tina</a>{' '}
-                <span>by </span>
-                <a href="https://www.forestry.io">Forestry.io</a>
+                {title}
+                {links
+                    .filter((footerLink: FooterLink) => footerLink.language === currentLanguage)
+                    .map((footerLink: FooterLink, index: number, arr: any[]) => (
+                        <span key={'footer-' + index}>
+                            {' - '}
+                            <Link to={footerLink.link}>{footerLink.title}</Link>
+                        </span>
+                    ))}
             </Wrapper>
         </footer>
     )

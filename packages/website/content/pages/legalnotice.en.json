@@ -1,7 +1,7 @@
 {
-  "title": "Startseite",
-  "path": "/de",
-  "lang": "de",
+  "title": "Legal Notice",
+  "path": "/en/legalnotice",
+  "lang": "en",
   "blocks": [
     {
       "_template": "ContentBlock",
@@ -10,24 +10,9 @@
     }
   ],
   "hero": {
-    "headline": "Willkommen beim Badminton Club Effretikon",
-    "textline": "Der Club mit Tradition",
-    "ctas": [
-      {
-        "label": "Blog lesen",
-        "link": "/de/blog",
-        "primary": true,
-        "arrow": true
-      },
-      {
-        "label": "Kontakt",
-        "link": "/de/contact",
-        "arrow": false,
-        "primary": false
-      }
-    ],
-    "image": "../images/badminton-racket.jpg",
-    "large": true
+    "headline": "Legal Notice",
+    "image": "../images/badminton-net.jpg",
+    "large": false
   },
   "displayTitle": false
 }

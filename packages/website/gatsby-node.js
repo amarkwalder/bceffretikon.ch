@@ -1,7 +1,22 @@
 const path = require(`path`)
-const { GraphQLBoolean } = require('gatsby/graphql')
+const { GraphQLBoolean, GraphQLString } = require('gatsby/graphql')
+const site = require('./content/settings/site.json')
 
 exports.setFieldsOnGraphQLNodeType = ({ type }) => {
+    if ('PagesJson' === type.name) {
+        return {
+            resolvedPath: {
+                type: [GraphQLString],
+                resolve: ({ path, alias }) => {
+                    if (!alias) {
+                        return [path]
+                    }
+                    return [path, alias]
+                },
+            },
+        }
+    }
+
     // if the node is a markdown file, add the `published` field
     if ('MarkdownRemark' === type.name) {
         return {
@@ -98,17 +113,6 @@ exports.onCreateNode = ({ node, actions, createNodeId, createContentDigest }) =>
     }
 }
 
-exports.onCreatePage = async ({ page, actions }) => {
-    const { createPage, deletePage } = actions
-    if (page.path.match(/^\/[a-z]{2}\/404\/$/)) {
-        const oldPage = { ...page }
-        const langCode = page.path.split(`/`)[1]
-        page.matchPath = `/${langCode}/*`
-        deletePage(oldPage)
-        createPage(page)
-    }
-}
-
 exports.createPages = async ({ actions, graphql, reporter }) => {
     const { createPage } = actions
 
@@ -158,6 +162,18 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
                 lang: node.lang,
             },
         }
+
+        if (page.path.match(/^\/[a-z]{2}\/404$/)) {
+            const langCode = page.path.split(`/`)[1]
+            if (langCode === site.languages.defaultLanguage) {
+                var default404Page = { ...page }
+                default404Page.path = `/404`
+                default404Page.matchPath = `/*`
+                createPage(default404Page)
+            }
+            page.matchPath = `/${langCode}/*`
+        }
+
         createPage(page)
     })
 
