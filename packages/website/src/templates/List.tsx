@@ -1,100 +1,26 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
-import { useLocalJsonForm } from 'gatsby-tinacms-json'
+import { useJsonForm, useLocalJsonForm } from 'gatsby-tinacms-json'
 import { Link } from 'gatsby'
 
 import { PageLayout } from '../components/PageLayout'
 import { Paper, Meta, MetaSpan, MetaActions, DraftBadge } from '../components/Style'
-import { ListAuthors, AuthorsForm } from '../components/Authors'
+import { Authors } from '../components/Authors'
+import { PageSettings, PageForm, PageFormWithoutSections } from './Page'
+import { AuthorSettings, AuthorsForm } from '../plugins/Authors'
+import { PostSettings } from './Post'
+import { usePlugin } from 'tinacms'
 
-interface ListProps {
-    data: any
-    pageContext: any
-}
+// ****************************************************************************
+// * Gatsby - GraphQL (Fragment / Page Query)
+// ****************************************************************************
 
-export const List: React.FC<ListProps> = ({ data, pageContext }) => {
-    const [page] = useLocalJsonForm(data.page, ListForm)
-    const [authors] = useLocalJsonForm(data.authors, AuthorsForm)
-
-    const { slug, limit, skip, numPages, currentPage } = pageContext
-    const isFirst = currentPage === 1
-    const isLast = currentPage === numPages
-    const prevPage = currentPage - 1 === 1 ? slug : slug + '/' + (currentPage - 1).toString()
-    const nextPage = slug + '/' + (currentPage + 1).toString()
-    page.title = isFirst ? page.title : page.title + ' - ' + currentPage
-
-    return (
-        <PageLayout page={page}>
-            <>
-                {data.posts &&
-                    data.posts.edges.map((item: any) => {
-                        return (
-                            <Paper article key={item.node.id}>
-                                {item.node.frontmatter.draft && <DraftBadge>Draft</DraftBadge>}
-                                <h2>
-                                    <Link to={item.node.frontmatter.path}>{item.node.frontmatter.title}</Link>
-                                </h2>
-                                <p>{item.node.excerpt}</p>
-                                <Meta>
-                                    <MetaSpan>{item.node.frontmatter.date}</MetaSpan>
-                                    {item.node.frontmatter.authors && (
-                                        <MetaSpan>
-                                            <em>By</em>&nbsp;
-                                            <ListAuthors authorIDs={item.node.frontmatter.authors} />
-                                        </MetaSpan>
-                                    )}
-                                    <MetaActions>
-                                        <Link to={item.node.frontmatter.path}>Read Article →</Link>
-                                    </MetaActions>
-                                </Meta>
-                            </Paper>
-                        )
-                    })}
-                <ListNav>
-                    {!isFirst && (
-                        <Link to={prevPage} rel="prev">
-                            ← Newer
-                        </Link>
-                    )}
-                    {!isLast && (
-                        <Link to={nextPage} rel="next">
-                            Older →
-                        </Link>
-                    )}
-                </ListNav>
-            </>
-        </PageLayout>
-    )
-}
-
-export default List
-
-export const pageQuery = graphql`
+export const PageQuery = graphql`
     query($listType: String!, $slug: String!, $skip: Int!, $limit: Int!) {
         page: pagesJson(path: { eq: $slug }) {
-            path
-            title
-            hero {
-                headline
-                textline
-                large
-                overlay
-                ctas {
-                    label
-                    link
-                    primary
-                    arrow
-                }
-                image {
-                    childImageSharp {
-                        fluid(quality: 70, maxWidth: 1920) {
-                            ...GatsbyImageSharpFluid_withWebp
-                        }
-                    }
-                }
-            }
-            listType
+            ...Page
+
             rawJson
             fileRelativePath
         }
@@ -106,26 +32,113 @@ export const pageQuery = graphql`
         ) {
             edges {
                 node {
-                    id
-                    excerpt
-                    frontmatter {
-                        date(formatString: "MMMM DD, YYYY")
-                        path
-                        title
-                        draft
-                        authors
-                    }
+                    ...Post
                 }
             }
         }
         authors: settingsJson(fileRelativePath: { eq: "/content/settings/authors.json" }) {
-            ...authors
+            ...Authors
 
             rawJson
             fileRelativePath
         }
     }
 `
+
+// ****************************************************************************
+// * Types
+// ****************************************************************************
+
+export type ListSettings = {
+    page: PageSettings
+    posts: {
+        edges: {
+            node: PostSettings
+        }[]
+    }
+    authors: AuthorSettings
+}
+
+export type ListProps = {
+    data: ListSettings
+    pageContext: any
+}
+
+// ****************************************************************************
+// * React Component
+// ****************************************************************************
+
+export const List: React.FC<ListProps> = ({ data, pageContext }) => {
+    const { page, posts, authors } = data
+
+    const [, pageForm] = useJsonForm(page as any, PageFormWithoutSections)
+    if (pageForm) usePlugin(pageForm)
+
+    const { slug, numPages, currentPage } = pageContext
+    const isFirst = currentPage === 1
+    const isLast = currentPage === numPages
+    const prevPage = currentPage - 1 === 1 ? slug : slug + '/' + (currentPage - 1).toString()
+    const nextPage = slug + '/' + (currentPage + 1).toString()
+
+    page.title = isFirst ? page.title : page.title + ' - ' + currentPage
+
+    const Post: React.FC<{ post: PostSettings; authors: AuthorSettings }> = ({ post }) => {
+        return (
+            <Paper article key={post.id}>
+                {post.frontmatter.draft && <DraftBadge>Draft</DraftBadge>}
+                <h2>
+                    <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
+                </h2>
+                <p>{post.excerpt}</p>
+                <Meta>
+                    <MetaSpan>{post.frontmatter.date}</MetaSpan>
+                    {post.frontmatter.authors && (
+                        <MetaSpan>
+                            <em>By</em>&nbsp;
+                            <Authors authorIDs={post.frontmatter.authors} settings={authors} />
+                        </MetaSpan>
+                    )}
+                    <MetaActions>
+                        <Link to={post.frontmatter.path}>Read Article →</Link>
+                    </MetaActions>
+                </Meta>
+            </Paper>
+        )
+    }
+
+    const PrevPage = () => {
+        if (isFirst) return <></>
+        return (
+            <Link to={prevPage} rel="prev">
+                ← Newer
+            </Link>
+        )
+    }
+
+    const NextPage = () => {
+        if (isLast) return <></>
+        return (
+            <Link to={nextPage} rel="next">
+                Older →
+            </Link>
+        )
+    }
+
+    return (
+        <PageLayout page={page}>
+            <>
+                {posts &&
+                    posts.edges
+                        .filter(item => item.node.frontmatter.lang === page.lang)
+                        .map((item, index) => <Post key={'post-' + index} post={item.node} authors={authors} />)}
+                <ListNav>
+                    <PrevPage />
+                    <NextPage />
+                </ListNav>
+            </>
+        </PageLayout>
+    )
+}
 
 export const ListNav = styled.div`
     display: flex;
@@ -138,77 +151,4 @@ export const ListNav = styled.div`
     }
 `
 
-const ListForm = {
-    label: 'Page',
-    fields: [
-        {
-            label: 'Title',
-            name: 'rawJson.title',
-            component: 'text',
-        },
-        {
-            label: 'Hero',
-            name: 'rawJson.hero',
-            component: 'group',
-            fields: [
-                {
-                    label: 'Headline',
-                    name: 'headline',
-                    component: 'text',
-                },
-                {
-                    label: 'Textline',
-                    name: 'textline',
-                    component: 'text',
-                },
-                {
-                    label: 'Image',
-                    name: 'image',
-                    component: 'image',
-                    parse: (filename: string) => `../images/${filename}`,
-                    uploadDir: () => `/content/images/`,
-                    previewSrc: (formValues: any) => {
-                        if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image) return ''
-                        return formValues.jsonNode.hero.image.childImageSharp.fluid.src
-                    },
-                },
-                {
-                    label: 'Actions',
-                    name: 'ctas',
-                    component: 'group-list',
-                    itemProps: (item: any) => ({
-                        key: item.link,
-                        label: item.label,
-                    }),
-                    fields: [
-                        {
-                            label: 'Label',
-                            name: 'label',
-                            component: 'text',
-                        },
-                        {
-                            label: 'Link',
-                            name: 'link',
-                            component: 'text',
-                        },
-                        {
-                            label: 'Primary',
-                            name: 'primary',
-                            component: 'toggle',
-                        },
-                        {
-                            label: 'Arrow',
-                            name: 'arrow',
-                            component: 'toggle',
-                        },
-                    ],
-                },
-                {
-                    label: 'Large',
-                    name: 'large',
-                    component: 'toggle',
-                },
-            ],
-        },
-    ],
-}
+export default List

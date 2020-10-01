@@ -1,6 +1,7 @@
 ---
 title: Vidit tum quis meoque
-path: /blog/vidit-tum
+path: /en/blog/vidit-tum
+lang: en
 date: '2019-01-06'
 type: post
 draft: true

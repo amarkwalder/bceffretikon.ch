@@ -8,24 +8,20 @@ import { Wrapper, Main } from './Style'
 import { ThemeContext } from './Theme'
 
 import merge from 'lodash.merge'
+import { PageSettings } from '../templates/Page'
+import { PostSettings } from '../templates/Post'
 
 type PageLayoutProps = {
-    page: {
-        title?: string
-        hero?: unknown
-        frontmatter?: {
-            title?: string
-            hero?: unknown
-        }
-    }
+    page?: PageSettings
+    post?: PostSettings
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({ page, children }) => {
+export const PageLayout: React.FC<PageLayoutProps> = ({ page, post, children }) => {
     const { theme } = useContext(ThemeContext)
 
-    const pageTitle = page?.title || page?.frontmatter?.title
+    const pageTitle = page?.title || post?.frontmatter?.title
 
-    const pageHero = page?.frontmatter?.hero || page?.hero
+    const pageHero = page?.hero || post?.frontmatter?.hero
     const hero = pageHero && theme ? merge({}, theme.hero, removeNull(pageHero)) : theme?.hero
 
     return (

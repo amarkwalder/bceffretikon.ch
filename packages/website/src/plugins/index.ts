@@ -6,6 +6,8 @@ import { useMenuQuery, MenuForm } from './Menu'
 import { useFooterQuery, FooterForm } from './Footer'
 import { useThemeQuery, ThemeForm } from './Theme'
 import { useCookieConsentQuery, CookieConsentForm } from './CookieConsent'
+import { useAuthorsQuery, AuthorsForm } from './Authors'
+import { useTranslationsQuery, TranslationsForm } from './Translations'
 
 export const registerFormPlugins = () => {
     const useGlobalForm = (data: any, formDef: any) => {
@@ -27,6 +29,12 @@ export const registerFormPlugins = () => {
 
     const cookieConsentData = useCookieConsentQuery()
     useGlobalForm(cookieConsentData.cookieconsent, CookieConsentForm)
+
+    const authorsData = useAuthorsQuery()
+    useGlobalForm(authorsData.authors, AuthorsForm)
+
+    const translationsData = useTranslationsQuery()
+    useGlobalForm(translationsData.translations, TranslationsForm)
 
     return { siteData, menuData, footerData, themeData, cookieConsentData }
 }

@@ -1,9 +1,11 @@
 ---
 title: Artificis restabat ducere
-path: /blog/artificis-restabat
+path: /en/blog/artificis-restabat
+lang: en
 date: '2019-03-06'
 type: post
 ---
+
 ## Da tempore In editus quantum aratro
 
 Lorem markdownum et poterat pascat, sacra ruris orare. Iuno genuit clarae

@@ -1,13 +1,14 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { Block } from '../templates/Page'
 
 interface ContentProps {
-    data: any
-    html: any
+    block: Block
+    html: string
 }
 
-export const Content: React.FC<ContentProps> = ({ data, html }) => {
-    const centered = data.center ? data.center : false
+export const Content: React.FC<ContentProps> = ({ block, html }) => {
+    const centered = block.center ? block.center : false
     return (
         <StyledContent
             center={centered}

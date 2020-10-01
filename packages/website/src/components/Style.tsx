@@ -716,8 +716,8 @@ export const DraftBadge = styled.span`
     color: ${props => props.theme.color.primaryContrast};
     background: ${props => props.theme.color.primary};
     position: absolute;
-    top: 50%;
-    right: 0;
+    top: 0;
+    left: 0;
 `
 
 export const EditButton = styled.button`

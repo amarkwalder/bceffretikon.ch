@@ -1,10 +1,11 @@
 ---
 title: My First Post
-path: /blog/my-first-post
+path: /en/blog/my-first-post
+lang: en
 date: '2019-04-04'
 type: post
 authors:
-  - scott-byrne
+  - amarkwalder
 draft: true
 ---
 

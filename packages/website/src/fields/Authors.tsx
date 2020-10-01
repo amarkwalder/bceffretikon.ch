@@ -4,7 +4,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddIcon, DragIcon, ReorderIcon, TrashIcon } from '@tinacms/icons'
 import { IconButton } from '@tinacms/styles'
 
-interface AuthorsFieldProps {
+type AuthorsFieldProps = {
     input: any
     field: any
     form: any
@@ -34,6 +34,7 @@ export const AuthorsField: React.FC<AuthorsFieldProps> = props => {
                     <AuthorMenuList>
                         {authors.map((author: { id: string; name: string }) => (
                             <AuthorOption
+                                key={author.id}
                                 onClick={() => {
                                     addAuthor(author.id)
                                     setVisible(false)
@@ -53,6 +54,7 @@ export const AuthorsField: React.FC<AuthorsFieldProps> = props => {
                             const author = authors.find((author: { id: string }) => author.id === authorID)
                             return (
                                 <AuthorListItem
+                                    key={index}
                                     author={author}
                                     form={form}
                                     field={field}
@@ -68,7 +70,7 @@ export const AuthorsField: React.FC<AuthorsFieldProps> = props => {
     )
 }
 
-interface AuthorListItemProps {
+type AuthorListItemProps = {
     author: any
     form: any
     field: any

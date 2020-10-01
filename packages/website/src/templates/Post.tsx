@@ -1,32 +1,111 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { Link } from 'gatsby'
-import { DeleteAction, useLocalRemarkForm } from 'gatsby-tinacms-remark'
+import { DeleteAction, useRemarkForm } from 'gatsby-tinacms-remark'
 import { InlineForm, InlineTextField } from 'react-tinacms-inline'
 import { InlineWysiwyg } from 'react-tinacms-editor'
 import ReactMarkdown from 'react-markdown'
 
 import { PageLayout } from '../components/PageLayout'
 import { Paper, Meta, MetaSpan, MetaActions, DraftBadge } from '../components/Style'
-import { EditToggle } from '../components/EditToggle'
-import { ListAuthors } from '../components/Authors'
-import { useAuthors } from '../utils/useAuthors'
-import { Form, useCMS } from 'tinacms'
+import { Authors } from '../components/Authors'
+import { Form, useCMS, usePlugin } from 'tinacms'
 import { RemarkNode } from 'gatsby-tinacms-remark/src/remark-node'
 import { DateFieldPlugin } from 'react-tinacms-date'
+import { Hero } from './Page'
+import { AuthorSettings } from '../plugins/Authors'
 
-interface PostProps {
-    data: any
+// ****************************************************************************
+// * Gatsby - GraphQL (Fragment / Page Query)
+// ****************************************************************************
+
+export const PostFragment = graphql`
+    fragment Post on MarkdownRemark {
+        excerpt(pruneLength: 160)
+        html
+
+        frontmatter {
+            path
+            lang
+            date(formatString: "DD.MM.YYYY")
+            title
+            draft
+            authors
+            hero {
+                large
+                overlay
+                image {
+                    childImageSharp {
+                        fluid(quality: 70, maxWidth: 1920) {
+                            ...GatsbyImageSharpFluid_withWebp
+                        }
+                    }
+                }
+            }
+        }
+    }
+`
+
+export const PostQuery = graphql`
+    query($path: String!) {
+        post: markdownRemark(published: { eq: true }, frontmatter: { path: { eq: $path } }) {
+            ...Post
+
+            id
+            fileRelativePath
+            rawFrontmatter
+            rawMarkdownBody
+        }
+        authorsSettings: settingsJson(fileRelativePath: { eq: "/content/settings/authors.json" }) {
+            ...Authors
+        }
+    }
+`
+
+// ****************************************************************************
+// * Types
+// ****************************************************************************
+
+export type Frontmatter = {
+    path: string
+    lang: string
+    date: string
+    title: string
+    draft: boolean
+    authors: string[]
+    hero: Hero
 }
 
-const Post: React.FC<PostProps> = props => {
-    const authors = useAuthors()
-    const page = props.data.markdownRemark
+export type PostSettings = {
+    id: string
+    fileRelativePath: string
+    rawFrontmatter: any
+    rawMarkdownBody: string
+
+    excerpt: string
+    html: string
+
+    frontmatter: Frontmatter
+}
+
+export type PostProps = {
+    data: {
+        post: PostSettings
+        authorsSettings: AuthorSettings
+    }
+}
+
+// ****************************************************************************
+// * React Component incl. Tina CMS - Form Definition
+// ****************************************************************************
+
+const Post: React.FC<PostProps> = ({ data }) => {
+    const { post, authorsSettings } = data
 
     const cms = useCMS()
     cms.plugins.add(DateFieldPlugin)
 
-    const formOptions = {
+    const PostForm = {
         actions: [DeleteAction],
         fields: [
             {
@@ -38,7 +117,7 @@ const Post: React.FC<PostProps> = props => {
                 label: 'Authors',
                 name: 'rawFrontmatter.authors',
                 component: 'authors',
-                authors: authors,
+                authors: authorsSettings.authors,
             },
             {
                 name: 'rawFrontmatter.draft',
@@ -66,22 +145,25 @@ const Post: React.FC<PostProps> = props => {
         ],
     }
 
-    const [data, form] = useLocalRemarkForm(page, formOptions) as [RemarkNode, Form]
+    const [, form] = useRemarkForm(post as any, PostForm) as [RemarkNode, Form]
+    if (form) usePlugin(form)
 
     return (
         <InlineForm form={form}>
-            <PageLayout page={data}>
+            <PageLayout post={post}>
                 <Paper>
                     <Meta>
-                        <MetaSpan>{data.frontmatter.date}</MetaSpan>
-                        {data.frontmatter.authors && data.frontmatter.authors.length > 0 && (
-                            <MetaSpan>
-                                <em>By</em>&nbsp;
-                                <ListAuthors authorIDs={data.frontmatter.authors} />
-                            </MetaSpan>
-                        )}
+                        <MetaSpan>{post?.frontmatter?.date || ''}</MetaSpan>
+                        {post?.frontmatter?.authors &&
+                            post?.frontmatter?.authors &&
+                            post?.frontmatter?.authors.length > 0 && (
+                                <MetaSpan>
+                                    <em>By</em>&nbsp;
+                                    <Authors authorIDs={post.frontmatter.authors} settings={authorsSettings} />
+                                </MetaSpan>
+                            )}
                         <MetaActions>
-                            <Link to="/blog">← Back to Blog</Link>
+                            <Link to={'/' + post.frontmatter.lang + '/blog'}>← Back to Blog</Link>
                         </MetaActions>
                     </Meta>
                     <h1>
@@ -89,10 +171,9 @@ const Post: React.FC<PostProps> = props => {
                     </h1>
                     <hr />
                     <InlineWysiwyg name="rawMarkdownBody" format="markdown">
-                        <ReactMarkdown source={data.rawMarkdownBody} />
+                        <ReactMarkdown source={post?.rawMarkdownBody || ''} />
                     </InlineWysiwyg>
-                    {data.frontmatter.draft && <DraftBadge>Draft</DraftBadge>}
-                    {process.env.NODE_ENV !== 'production' && <EditToggle />}
+                    {post?.frontmatter?.draft && <DraftBadge>Draft</DraftBadge>}
                 </Paper>
             </PageLayout>
         </InlineForm>
@@ -100,39 +181,3 @@ const Post: React.FC<PostProps> = props => {
 }
 
 export default Post
-
-export const postQuery = graphql`
-    query($path: String!) {
-        markdownRemark(published: { eq: true }, frontmatter: { path: { eq: $path } }) {
-            id
-            excerpt(pruneLength: 160)
-            html
-
-            frontmatter {
-                path
-                date(formatString: "MMMM DD, YYYY")
-                title
-                draft
-                authors
-                hero {
-                    large
-                    overlay
-                    image {
-                        childImageSharp {
-                            fluid(quality: 70, maxWidth: 1920) {
-                                ...GatsbyImageSharpFluid_withWebp
-                            }
-                        }
-                    }
-                }
-            }
-
-            fileRelativePath
-            rawFrontmatter
-            rawMarkdownBody
-        }
-        settingsJson(fileRelativePath: { eq: "/content/settings/authors.json" }) {
-            ...authors
-        }
-    }
-`

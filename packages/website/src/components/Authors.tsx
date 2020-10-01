@@ -1,15 +1,19 @@
 import React from 'react'
 
-import { useAuthors } from '../utils/useAuthors'
+import { Author, AuthorSettings } from '../plugins/Authors'
 
-interface ListAuthorsProps {
+type AuthorsProps = {
     authorIDs: string[]
+    settings: AuthorSettings
 }
 
-export const ListAuthors: React.FC<ListAuthorsProps> = ({ authorIDs }) => {
-    const authors = useAuthors().filter(author => authorIDs.find(id => id === author.id))
+export const Authors: React.FC<AuthorsProps> = ({ authorIDs, settings }) => {
+    const allAuthors = settings.authors
+    const authors = authorIDs
+        .map(id => allAuthors.find(author => id === author.id))
+        .filter(author => author !== undefined) as Author[]
 
-    const authorList = authors.map((author, index) => {
+    const authorList = authors.map((author: Author, index: number) => {
         if (authors.length === index + 1) {
             return author.name
         } else {
@@ -17,52 +21,7 @@ export const ListAuthors: React.FC<ListAuthorsProps> = ({ authorIDs }) => {
         }
     })
 
-    return <>{authorList.length > 0 && authorList[0]}</>
+    return <>{authorList.length > 0 && authorList}</>
 }
 
-export const AuthorsForm = {
-    label: 'Authors',
-    fields: [
-        {
-            label: 'Authors',
-            name: 'rawJson.authors',
-            component: 'group-list',
-            itemProps: (item: { id: string; name: string }): { key: string; label: string } => ({
-                key: item.id,
-                label: item.name,
-            }),
-            defaultItem: (): { name: string; id: string; email: string; link: string } => ({
-                name: 'New Author',
-                id: Math.random().toString(36).substr(2, 9),
-                email: '',
-                link: '',
-            }),
-            fields: [
-                {
-                    label: 'Name',
-                    name: 'name',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-                {
-                    label: 'Email',
-                    name: 'email',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-                {
-                    label: 'Link',
-                    name: 'link',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-            ],
-        },
-    ],
-}
+export default Authors

@@ -2,17 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
 import get from 'lodash.get'
+import { Block } from '../templates/Page'
 
 interface ImageProps {
-    data: any;
+    block: Block
 }
 
-export const Image: React.FC<ImageProps> = ({ data }) => {
+export const Image: React.FC<ImageProps> = ({ block }) => {
     return (
-        data.image &&
-        data.image.childImageSharp && (
+        block.image &&
+        block.image.childImageSharp && (
             <ImageWrapper>
-                <Img fluid={data.image.childImageSharp.fluid} />
+                <Img fluid={block.image.childImageSharp.fluid} />
             </ImageWrapper>
         )
     )
@@ -34,9 +35,9 @@ export const ImageBlock = {
             label: 'Image',
             name: 'image',
             component: 'image',
-            parse: filename => `../images/${filename}`,
+            parse: (filename: string) => `../images/${filename}`,
             uploadDir: () => `/content/images/`,
-            previewSrc: (formValues, fieldProps) => {
+            previewSrc: (formValues: any, fieldProps: any) => {
                 const pathName = fieldProps.input.name.replace('rawJson', 'jsonNode')
                 const imageNode = get(formValues, pathName)
                 if (!imageNode || !imageNode.childImageSharp) return ''

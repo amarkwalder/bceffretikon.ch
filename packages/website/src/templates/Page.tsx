@@ -8,41 +8,276 @@ import { Title, TitleBlock } from '../blocks/Title'
 import { Image, ImageBlock } from '../blocks/Image'
 import { Content, ContentBlock } from '../blocks/Content'
 
-import { useLocalJsonForm } from 'gatsby-tinacms-json'
+import { usePlugin } from 'tinacms'
+import { useJsonForm } from 'gatsby-tinacms-json'
+
 //import { InlineForm } from 'react-tinacms-inline'
-import { Form } from 'tinacms'
 
-interface PageProps {
-    data: any
+// ****************************************************************************
+// * Gatsby - GraphQL (Fragment / Page Query)
+// ****************************************************************************
+
+export const PageFragment = graphql`
+    fragment Page on PagesJson {
+        path
+        lang
+        title
+        displayTitle
+        listType
+        hero {
+            headline
+            textline
+            large
+            overlay
+            image {
+                childImageSharp {
+                    fluid(quality: 70, maxWidth: 1920) {
+                        ...GatsbyImageSharpFluid_withWebp
+                    }
+                }
+            }
+            ctas {
+                label
+                link
+                primary
+                arrow
+            }
+        }
+        blocks {
+            _template
+            content
+            name
+            title
+            underline
+            center
+            recipient
+            fields {
+                label
+                inputType
+                autocomplete
+            }
+            image {
+                childImageSharp {
+                    fluid(quality: 70, maxWidth: 1920) {
+                        ...GatsbyImageSharpFluid_withWebp
+                    }
+                }
+            }
+        }
+        childrenPagesJsonBlockMarkdown {
+            childMarkdownRemark {
+                html
+            }
+        }
+    }
+`
+
+export const PageQuery = graphql`
+    query($path: String!) {
+        page: pagesJson(resolvedPath: { eq: $path }) {
+            ...Page
+
+            rawJson
+            fileRelativePath
+        }
+    }
+`
+
+// ****************************************************************************
+// * Types
+// ****************************************************************************
+
+export type Ctas = {
+    label?: string
+    link?: string
+    primary?: boolean
+    arrow?: boolean
 }
 
-interface Block {
-    _template: string
-    content: string
+export type Hero = {
+    headline?: string
+    textline?: string
+    large?: boolean
+    overlay?: boolean
+    image?: any
+    ctas?: Ctas[]
 }
+
+export type Field = {
+    label?: string
+    inputType?: string
+    autocomplete?: string
+}
+
+export type Block = {
+    _template?: string
+    content?: string
+    name?: string
+    title?: string
+    underline?: boolean
+    center?: boolean
+    recipient?: string
+    fields?: Field[]
+    image?: any
+}
+
+export type ChildMarkdownRemark = {
+    html: string
+}
+
+export type ChildrenPagesJsonBlockMarkdown = {
+    childMarkdownRemark: ChildMarkdownRemark
+}
+
+export type PageSettings = {
+    id: string
+    rawJson: string
+    fileRelativePath: string
+
+    path: string
+    lang: string
+    title: string
+    displayTitle: string
+    hero: Hero
+    blocks: Block[]
+    childrenPagesJsonBlockMarkdown: ChildrenPagesJsonBlockMarkdown[]
+}
+
+export type PageProps = {
+    data: {
+        page: PageSettings
+    }
+}
+
+// ****************************************************************************
+// * Tina CMS - Form Definition
+// ****************************************************************************
+
+const PageFormGeneralFields = [
+    {
+        label: 'Title',
+        name: 'rawJson.title',
+        component: 'text',
+    },
+    {
+        label: 'Hero',
+        name: 'rawJson.hero',
+        component: 'group',
+        fields: [
+            {
+                label: 'Headline',
+                name: 'headline',
+                component: 'text',
+            },
+            {
+                label: 'Textline',
+                name: 'textline',
+                component: 'text',
+            },
+            {
+                label: 'Image',
+                name: 'image',
+                component: 'image',
+                parse: (filename: string) => `../images/${filename}`,
+                uploadDir: () => `/content/images/`,
+                previewSrc: (formValues: any, input: any) => {
+                    if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image) return ''
+                    return formValues.jsonNode.hero.image.childImageSharp.fluid.src
+                },
+            },
+            {
+                label: 'Actions',
+                name: 'ctas',
+                component: 'group-list',
+                itemProps: (item: any) => ({
+                    key: item.link,
+                    label: item.label,
+                }),
+                fields: [
+                    {
+                        label: 'Label',
+                        name: 'label',
+                        component: 'text',
+                    },
+                    {
+                        label: 'Link',
+                        name: 'link',
+                        component: 'text',
+                    },
+                    {
+                        label: 'Primary',
+                        name: 'primary',
+                        component: 'toggle',
+                    },
+                    {
+                        label: 'Arrow',
+                        name: 'arrow',
+                        component: 'toggle',
+                    },
+                ],
+            },
+            {
+                label: 'Large',
+                name: 'large',
+                component: 'toggle',
+            },
+        ],
+    },
+]
+
+const PageFormSections = [
+    {
+        label: 'Page Sections',
+        name: 'rawJson.blocks',
+        component: 'blocks',
+        templates: {
+            TitleBlock,
+            ImageBlock,
+            // FormBlock,
+            ContentBlock,
+        },
+    },
+]
+
+export const PageForm = {
+    label: 'Page',
+    fields: PageFormGeneralFields.concat(PageFormSections),
+}
+
+export const PageFormWithoutSections = {
+    label: 'Page',
+    fields: PageFormGeneralFields,
+}
+
+// ****************************************************************************
+// * React Component
+// ****************************************************************************
 
 export const Page: React.FC<PageProps> = ({ data }) => {
-    const [page, form] = useLocalJsonForm(data.page, PageForm) as [any, Form]
+    const { page } = data
+
+    const [, form] = useJsonForm(page as any, PageForm)
+    if (form) usePlugin(form)
     const blocks: Block[] = page?.blocks ? page.blocks : []
 
     return (
         // <InlineForm form={form}>
         <PageLayout page={page}>
             <Paper>
-                {blocks.map(({ _template, ...data }, i: number) => {
-                    switch (_template) {
+                {blocks.map((block, i) => {
+                    switch (block._template) {
                         case 'TitleBlock':
-                            return <Title key={'block-' + i} page={page} data={data} />
+                            return <Title key={'block-' + i} page={page} block={block} />
                         case 'ImageBlock':
-                            return <Image key={'block-' + i} data={data} />
+                            return <Image key={'block-' + i} block={block} />
                         // case 'FormBlock':
                         //     return <Form form={data} />
                         case 'ContentBlock':
-                            if (data.content && page.childrenPagesJsonBlockMarkdown[i])
+                            if (block.content && page.childrenPagesJsonBlockMarkdown[i])
                                 return (
                                     <Content
                                         key={'block-' + i}
-                                        data={data}
+                                        block={block}
                                         html={page.childrenPagesJsonBlockMarkdown[i].childMarkdownRemark.html}
                                     />
                                 )
@@ -58,146 +293,3 @@ export const Page: React.FC<PageProps> = ({ data }) => {
 }
 
 export default Page
-
-const PageForm = {
-    label: 'Page',
-    fields: [
-        {
-            label: 'Title',
-            name: 'rawJson.title',
-            component: 'text',
-        },
-        {
-            label: 'Hero',
-            name: 'rawJson.hero',
-            component: 'group',
-            fields: [
-                {
-                    label: 'Headline',
-                    name: 'headline',
-                    component: 'text',
-                },
-                {
-                    label: 'Textline',
-                    name: 'textline',
-                    component: 'text',
-                },
-                {
-                    label: 'Image',
-                    name: 'image',
-                    component: 'image',
-                    parse: (filename: string) => `../images/${filename}`,
-                    uploadDir: () => `/content/images/`,
-                    previewSrc: (formValues: any, input: any) => {
-                        if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image) return ''
-                        return formValues.jsonNode.hero.image.childImageSharp.fluid.src
-                    },
-                },
-                {
-                    label: 'Actions',
-                    name: 'ctas',
-                    component: 'group-list',
-                    itemProps: (item: any) => ({
-                        key: item.link,
-                        label: item.label,
-                    }),
-                    fields: [
-                        {
-                            label: 'Label',
-                            name: 'label',
-                            component: 'text',
-                        },
-                        {
-                            label: 'Link',
-                            name: 'link',
-                            component: 'text',
-                        },
-                        {
-                            label: 'Primary',
-                            name: 'primary',
-                            component: 'toggle',
-                        },
-                        {
-                            label: 'Arrow',
-                            name: 'arrow',
-                            component: 'toggle',
-                        },
-                    ],
-                },
-                {
-                    label: 'Large',
-                    name: 'large',
-                    component: 'toggle',
-                },
-            ],
-        },
-        {
-            label: 'Page Sections',
-            name: 'rawJson.blocks',
-            component: 'blocks',
-            templates: {
-                TitleBlock,
-                ImageBlock,
-                // FormBlock,
-                ContentBlock,
-            },
-        },
-    ],
-}
-
-export const pageQuery = graphql`
-    query($path: String!) {
-        page: pagesJson(resolvedPath: { eq: $path }) {
-            title
-            displayTitle
-            hero {
-                headline
-                textline
-                large
-                overlay
-                image {
-                    childImageSharp {
-                        fluid(quality: 70, maxWidth: 1920) {
-                            ...GatsbyImageSharpFluid_withWebp
-                        }
-                    }
-                }
-                ctas {
-                    label
-                    link
-                    primary
-                    arrow
-                }
-            }
-            blocks {
-                _template
-                content
-                name
-                title
-                underline
-                center
-                recipient
-                fields {
-                    label
-                    inputType
-                    autocomplete
-                }
-                image {
-                    childImageSharp {
-                        fluid(quality: 70, maxWidth: 1920) {
-                            ...GatsbyImageSharpFluid_withWebp
-                        }
-                    }
-                }
-            }
-            childrenPagesJsonBlockMarkdown {
-                childMarkdownRemark {
-                    html
-                }
-            }
-
-            rawJson
-            fileRelativePath
-        }
-    }
-`

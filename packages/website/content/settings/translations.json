@@ -1,0 +1,15 @@
+{
+  "translations": [
+    {
+      "code": "WELCOME",
+      "text": "Hallo",
+      "lang": "de",
+      "language": "de"
+    },
+    {
+      "code": "WELCOM",
+      "language": "en",
+      "text": "Hello"
+    }
+  ]
+}

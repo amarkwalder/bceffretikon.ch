@@ -1,19 +1,20 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { Block, PageSettings } from '../templates/Page'
 
 interface TitleProps {
-    page: any
-    data: any
+    page: PageSettings
+    block: Block
 }
 
-export const Title: React.FC<TitleProps> = ({ page, data }) => {
-    const centered = data.center ? data.center : false
+export const Title: React.FC<TitleProps> = ({ page, block }) => {
+    const centered = block?.center || false
     return (
         <>
             <StyledTitle center={centered}>
-                {data && data.title ? data.title : page.title ? page.title : ''}
+                {block && block.title ? block.title : page.title ? page.title : ''}
             </StyledTitle>
-            {data && data.underline && <Hr center={centered} />}
+            {block && block.underline && <Hr center={centered} />}
         </>
     )
 }

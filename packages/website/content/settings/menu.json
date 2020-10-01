@@ -7,6 +7,12 @@
       "language": "en"
     },
     {
+      "label": "Blog (EN)",
+      "title": "Blog",
+      "language": "en",
+      "link": "/en/blog"
+    },
+    {
       "label": "Training (EN)",
       "link": "/en/training",
       "title": "Training",
@@ -35,6 +41,12 @@
       "link": "/de",
       "title": "Startseite",
       "language": "de"
+    },
+    {
+      "label": "Blog (DE)",
+      "title": "Blog",
+      "language": "de",
+      "link": "/de/blog"
     },
     {
       "label": "Training (DE)",
