@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Paper } from '../components/Style'
 import { PageLayout } from '../components/PageLayout'
 
-import { Form, FormBlock } from '../blocks/form'
+import { Form, FormBlock } from '../blocks/Form'
 import { Title, TitleBlock } from '../blocks/Title'
 import { Image, ImageBlock } from '../blocks/Image'
 import { Content, ContentBlock } from '../blocks/Content'
