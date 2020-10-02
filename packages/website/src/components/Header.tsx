@@ -6,7 +6,7 @@ import { transparentize } from 'polished'
 import Img, { GatsbyImageFixedProps } from 'gatsby-image'
 
 import { Wrapper } from './Style'
-import { Navbar } from './navbar/Navbar'
+import { Navbar } from './Navbar'
 import { ThemeContext } from './Theme'
 import { MenuItem } from '../plugins/Menu'
 

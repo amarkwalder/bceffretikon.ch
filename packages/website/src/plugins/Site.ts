@@ -2,6 +2,7 @@ import { useStaticQuery, graphql } from 'gatsby'
 import { createRemarkButton } from 'gatsby-tinacms-remark'
 import { JsonCreatorPlugin } from 'gatsby-tinacms-json'
 import slugify from 'react-slugify'
+import { GatsbyImageFixedProps } from 'gatsby-image'
 
 // ****************************************************************************
 // * Gatsby - GraphQL (Fragment / Static Query)
@@ -41,7 +42,7 @@ export const useSiteQuery = (): SiteQueryData => {
 
 export type SiteSettings = {
     title: string
-    logo: unknown
+    logo: { childImageSharp: GatsbyImageFixedProps }
     description: string
     author: string
 

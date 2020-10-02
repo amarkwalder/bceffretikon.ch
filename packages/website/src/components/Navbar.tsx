@@ -6,14 +6,14 @@ import { Menu, MenuOpen } from 'styled-icons/material-outlined'
 import styled, { css } from 'styled-components'
 import { mix, transparentize } from 'polished'
 
-import { MenuItem } from '../../plugins/Menu'
+import { MenuItem } from '../plugins/Menu'
 
 import { NavLink } from './NavLink'
 import { NavSelect } from './NavSelect'
 
 import { navigate } from 'gatsby'
-import { TranslationContext } from '../Translation'
-import { removeSuffixSlash, removeTrailingSlash } from '../../utils/helpers'
+import { TranslationContext } from './Translation'
+import { removeSuffixSlash, removeTrailingSlash } from '../utils/helpers'
 
 type NavProps = {
     toggleDarkMode?: () => void
@@ -339,7 +339,7 @@ const NavToggle = styled(({ navOpen, ...styleProps }) => {
     )
 })`
     position: relative;
-    padding: 0;
+    padding: 0 10px;
     border: 0;
     background: transparent;
     color: inherit;

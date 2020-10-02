@@ -5,10 +5,6 @@
       "link": "/"
     },
     {
-      "title": "Blog",
-      "link": "/blog"
-    },
-    {
       "link": "/training",
       "title": "Training"
     },

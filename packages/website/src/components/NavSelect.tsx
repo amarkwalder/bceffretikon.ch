@@ -44,7 +44,7 @@ export const NavSelect: React.FC<NavSelectProps> = ({ items, selected, isDarkMod
     return (
         <Select ref={ref} {...styleProps}>
             <Trigger onClick={toggleDropdownOpen}>
-                {selected} {!dropdownOpen ? <LeftArrow size="15" /> : <DownArrow size="15" />}
+                {selected} {!dropdownOpen ? <LeftArrowWrapper size="15" /> : <DownArrowWrapper size="15" />}
             </Trigger>
             <Options open={dropdownOpen}>
                 {items.map(item => (
@@ -60,6 +60,14 @@ export const NavSelect: React.FC<NavSelectProps> = ({ items, selected, isDarkMod
 const Select = styled.div`
     display: block;
     color: inherit;
+`
+
+const LeftArrowWrapper = styled(LeftArrow)`
+    padding-bottom: 1px;
+`
+
+const DownArrowWrapper = styled(DownArrow)`
+    padding-bottom: 1px;
 `
 
 const Trigger = styled.span`
