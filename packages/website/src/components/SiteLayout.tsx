@@ -8,9 +8,10 @@ import { CookieConsent } from './CookieConsent'
 
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { Theme, ThemeContext } from './Theme'
+import { Theme } from './Theme'
 
 import { registerFormPlugins, withPlugin } from '../plugins'
+import { Translation } from './Translation'
 
 type SiteLayoutProps = {
     children: React.ReactNode
@@ -21,43 +22,41 @@ type SiteLayoutProps = {
 }
 
 const SiteLayout: React.FC<SiteLayoutProps> = ({ children, location, pageContext }) => {
-    const { siteData, menuData, footerData, themeData, cookieConsentData } = registerFormPlugins()
+    const { siteData, menuData, footerData, themeData, translationData: translationsData } = registerFormPlugins()
 
     const site = siteData.site
     const menu = menuData.menu
     const footer = footerData.footer
     const theme = themeData.theme
-    const cookieConsent = cookieConsentData.cookieconsent
+    const { defaultLanguage, availableLanguages, translations } = translationsData.translations
 
-    const currentLanguage = pageContext.lang || site.languages.defaultLanguage
+    const currentLanguage = pageContext.lang || defaultLanguage
 
     return (
-        <>
+        <Translation
+            translations={translations}
+            currentLanguage={currentLanguage}
+            defaultLanguage={defaultLanguage}
+            availableLanguages={availableLanguages}
+        >
             <Helmet>
                 <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.1.0/dist/focus-visible.min.js"></script>
             </Helmet>
 
             <Theme theme={theme}>
-                <ThemeContext.Consumer>
-                    {({ theme }) => (
-                        <>
-                            <CookieConsent currentLanguage={currentLanguage} settings={cookieConsent} />
-                            <Site>
-                                <Header
-                                    currentLanguage={currentLanguage}
-                                    availableLanguages={site.languages.availableLanguages}
-                                    location={location}
-                                    menuItems={menu.menuItems}
-                                    logo={site.logo}
-                                />
-                                {children}
-                                <Footer title={footer.title} links={footer.links} currentLanguage={currentLanguage} />
-                            </Site>
-                        </>
-                    )}
-                </ThemeContext.Consumer>
+                <CookieConsent />
+                <Site>
+                    <Header
+                        currentLanguage={currentLanguage}
+                        location={location}
+                        menuItems={menu.menuItems}
+                        logo={site.logo}
+                    />
+                    {children}
+                    <Footer title={footer.title} links={footer.links} currentLanguage={currentLanguage} />
+                </Site>
             </Theme>
-        </>
+        </Translation>
     )
 }
 

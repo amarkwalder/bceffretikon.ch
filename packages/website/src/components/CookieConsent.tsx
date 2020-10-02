@@ -1,25 +1,18 @@
 import React, { useContext } from 'react'
 
-import { CookieConsentSettings } from '../plugins/CookieConsent'
 import { ThemeContext } from './Theme'
 
 import ReactCookieConsent from 'react-cookie-consent'
 import { ButtonDiv } from './Style'
+import { TranslationContext } from './Translation'
 
-type CookieConsentProps = {
-    currentLanguage: string
-    settings: CookieConsentSettings
-}
-
-export const CookieConsent: React.FC<CookieConsentProps> = ({ currentLanguage, settings }) => {
+export const CookieConsent: React.FC = () => {
     const { theme } = useContext(ThemeContext)
+    const { tr } = useContext(TranslationContext)
 
-    const acceptButtonText =
-        settings.acceptButton.filter(item => item.language === currentLanguage)[0]?.title || 'Accept'
-    const declineButtonText =
-        settings.declineButton.filter(item => item.language === currentLanguage)[0]?.title || 'Decline'
-    const consentText =
-        settings.consentText.filter(item => item.language === currentLanguage)[0]?.title || 'This site uses cookies...'
+    const acceptButtonText = tr('COOKIECONSENT.AcceptButton') || '!!Accept'
+    const declineButtonText = tr('COOKIECONSENT.DeclineButton') || '!!Decline'
+    const consentText = tr('COOKIECONSENT.Text') || '!!This site uses cookies ...'
 
     return (
         <ReactCookieConsent

@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
-import { useJsonForm, useLocalJsonForm } from 'gatsby-tinacms-json'
+import { useJsonForm } from 'gatsby-tinacms-json'
 import { Link } from 'gatsby'
 
 import { PageLayout } from '../components/PageLayout'
 import { Paper, Meta, MetaSpan, MetaActions, DraftBadge } from '../components/Style'
 import { Authors } from '../components/Authors'
-import { PageSettings, PageForm, PageFormWithoutSections } from './Page'
-import { AuthorSettings, AuthorsForm } from '../plugins/Authors'
+import { PageSettings, PageFormWithoutSections } from './Page'
+import { AuthorSettings } from '../plugins/Authors'
 import { PostSettings } from './Post'
 import { usePlugin } from 'tinacms'
+import { TranslationContext } from '../components/Translation'
 
 // ****************************************************************************
 // * Gatsby - GraphQL (Fragment / Page Query)
@@ -82,10 +83,12 @@ export const List: React.FC<ListProps> = ({ data, pageContext }) => {
 
     page.title = isFirst ? page.title : page.title + ' - ' + currentPage
 
+    const { tr } = useContext(TranslationContext)
+
     const Post: React.FC<{ post: PostSettings; authors: AuthorSettings }> = ({ post }) => {
         return (
             <Paper article key={post.id}>
-                {post.frontmatter.draft && <DraftBadge>Draft</DraftBadge>}
+                {post.frontmatter.draft && <DraftBadge>{tr('POST.Draft') || '!!Draft'}</DraftBadge>}
                 <h2>
                     <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
                 </h2>
@@ -94,12 +97,12 @@ export const List: React.FC<ListProps> = ({ data, pageContext }) => {
                     <MetaSpan>{post.frontmatter.date}</MetaSpan>
                     {post.frontmatter.authors && (
                         <MetaSpan>
-                            <em>By</em>&nbsp;
+                            <em>{tr('POST.By') || '!!By'}</em>&nbsp;
                             <Authors authorIDs={post.frontmatter.authors} settings={authors} />
                         </MetaSpan>
                     )}
                     <MetaActions>
-                        <Link to={post.frontmatter.path}>Read Article →</Link>
+                        <Link to={post.frontmatter.path}>{tr('POST.ReadArticle') || '!!Read Article →'}</Link>
                     </MetaActions>
                 </Meta>
             </Paper>
@@ -110,7 +113,7 @@ export const List: React.FC<ListProps> = ({ data, pageContext }) => {
         if (isFirst) return <></>
         return (
             <Link to={prevPage} rel="prev">
-                ← Newer
+                {tr('POST.Newer') || '!!← Newer'}
             </Link>
         )
     }
@@ -119,7 +122,7 @@ export const List: React.FC<ListProps> = ({ data, pageContext }) => {
         if (isLast) return <></>
         return (
             <Link to={nextPage} rel="next">
-                Older →
+                {tr('POST.Older') || '!!Older →'}
             </Link>
         )
     }

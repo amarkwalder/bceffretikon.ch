@@ -1,15 +1,24 @@
 import { useFormScreenPlugin, withPlugins } from 'tinacms'
 import { useJsonForm } from 'gatsby-tinacms-json'
 
-import { useSiteQuery, SiteForm, CreatePostButton, CreatePageButton } from './Site'
-import { useMenuQuery, MenuForm } from './Menu'
-import { useFooterQuery, FooterForm } from './Footer'
-import { useThemeQuery, ThemeForm } from './Theme'
-import { useCookieConsentQuery, CookieConsentForm } from './CookieConsent'
-import { useAuthorsQuery, AuthorsForm } from './Authors'
-import { useTranslationsQuery, TranslationsForm } from './Translations'
+import { useSiteQuery, SiteForm, CreatePostButton, CreatePageButton, SiteQueryData } from './Site'
+import { useMenuQuery, MenuForm, MenuQueryData } from './Menu'
+import { useFooterQuery, FooterForm, FooterQueryData } from './Footer'
+import { useThemeQuery, ThemeForm, ThemeQueryData } from './Theme'
+import { useAuthorsQuery, AuthorsForm, AuthorsQueryData } from './Authors'
+import { useTranslationQuery, TranslationForm, TranslationQueryData } from './Translation'
 
-export const registerFormPlugins = () => {
+type RegisterFormPluginsResponse = {
+    siteData: SiteQueryData
+    menuData: MenuQueryData
+    footerData: FooterQueryData
+    themeData: ThemeQueryData
+    authorsData: AuthorsQueryData
+    translationData: TranslationQueryData
+}
+
+export const registerFormPlugins = (): RegisterFormPluginsResponse => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const useGlobalForm = (data: any, formDef: any) => {
         const [, form] = useJsonForm(data, formDef)
         if (form) useFormScreenPlugin(form)
@@ -27,18 +36,16 @@ export const registerFormPlugins = () => {
     const themeData = useThemeQuery()
     useGlobalForm(themeData.theme, ThemeForm)
 
-    const cookieConsentData = useCookieConsentQuery()
-    useGlobalForm(cookieConsentData.cookieconsent, CookieConsentForm)
-
     const authorsData = useAuthorsQuery()
     useGlobalForm(authorsData.authors, AuthorsForm)
 
-    const translationsData = useTranslationsQuery()
-    useGlobalForm(translationsData.translations, TranslationsForm)
+    const translationData = useTranslationQuery()
+    useGlobalForm(translationData.translations, TranslationForm)
 
-    return { siteData, menuData, footerData, themeData, cookieConsentData }
+    return { siteData, menuData, footerData, themeData, authorsData, translationData: translationData }
 }
 
-export const withPlugin = (component: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const withPlugin = (component: unknown) => {
     return withPlugins(component, [CreatePostButton, CreatePageButton])
 }

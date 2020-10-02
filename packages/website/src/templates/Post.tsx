@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { graphql } from 'gatsby'
 import { Link } from 'gatsby'
 import { DeleteAction, useRemarkForm } from 'gatsby-tinacms-remark'
@@ -14,6 +14,7 @@ import { RemarkNode } from 'gatsby-tinacms-remark/src/remark-node'
 import { DateFieldPlugin } from 'react-tinacms-date'
 import { Hero } from './Page'
 import { AuthorSettings } from '../plugins/Authors'
+import { TranslationContext } from '../components/Translation'
 
 // ****************************************************************************
 // * Gatsby - GraphQL (Fragment / Page Query)
@@ -148,6 +149,8 @@ const Post: React.FC<PostProps> = ({ data }) => {
     const [, form] = useRemarkForm(post as any, PostForm) as [RemarkNode, Form]
     if (form) usePlugin(form)
 
+    const { tr } = useContext(TranslationContext)
+
     return (
         <InlineForm form={form}>
             <PageLayout post={post}>
@@ -158,12 +161,14 @@ const Post: React.FC<PostProps> = ({ data }) => {
                             post?.frontmatter?.authors &&
                             post?.frontmatter?.authors.length > 0 && (
                                 <MetaSpan>
-                                    <em>By</em>&nbsp;
+                                    <em>{tr('POST.By') || '!!By'}</em>&nbsp;
                                     <Authors authorIDs={post.frontmatter.authors} settings={authorsSettings} />
                                 </MetaSpan>
                             )}
                         <MetaActions>
-                            <Link to={'/' + post.frontmatter.lang + '/blog'}>← Back to Blog</Link>
+                            <Link to={'/' + post.frontmatter.lang + '/blog'}>
+                                {tr('POST.BackToBlog') || '!!← Back to Blog'}
+                            </Link>
                         </MetaActions>
                     </Meta>
                     <h1>
@@ -173,7 +178,7 @@ const Post: React.FC<PostProps> = ({ data }) => {
                     <InlineWysiwyg name="rawMarkdownBody" format="markdown">
                         <ReactMarkdown source={post?.rawMarkdownBody || ''} />
                     </InlineWysiwyg>
-                    {post?.frontmatter?.draft && <DraftBadge>Draft</DraftBadge>}
+                    {post?.frontmatter?.draft && <DraftBadge>{tr('POST.Draft') || '!!Draft'}</DraftBadge>}
                 </Paper>
             </PageLayout>
         </InlineForm>

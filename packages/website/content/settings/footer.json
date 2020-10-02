@@ -2,28 +2,12 @@
   "title": "© 2020 - Badminton Club Effretikon",
   "links": [
     {
-      "label": "Data Protection (EN)",
-      "link": "/en/dataprotection",
-      "title": "Data Protection",
-      "language": "en"
+      "title": "DataProtection",
+      "link": "/dataprotection"
     },
     {
-      "label": "Legal Notice (EN)",
-      "link": "/en/legalnotice",
-      "title": "Legal Notice",
-      "language": "en"
-    },
-    {
-      "label": "Datenschutz (DE)",
-      "link": "/de/dataprotection",
-      "title": "Datenschutz",
-      "language": "de"
-    },
-    {
-      "label": "Impressum (DE)",
-      "link": "/de/legalnotice",
-      "title": "Impressum",
-      "language": "de"
+      "title": "LegalNotice",
+      "link": "/legalnotice"
     }
   ]
 }

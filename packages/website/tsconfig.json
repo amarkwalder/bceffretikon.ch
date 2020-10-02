@@ -5,6 +5,7 @@
         "module": "esnext",
         "lib": ["dom", "es2017"],
         "moduleResolution": "node",
+        "resolveJsonModule": true,
         // "allowJs": true,
         // "checkJs": true,
         "jsx": "react",

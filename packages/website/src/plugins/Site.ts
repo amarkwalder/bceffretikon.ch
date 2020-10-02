@@ -17,10 +17,6 @@ export const SiteFragment = graphql`
                 }
             }
         }
-        languages {
-            defaultLanguage
-            availableLanguages
-        }
         description
         author
     }
@@ -46,10 +42,6 @@ export const useSiteQuery = (): SiteQueryData => {
 export type SiteSettings = {
     title: string
     logo: any
-    languages: {
-        defaultLanguage: string
-        availableLanguages: string[]
-    }
     description: string
     author: string
 
@@ -116,9 +108,9 @@ export const SiteForm = {
             label: 'Image',
             name: 'rawJson.logo',
             component: 'image',
-            parse: (filename: string) => `../images/${filename}`,
+            parse: (filename: string): string => `../images/${filename}`,
             uploadDir: () => `/content/images/`,
-            previewSrc: (formValues: any, input: any) => {
+            previewSrc: (formValues: any, input: any): string => {
                 if (!formValues.jsonNode.logo) return ''
                 return formValues.jsonNode.logo.childImageSharp.fixed.src
             },
@@ -146,25 +138,6 @@ export const SiteForm = {
             parse(value: string): string {
                 return value || ''
             },
-        },
-        {
-            label: 'Default Language',
-            name: 'rawJson.languages.defaultLanguage',
-            component: 'text',
-            parse(value: string): string {
-                return value || ''
-            },
-        },
-        {
-            label: 'Available Languages',
-            name: 'rawJson.languages.availableLanguages',
-            component: 'list',
-            field: {
-                component: 'text',
-            },
-            itemProps: (item: string) => ({
-                key: item,
-            }),
         },
     ],
 }

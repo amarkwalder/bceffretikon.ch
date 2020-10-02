@@ -1,15 +1,230 @@
 {
+  "defaultLanguage": "de",
+  "availableLanguages": [
+    "de",
+    "en"
+  ],
   "translations": [
     {
-      "code": "WELCOME",
-      "text": "Hallo",
-      "lang": "de",
-      "language": "de"
+      "code": "POST.BackToBlog",
+      "translation": [
+        {
+          "text": "← Back to Blog",
+          "language": "en"
+        },
+        {
+          "text": "← Zurück zum Blog",
+          "language": "de"
+        }
+      ]
     },
     {
-      "code": "WELCOM",
-      "language": "en",
-      "text": "Hello"
+      "code": "POST.ReadArticle",
+      "translation": [
+        {
+          "text": "Lese Artikel →",
+          "language": "de"
+        },
+        {
+          "text": "Read Aticle →",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "POST.Older",
+      "translation": [
+        {
+          "text": "Älter →",
+          "language": "de"
+        },
+        {
+          "text": "Older →",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "POST.Newer",
+      "translation": [
+        {
+          "text": "← Neuer",
+          "language": "de"
+        },
+        {
+          "text": "← Newer",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "POST.Draft",
+      "translation": [
+        {
+          "text": "Entwurf",
+          "language": "de"
+        },
+        {
+          "text": "Draft",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "POST.By",
+      "translation": [
+        {
+          "text": "Von",
+          "language": "de"
+        },
+        {
+          "text": "By",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "COOKIECONSENT.Text",
+      "translation": [
+        {
+          "text": "This website uses cookies to ensure you get the best experience on our website.",
+          "language": "en"
+        },
+        {
+          "text": "Diese Website nutzt Cookies um bestmögliche Funktionalität bieten zu können.",
+          "language": "de"
+        }
+      ]
+    },
+    {
+      "code": "COOKIECONSENT.DeclineButton",
+      "translation": [
+        {
+          "text": "Decline",
+          "language": "en"
+        },
+        {
+          "text": "Ablehnen",
+          "language": "de"
+        }
+      ]
+    },
+    {
+      "code": "COOKIECONSENT.AcceptButton",
+      "translation": [
+        {
+          "text": "Accept",
+          "language": "en"
+        },
+        {
+          "text": "Akzeptieren",
+          "language": "de"
+        }
+      ]
+    },
+    {
+      "code": "MENU.Home",
+      "translation": [
+        {
+          "text": "Startseite",
+          "language": "de"
+        },
+        {
+          "text": "Home",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "MENU.Blog",
+      "translation": [
+        {
+          "text": "Blog",
+          "language": "de"
+        },
+        {
+          "text": "Blog",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "MENU.Training",
+      "translation": [
+        {
+          "text": "Training",
+          "language": "de"
+        },
+        {
+          "text": "Training",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "MENU.Interclub",
+      "translation": [
+        {
+          "text": "Interclub",
+          "language": "de"
+        },
+        {
+          "text": "Interclub",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "MENU.Contact",
+      "translation": [
+        {
+          "text": "Kontakt",
+          "language": "de"
+        },
+        {
+          "text": "Contact",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "MENU.About",
+      "translation": [
+        {
+          "text": "Über uns",
+          "language": "de"
+        },
+        {
+          "text": "About Us",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "FOOTER.DataProtection",
+      "translation": [
+        {
+          "text": "Datenschutz",
+          "language": "de"
+        },
+        {
+          "text": "Data Protection",
+          "language": "en"
+        }
+      ]
+    },
+    {
+      "code": "FOOTER.LegalNotice",
+      "translation": [
+        {
+          "text": "Impressum",
+          "language": "de"
+        },
+        {
+          "text": "Legal Notice",
+          "language": "en"
+        }
+      ]
     }
   ]
 }

@@ -14,38 +14,34 @@ import { EditToggle } from './EditToggle'
 
 type HeaderProps = {
     currentLanguage: string
-    availableLanguages: string[]
     location: Location
     menuItems: MenuItem[]
     logo: any
 }
 
-export const Header = styled(
-    ({ currentLanguage, availableLanguages, location, menuItems, logo, ...styleProps }: HeaderProps) => {
-        const { toggleDarkMode, isDarkMode } = useContext(ThemeContext)
+export const Header = styled(({ currentLanguage, location, menuItems, logo, ...styleProps }: HeaderProps) => {
+    const { toggleDarkMode, isDarkMode } = useContext(ThemeContext)
 
-        return (
-            <header {...styleProps}>
-                <HeaderWrapper>
-                    <SiteTitle>
-                        <SiteLink to={'/' + currentLanguage}>
-                            <Img fadeIn={false} fixed={logo.childImageSharp.fixed} />
-                        </SiteLink>
-                    </SiteTitle>
-                    <Navbar
-                        toggleDarkMode={toggleDarkMode}
-                        isDarkMode={isDarkMode}
-                        currentLanguage={currentLanguage}
-                        availableLanguages={availableLanguages}
-                        location={location}
-                        menuItems={menuItems}
-                    />
-                </HeaderWrapper>
-                {process.env.NODE_ENV !== 'production' && <EditToggle />}
-            </header>
-        )
-    },
-)`
+    return (
+        <header {...styleProps}>
+            <HeaderWrapper>
+                <SiteTitle>
+                    <SiteLink to={'/' + currentLanguage}>
+                        <Img fadeIn={false} fixed={logo.childImageSharp.fixed} />
+                    </SiteLink>
+                </SiteTitle>
+                <Navbar
+                    toggleDarkMode={toggleDarkMode}
+                    isDarkMode={isDarkMode}
+                    currentLanguage={currentLanguage}
+                    location={location}
+                    menuItems={menuItems}
+                />
+            </HeaderWrapper>
+            {process.env.NODE_ENV !== 'production' && <EditToggle />}
+        </header>
+    )
+})`
     position: absolute;
     z-index: 100;
     width: 100%;

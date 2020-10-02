@@ -1,76 +1,28 @@
 {
   "menuItems": [
     {
-      "label": "Home (EN)",
-      "link": "/en",
       "title": "Home",
-      "language": "en"
+      "link": "/"
     },
     {
-      "label": "Blog (EN)",
       "title": "Blog",
-      "language": "en",
-      "link": "/en/blog"
+      "link": "/blog"
     },
     {
-      "label": "Training (EN)",
-      "link": "/en/training",
-      "title": "Training",
-      "language": "en"
+      "link": "/training",
+      "title": "Training"
     },
     {
-      "label": "Interclub (EN)",
       "title": "Interclub",
-      "link": "/en/interclub",
-      "language": "en"
+      "link": "/interclub"
     },
     {
-      "label": "Contact (EN)",
       "title": "Contact",
-      "link": "/en/contact",
-      "language": "en"
+      "link": "/contact"
     },
     {
-      "label": "About (EN)",
       "title": "About",
-      "link": "/en/about",
-      "language": "en"
-    },
-    {
-      "label": "Startseite (DE)",
-      "link": "/de",
-      "title": "Startseite",
-      "language": "de"
-    },
-    {
-      "label": "Blog (DE)",
-      "title": "Blog",
-      "language": "de",
-      "link": "/de/blog"
-    },
-    {
-      "label": "Training (DE)",
-      "link": "/de/training",
-      "title": "Training",
-      "language": "de"
-    },
-    {
-      "label": "Interclub (DE)",
-      "title": "Interclub",
-      "link": "/de/interclub",
-      "language": "de"
-    },
-    {
-      "label": "Kontakt (DE)",
-      "title": "Kontakt",
-      "link": "/de/contact",
-      "language": "de"
-    },
-    {
-      "label": "Über uns (DE)",
-      "title": "Über uns",
-      "link": "/de/about",
-      "language": "de"
+      "link": "/about"
     }
   ]
 }

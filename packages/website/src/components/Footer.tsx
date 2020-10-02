@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { transparentize } from 'polished'
 
@@ -6,20 +6,26 @@ import { Link } from 'gatsby'
 
 import { Wrapper } from './Style'
 import { FooterLink } from '../plugins/Footer'
+import { TranslationContext } from './Translation'
+import { removeSuffixSlash, removeTrailingSlash } from '../utils/helpers'
 
 export const Footer = styled(({ title, links, currentLanguage, ...styleProps }) => {
+    const { tr } = useContext(TranslationContext)
+
     return (
         <footer {...styleProps}>
             <Wrapper>
                 {title}
-                {links
-                    .filter((footerLink: FooterLink) => footerLink.language === currentLanguage)
-                    .map((footerLink: FooterLink, index: number, arr: any[]) => (
-                        <span key={'footer-' + index}>
-                            {' - '}
-                            <Link to={footerLink.link}>{footerLink.title}</Link>
-                        </span>
-                    ))}
+                {links.map((footerLink: FooterLink, index: number) => (
+                    <span key={'footer-' + index}>
+                        {' - '}
+                        <Link
+                            to={removeTrailingSlash('/' + currentLanguage + '/' + removeSuffixSlash(footerLink.link))}
+                        >
+                            {tr('FOOTER.' + footerLink.title) || '!!' + footerLink.title}
+                        </Link>
+                    </span>
+                ))}
             </Wrapper>
         </footer>
     )

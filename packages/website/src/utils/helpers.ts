@@ -9,3 +9,6 @@ export const removeNull = (obj: any): any =>
                     : { ...newObj, [k]: obj[k] }, // Copy value.
             {},
         )
+
+export const removeTrailingSlash = (path: string): string => (path === `/` ? path : path.replace(/\/$/, ``))
+export const removeSuffixSlash = (path: string): string => (!path.startsWith('/') ? path : path.substring(1))

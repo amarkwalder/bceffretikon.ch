@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { Moon, Sun } from 'styled-icons/boxicons-regular'
 import { Menu, MenuOpen } from 'styled-icons/material-outlined'
@@ -12,30 +12,22 @@ import { NavLink } from './NavLink'
 import { NavSelect } from './NavSelect'
 
 import { navigate } from 'gatsby'
+import { TranslationContext } from '../Translation'
+import { removeSuffixSlash, removeTrailingSlash } from '../../utils/helpers'
 
 type NavProps = {
     toggleDarkMode?: () => void
     isDarkMode?: boolean
     currentLanguage: string
-    availableLanguages: string[]
     location: Location
     menuItems: MenuItem[]
 }
 
-export const Navbar: React.FC<NavProps> = ({
-    toggleDarkMode,
-    isDarkMode,
-    currentLanguage,
-    availableLanguages,
-    location,
-    menuItems,
-}) => {
+export const Navbar: React.FC<NavProps> = ({ toggleDarkMode, isDarkMode, currentLanguage, location, menuItems }) => {
     const [navOpen, setNavOpen] = useState(false)
     const toggleNavOpen = () => {
         setNavOpen(!navOpen)
     }
-
-    const removeTrailingSlash = (path: string) => (path === `/` ? path : path.replace(/\/$/, ``))
 
     const onLanguageChange = (language: string) => {
         const { pathname } = location
@@ -44,18 +36,21 @@ export const Navbar: React.FC<NavProps> = ({
         navigate(removeTrailingSlash('/' + language.toLowerCase() + pathSuffix))
     }
 
+    const { tr, availableLanguages } = useContext(TranslationContext)
+
     return (
         <>
             <StyledNavbar navOpen={navOpen} isDarkMode={isDarkMode}>
-                {menuItems
-                    .filter(menuItem => menuItem.language === currentLanguage)
-                    .map(menuItem => (
-                        <NavItem key={menuItem.title}>
-                            <StyledNavLink onClick={toggleNavOpen} to={removeTrailingSlash(menuItem.link)}>
-                                {menuItem.title}
-                            </StyledNavLink>
-                        </NavItem>
-                    ))}
+                {menuItems.map(menuItem => (
+                    <NavItem key={menuItem.title}>
+                        <StyledNavLink
+                            onClick={toggleNavOpen}
+                            to={removeTrailingSlash('/' + currentLanguage + '/' + removeSuffixSlash(menuItem.link))}
+                        >
+                            {tr('MENU.' + menuItem.title) || '!!' + menuItem.title}
+                        </StyledNavLink>
+                    </NavItem>
+                ))}
                 <NavItem>
                     <DarkModeToggle aria-label="Toggle Dark Theme" onClick={toggleDarkMode} isDarkMode={isDarkMode} />
                 </NavItem>

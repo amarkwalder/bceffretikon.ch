@@ -7,10 +7,8 @@ import { useStaticQuery, graphql } from 'gatsby'
 export const MenuFragment = graphql`
     fragment Menu on SettingsJson {
         menuItems {
-            label
             title
             link
-            language
         }
     }
 `
@@ -33,10 +31,8 @@ export const useMenuQuery = (): MenuQueryData => {
 // ****************************************************************************
 
 export type MenuItem = {
-    label: string
     title: string
     link: string
-    language: string
 }
 
 export type MenuSettings = {
@@ -61,29 +57,17 @@ export const MenuForm = {
             label: 'Main Menu',
             name: 'rawJson.menuItems',
             component: 'group-list',
-            itemProps: (item: { label: string }): { label: string } => ({
-                label: item.label,
+            itemProps: (item: { title: string }): { label: string } => ({
+                label: item.title,
             }),
+            defaultItem: {
+                title: 'Menu Item',
+                link: '/path',
+            },
             fields: [
-                {
-                    label: 'Label',
-                    name: 'label',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
                 {
                     label: 'Title',
                     name: 'title',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-                {
-                    label: 'Language',
-                    name: 'language',
                     component: 'text',
                     parse(value: string): string {
                         return value || ''

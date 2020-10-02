@@ -15,7 +15,7 @@ export const AuthorsFragment = graphql`
     }
 `
 
-export const useAuthorsQuery = (): AuthorSettings => {
+export const useAuthorsQuery = (): AuthorsQueryData => {
     return useStaticQuery(
         graphql`
             query authorsQuery {

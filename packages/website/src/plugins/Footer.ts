@@ -8,10 +8,8 @@ export const FooterFragment = graphql`
     fragment Footer on SettingsJson {
         title
         links {
-            label
             title
             link
-            language
         }
     }
 `
@@ -34,10 +32,8 @@ export const useFooterQuery = (): FooterQueryData => {
 // ****************************************************************************
 
 export type FooterLink = {
-    label: string
     title: string
     link: string
-    language: string
 }
 
 export type FooterSettings = {
@@ -71,29 +67,17 @@ export const FooterForm = {
             label: 'Links',
             name: 'rawJson.links',
             component: 'group-list',
-            itemProps: (item: { label: string }): { label: string } => ({
-                label: item.label,
+            itemProps: (item: { title: string }): { label: string } => ({
+                label: item.title,
             }),
+            defaultItem: {
+                title: 'Title',
+                link: '/path',
+            },
             fields: [
-                {
-                    label: 'Label',
-                    name: 'label',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
                 {
                     label: 'Title',
                     name: 'title',
-                    component: 'text',
-                    parse(value: string): string {
-                        return value || ''
-                    },
-                },
-                {
-                    label: 'Language',
-                    name: 'language',
                     component: 'text',
                     parse(value: string): string {
                         return value || ''
