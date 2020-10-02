@@ -1,6 +1,6 @@
 import { AuthorsField } from './src/fields/Authors'
 
-const site = require('./content/settings/site.json')
+const translations = require('./content/settings/translations.json')
 
 export const onClientEntry = () => {
     window.tinacms.fields.add({
@@ -8,6 +8,6 @@ export const onClientEntry = () => {
         Component: AuthorsField,
     })
     if (window.location.pathname === '/') {
-        window.location.pathname = `/${site.languages.defaultLanguage}`
+        window.location.pathname = `/${translations.defaultLanguage}`
     }
 }

@@ -25,7 +25,8 @@ export const CookieConsent: React.FC = () => {
             declineButtonText={<ButtonDiv>{declineButtonText}</ButtonDiv>}
             declineButtonStyle={{ backgroundColor: theme?.color.background }}
             contentStyle={{ color: theme?.color.foreground }}
-            overlay={true}
+            overlay={false}
+            acceptOnScroll={true}
         >
             {consentText}
         </ReactCookieConsent>

@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled, { css } from 'styled-components'
 
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 import { CookieConsent } from './CookieConsent'
 

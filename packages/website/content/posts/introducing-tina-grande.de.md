@@ -5,13 +5,13 @@ lang: de
 date: '2019-11-06T00:00:00.000Z'
 type: post
 authors:
-  - amarkwalder
-  - nwvwmymju
+    - amarkwalder
+    - nwvwmymju
 draft: false
 hero:
-  image: ../images/coffee-beans.jpg
-  large: false
-  overlay: true
+    image: ../images/badminton-racket.png
+    large: false
+    overlay: true
 ---
 
 > **Tina Grande** ist ein Gatsby starter mit voller TinaCMS Integration. Du kannst Tina benutzen um Seiten hinzuzufügen oder zu löschen, Theme anpassen, Inhalte schreiben und mehr!

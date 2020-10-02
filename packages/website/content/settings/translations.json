@@ -6,6 +6,19 @@
   ],
   "translations": [
     {
+      "code": "SITE.Description",
+      "translation": [
+        {
+          "text": "Badminton Club Effretikon - The Club with tradition",
+          "language": "en"
+        },
+        {
+          "text": "Badminton Club Effretikon - Der Club mit Tradition",
+          "language": "de"
+        }
+      ]
+    },
+    {
       "code": "POST.BackToBlog",
       "translation": [
         {

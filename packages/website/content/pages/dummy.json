@@ -9,7 +9,7 @@
         "textline": "Dummy",
         "large": false,
         "overlay": true,
-        "image": "../images/cafe-2.jpg",
+        "image": "../images/badminton-racket.png",
         "ctas": [
             {
                 "label": "Read The Blog",

@@ -2,7 +2,7 @@
 type: dummmy
 draft: true
 hero:
-    image: ../images/coffee-beans.jpg
+    image: ../images/badminton-racket.png
     large: false
     overlay: true
 ---

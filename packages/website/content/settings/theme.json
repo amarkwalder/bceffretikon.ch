@@ -22,7 +22,7 @@
     "underline": true
   },
   "hero": {
-    "image": "../images/badminton-racket.jpg",
+    "image": "../images/badminton-racket.png",
     "large": false,
     "overlay": true,
     "overlap": "8rem",

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
+import { TranslationContext } from './Translation'
 
 interface SEOProps {
     description?: string
@@ -20,8 +21,10 @@ export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
         }
     `)
 
+    const { tr } = useContext(TranslationContext)
+
     const site = data.site
-    const metaDescription = description || site.description
+    const metaDescription = description || tr('SITE.Description') || site.description
 
     return (
         <Helmet
@@ -69,7 +72,7 @@ export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
 }
 
 SEO.defaultProps = {
-    lang: `en`,
+    lang: `de`,
     meta: [],
     description: ``,
 }
