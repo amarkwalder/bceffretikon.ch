@@ -42,7 +42,7 @@ export const registerFormPlugins = (): RegisterFormPluginsResponse => {
     const translationData = useTranslationQuery()
     useGlobalForm(translationData.translations, TranslationForm)
 
-    return { siteData, menuData, footerData, themeData, authorsData, translationData: translationData }
+    return { siteData, menuData, footerData, themeData, authorsData, translationData }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

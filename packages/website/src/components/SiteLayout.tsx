@@ -22,13 +22,13 @@ type SiteLayoutProps = {
 }
 
 const SiteLayout: React.FC<SiteLayoutProps> = ({ children, location, pageContext }) => {
-    const { siteData, menuData, footerData, themeData, translationData: translationsData } = registerFormPlugins()
+    const { siteData, menuData, footerData, themeData, translationData } = registerFormPlugins()
 
     const site = siteData.site
     const menu = menuData.menu
     const footer = footerData.footer
     const theme = themeData.theme
-    const { defaultLanguage, availableLanguages, translations } = translationsData.translations
+    const { defaultLanguage, availableLanguages, translations } = translationData.translations
 
     const currentLanguage = pageContext.lang || defaultLanguage
 

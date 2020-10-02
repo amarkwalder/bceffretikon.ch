@@ -128,10 +128,6 @@ export const TranslationForm = {
     ],
 }
 
-export const useTranslation = (): TranslationSettings => {
-    return useTranslationQuery().translations
-}
-
 export const tr = (code: string, language: string, translations: TranslationCode[]): string | undefined => {
     const result = translations.find(value => value.code === code)
     if (!result || !result.translation) return undefined
