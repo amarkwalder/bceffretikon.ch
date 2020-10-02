@@ -4,18 +4,15 @@ import Img from 'gatsby-image'
 import get from 'lodash.get'
 import { Block } from '../templates/Page'
 
-interface ImageProps {
+type ImageProps = {
     block: Block
 }
 
 export const Image: React.FC<ImageProps> = ({ block }) => {
     return (
-        block.image &&
-        block.image.childImageSharp && (
-            <ImageWrapper>
-                <Img fluid={block.image.childImageSharp.fluid} />
-            </ImageWrapper>
-        )
+        <ImageWrapper>
+            {block?.image?.childImageSharp && <Img fluid={block.image.childImageSharp.fluid} />}
+        </ImageWrapper>
     )
 }
 
@@ -35,9 +32,9 @@ export const ImageBlock = {
             label: 'Image',
             name: 'image',
             component: 'image',
-            parse: (filename: string) => `../images/${filename}`,
-            uploadDir: () => `/content/images/`,
-            previewSrc: (formValues: any, fieldProps: any) => {
+            parse: (filename: string): string => `../images/${filename}`,
+            uploadDir: (): string => `/content/images/`,
+            previewSrc: (formValues: unknown, fieldProps: { input: { name: string } }): string => {
                 const pathName = fieldProps.input.name.replace('rawJson', 'jsonNode')
                 const imageNode = get(formValues, pathName)
                 if (!imageNode || !imageNode.childImageSharp) return ''

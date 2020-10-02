@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { Block, PageSettings } from '../templates/Page'
 
-interface TitleProps {
+type TitleProps = {
     page: PageSettings
     block: Block
 }

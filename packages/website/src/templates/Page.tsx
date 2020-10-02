@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Paper } from '../components/Style'
 import { PageLayout } from '../components/PageLayout'
 
-//import { Form, FormBlock } from '../blocks/form'
+import { Form, FormBlock } from '../blocks/form'
 import { Title, TitleBlock } from '../blocks/Title'
 import { Image, ImageBlock } from '../blocks/Image'
 import { Content, ContentBlock } from '../blocks/Content'
@@ -56,6 +56,7 @@ export const PageFragment = graphql`
                 label
                 inputType
                 autocomplete
+                required
             }
             image {
                 childImageSharp {
@@ -108,6 +109,7 @@ export type Field = {
     label?: string
     inputType?: string
     autocomplete?: string
+    required?: boolean
 }
 
 export type Block = {
@@ -236,7 +238,7 @@ const PageFormSections = [
         templates: {
             TitleBlock,
             ImageBlock,
-            // FormBlock,
+            FormBlock,
             ContentBlock,
         },
     },
@@ -278,8 +280,8 @@ export const Page: React.FC<PageProps> = ({ data }) => {
                             return <Title key={'block-' + i} page={page} block={block} />
                         case 'ImageBlock':
                             return <Image key={'block-' + i} block={block} />
-                        // case 'FormBlock':
-                        //     return <Form form={data} />
+                        case 'FormBlock':
+                            return <Form key={'block-' + i} block={block} />
                         case 'ContentBlock':
                             if (block.content && page.childrenPagesJsonBlockMarkdown[i])
                                 return (

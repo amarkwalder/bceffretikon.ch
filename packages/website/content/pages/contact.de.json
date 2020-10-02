@@ -17,22 +17,26 @@
           "label": "Name",
           "inputType": "text",
           "autocomplete": "name",
-          "_template": "nameInputBlock"
+          "required": true,
+          "_template": "NameInputBlock"
         },
         {
           "label": "Email",
           "inputType": "text",
           "autocomplete": "email",
-          "_template": "emailInputBlock"
+          "required": true,
+          "_template": "EmailInputBlock"
         },
         {
           "label": "Meldung",
           "inputType": "textarea",
           "autocomplete": "",
-          "_template": "messageInputBlock"
+          "required": true,
+          "_template": "MessageInputBlock"
         }
       ],
-      "content": ""
+      "content": "",
+      "recipient": "andre.markwalder@gmail.com"
     }
   ],
   "displayTitle": true
