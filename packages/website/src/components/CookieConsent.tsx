@@ -18,6 +18,7 @@ export const CookieConsent: React.FC = () => {
         <ReactCookieConsent
             location="bottom"
             cookieName="gatsby-gdpr-google-analytics"
+            sameSite="strict"
             style={{ backgroundColor: theme?.color.background }}
             enableDeclineButton={true}
             buttonText={<ButtonDiv primary="true">{acceptButtonText}</ButtonDiv>}
@@ -25,8 +26,7 @@ export const CookieConsent: React.FC = () => {
             declineButtonText={<ButtonDiv>{declineButtonText}</ButtonDiv>}
             declineButtonStyle={{ backgroundColor: theme?.color.background }}
             contentStyle={{ color: theme?.color.foreground }}
-            overlay={false}
-            acceptOnScroll={true}
+            overlay={true}
         >
             {consentText}
         </ReactCookieConsent>

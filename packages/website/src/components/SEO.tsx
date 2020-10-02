@@ -1,13 +1,22 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
 import { TranslationContext } from './Translation'
 
-interface SEOProps {
+type MetaItemWithName = {
+    name: string
+    content: string
+}
+
+type MetaItemWithProperty = {
+    property: string
+    content: string
+}
+
+type SEOProps = {
     description?: string
     lang?: string
-    meta?: any
+    meta?: (MetaItemWithName | MetaItemWithProperty)[]
     title: string
 }
 
@@ -25,6 +34,8 @@ export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
 
     const site = data.site
     const metaDescription = description || tr('SITE.Description') || site.description
+
+    if (!meta) meta = []
 
     return (
         <Helmet
@@ -69,17 +80,4 @@ export const SEO: React.FC<SEOProps> = ({ description, lang, meta, title }) => {
             ].concat(meta)}
         />
     )
-}
-
-SEO.defaultProps = {
-    lang: `de`,
-    meta: [],
-    description: ``,
-}
-
-SEO.propTypes = {
-    description: PropTypes.string,
-    lang: PropTypes.string,
-    meta: PropTypes.arrayOf(PropTypes.object),
-    title: PropTypes.string.isRequired,
 }

@@ -80,7 +80,7 @@ export type Frontmatter = {
 export type PostSettings = {
     id: string
     fileRelativePath: string
-    rawFrontmatter: any
+    rawFrontmatter: unknown
     rawMarkdownBody: string
 
     excerpt: string
@@ -138,7 +138,9 @@ const Post: React.FC<PostProps> = ({ data }) => {
                 component: 'image',
                 parse: (filename: string) => `../images/${filename}`,
                 uploadDir: () => `/content/images/`,
-                previewSrc: (formValues: any) => {
+                previewSrc: (formValues: {
+                    frontmatter: { hero: { image: { childImageSharp: { fluid: { src: string } } } } }
+                }) => {
                     if (!formValues.frontmatter.hero || !formValues.frontmatter.hero.image) return ''
                     return formValues.frontmatter.hero.image.childImageSharp.fluid.src
                 },
@@ -146,7 +148,7 @@ const Post: React.FC<PostProps> = ({ data }) => {
         ],
     }
 
-    const [, form] = useRemarkForm(post as any, PostForm) as [RemarkNode, Form]
+    const [, form] = useRemarkForm(post, PostForm) as [RemarkNode, Form]
     if (form) usePlugin(form)
 
     const { tr } = useContext(TranslationContext)

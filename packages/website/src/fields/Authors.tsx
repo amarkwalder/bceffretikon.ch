@@ -3,18 +3,21 @@ import styled, { css } from 'styled-components'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddIcon, DragIcon, ReorderIcon, TrashIcon } from '@tinacms/icons'
 import { IconButton } from '@tinacms/styles'
+import { Author } from '../plugins/Authors'
+import { Field, Form } from 'tinacms'
 
 type AuthorsFieldProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     input: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     field: any
-    form: any
+    form: Form
 }
 
-export const AuthorsField: React.FC<AuthorsFieldProps> = props => {
-    const { input, field, form } = props
+export const AuthorsField: React.FC<AuthorsFieldProps> = ({ input, field, form }) => {
     const [visible, setVisible] = React.useState(false)
-    const authors = field.authors
-    const authorIDs = input.value || []
+    const authors = field.authors as Author[]
+    const authorIDs = (input.value || []) as string[]
 
     const addAuthor = React.useCallback(
         authorID => {
@@ -49,9 +52,10 @@ export const AuthorsField: React.FC<AuthorsFieldProps> = props => {
             <Droppable droppableId={field.name} type={field.name}>
                 {provider => (
                     <AuthorList ref={provider.innerRef}>
-                        {authorIDs.length === 0 && <EmptyList>There's no authors</EmptyList>}
+                        {authorIDs.length === 0 && <EmptyList>There&apos;s no authors</EmptyList>}
                         {authorIDs.map((authorID: string, index: number) => {
-                            const author = authors.find((author: { id: string }) => author.id === authorID)
+                            const author = authors.find(author => author.id === authorID)
+                            if (!author) return
                             return (
                                 <AuthorListItem
                                     key={index}
@@ -71,9 +75,9 @@ export const AuthorsField: React.FC<AuthorsFieldProps> = props => {
 }
 
 type AuthorListItemProps = {
-    author: any
-    form: any
-    field: any
+    author: Author
+    form: Form
+    field: Field
     index: number
 }
 

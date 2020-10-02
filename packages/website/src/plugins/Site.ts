@@ -41,7 +41,7 @@ export const useSiteQuery = (): SiteQueryData => {
 
 export type SiteSettings = {
     title: string
-    logo: any
+    logo: unknown
     description: string
     author: string
 
@@ -109,8 +109,10 @@ export const SiteForm = {
             name: 'rawJson.logo',
             component: 'image',
             parse: (filename: string): string => `../images/${filename}`,
-            uploadDir: () => `/content/images/`,
-            previewSrc: (formValues: any, input: any): string => {
+            uploadDir: (): string => `/content/images/`,
+            previewSrc: (formValues: {
+                jsonNode: { logo: { childImageSharp: { fixed: { src: string } } } }
+            }): string => {
                 if (!formValues.jsonNode.logo) return ''
                 return formValues.jsonNode.logo.childImageSharp.fixed.src
             },

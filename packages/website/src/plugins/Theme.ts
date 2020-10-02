@@ -1,7 +1,4 @@
 import { useStaticQuery, graphql } from 'gatsby'
-import { createRemarkButton } from 'gatsby-tinacms-remark'
-import { JsonCreatorPlugin } from 'gatsby-tinacms-json'
-import slugify from 'react-slugify'
 
 // ****************************************************************************
 // * Gatsby - GraphQL (Fragment / Static Query)

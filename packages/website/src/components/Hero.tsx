@@ -3,10 +3,11 @@ import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 import { Wrapper, Overlay, LinkButton } from '../components/Style'
 import BackgroundImage from 'gatsby-background-image'
-import { InlineText, InlineGroup } from 'react-tinacms-inline'
+import { Hero as HeroType } from '../templates/Page'
+//import { InlineText, InlineGroup } from 'react-tinacms-inline'
 
-interface HeroProps {
-    hero: any
+type HeroProps = {
+    hero: HeroType
 }
 
 export const Hero: React.FC<HeroProps> = ({ hero }) => {
@@ -30,15 +31,16 @@ export const Hero: React.FC<HeroProps> = ({ hero }) => {
                         {hero.textline && <Textline>{hero.textline}</Textline>}
                         {hero.ctas && (
                             <Actions>
-                                {Object.keys(hero.ctas).map(key => {
+                                {Object.values(hero.ctas).map((ctas, index) => {
+                                    //                                {hero.ctas.map((ctas: Ctas, index: number) => {
                                     return (
                                         <LinkButton
-                                            key={key}
-                                            primary={hero.ctas[key].primary.toString()}
-                                            to={hero.ctas[key].link}
+                                            key={'ctas-' + index}
+                                            primary={ctas.primary?.toString() || 'false'}
+                                            to={ctas.link}
                                         >
-                                            {hero.ctas[key].label}
-                                            {hero.ctas[key].arrow && <span>&nbsp;&nbsp;→</span>}
+                                            {ctas.label}
+                                            {ctas.arrow && <span>&nbsp;&nbsp;→</span>}
                                         </LinkButton>
                                     )
                                 })}

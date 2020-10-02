@@ -4,7 +4,7 @@ import { mix, shade, transparentize, getContrast } from 'polished'
 import Img from 'gatsby-image'
 import { Link } from 'gatsby'
 
-export const bestContrast = (baseColor: string, optionOne: string, optionTwo: string) => {
+export const bestContrast = (baseColor: string, optionOne: string, optionTwo: string): string => {
     const contrastOne = getContrast(baseColor, optionOne)
     const contrastTwo = getContrast(baseColor, optionTwo)
     return contrastOne > contrastTwo ? optionOne : optionTwo
@@ -757,6 +757,7 @@ export const PlainInput = styled.input`
     width: 100%;
 `
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export const PlainText = (props: any) => {
     return <PlainInput {...props.input} />
 }

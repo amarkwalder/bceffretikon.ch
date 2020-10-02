@@ -62,7 +62,11 @@ export type ListSettings = {
 
 export type ListProps = {
     data: ListSettings
-    pageContext: any
+    pageContext: {
+        slug: string
+        numPages: number
+        currentPage: number
+    }
 }
 
 // ****************************************************************************
@@ -72,7 +76,7 @@ export type ListProps = {
 export const List: React.FC<ListProps> = ({ data, pageContext }) => {
     const { page, posts, authors } = data
 
-    const [, pageForm] = useJsonForm(page as any, PageFormWithoutSections)
+    const [, pageForm] = useJsonForm(page as never, PageFormWithoutSections)
     if (pageForm) usePlugin(pageForm)
 
     const { slug, numPages, currentPage } = pageContext

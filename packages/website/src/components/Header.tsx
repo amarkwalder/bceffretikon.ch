@@ -3,7 +3,7 @@ import { Link } from 'gatsby'
 
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
-import Img from 'gatsby-image'
+import Img, { GatsbyImageFixedProps } from 'gatsby-image'
 
 import { Wrapper } from './Style'
 import { Navbar } from './navbar/Navbar'
@@ -16,7 +16,7 @@ type HeaderProps = {
     currentLanguage: string
     location: Location
     menuItems: MenuItem[]
-    logo: any
+    logo: { childImageSharp: GatsbyImageFixedProps }
 }
 
 export const Header = styled(({ currentLanguage, location, menuItems, logo, ...styleProps }: HeaderProps) => {

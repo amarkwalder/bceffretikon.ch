@@ -10,6 +10,7 @@ import { Content, ContentBlock } from '../blocks/Content'
 
 import { usePlugin } from 'tinacms'
 import { useJsonForm } from 'gatsby-tinacms-json'
+import { GatsbyImageFluidProps } from 'gatsby-image'
 
 //import { InlineForm } from 'react-tinacms-inline'
 
@@ -99,7 +100,7 @@ export type Hero = {
     textline?: string
     large?: boolean
     overlay?: boolean
-    image?: any
+    image?: { childImageSharp: GatsbyImageFluidProps }
     ctas?: Ctas[]
 }
 
@@ -118,7 +119,7 @@ export type Block = {
     center?: boolean
     recipient?: string
     fields?: Field[]
-    image?: any
+    image?: { childImageSharp: GatsbyImageFluidProps }
 }
 
 export type ChildMarkdownRemark = {
@@ -178,9 +179,11 @@ const PageFormGeneralFields = [
                 label: 'Image',
                 name: 'image',
                 component: 'image',
-                parse: (filename: string) => `../images/${filename}`,
-                uploadDir: () => `/content/images/`,
-                previewSrc: (formValues: any, input: any) => {
+                parse: (filename: string): string => `../images/${filename}`,
+                uploadDir: (): string => `/content/images/`,
+                previewSrc: (formValues: {
+                    jsonNode: { hero: { image: { childImageSharp: { fluid: { src: string } } } } }
+                }): string => {
                     if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image) return ''
                     return formValues.jsonNode.hero.image.childImageSharp.fluid.src
                 },
@@ -189,7 +192,7 @@ const PageFormGeneralFields = [
                 label: 'Actions',
                 name: 'ctas',
                 component: 'group-list',
-                itemProps: (item: any) => ({
+                itemProps: (item: { link: string; label: string }): { key: string; label: string } => ({
                     key: item.link,
                     label: item.label,
                 }),
@@ -252,11 +255,16 @@ export const PageFormWithoutSections = {
 // ****************************************************************************
 // * React Component
 // ****************************************************************************
-
+interface JsonNode {
+    id: string
+    rawJson: string
+    fileRelativePath: string
+    [key: string]: string
+}
 export const Page: React.FC<PageProps> = ({ data }) => {
     const { page } = data
 
-    const [, form] = useJsonForm(page as any, PageForm)
+    const [, form] = useJsonForm(page as never, PageForm)
     if (form) usePlugin(form)
     const blocks: Block[] = page?.blocks ? page.blocks : []
 
