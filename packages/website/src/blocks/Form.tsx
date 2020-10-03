@@ -42,7 +42,7 @@ export const Form: React.FC<FormProps> = ({ block }) => {
             </label>
             <textarea
                 id={slugify(field.label)}
-                name={slugify(field.label)}
+                name={slugify(field.name)}
                 required={field.required || false}
                 cols={40}
                 rows={5}
@@ -57,7 +57,7 @@ export const Form: React.FC<FormProps> = ({ block }) => {
             </label>
             <input
                 id={slugify(field.label)}
-                name={slugify(field.label)}
+                name={slugify(field.name)}
                 type={field.inputType}
                 autoCorrect="off"
                 autoComplete={field.autocomplete || ''}
@@ -101,6 +101,7 @@ const Base = {
     key: 'label',
     component: 'group',
     fields: [
+        { name: 'name', label: 'Name', component: 'text' },
         { name: 'label', label: 'Label', component: 'text' },
         { name: 'inputType', label: 'Input Type', component: 'text' },
         { name: 'autocomplete', label: 'Autocomplete', component: 'text' },
@@ -116,6 +117,7 @@ export const CustomInputBlock = {
 export const NameInputBlock = {
     label: 'Name',
     defaultItem: {
+        name: 'Name',
         label: 'Name',
         inputType: 'text',
         autocomplete: 'name',
@@ -127,6 +129,7 @@ export const NameInputBlock = {
 export const EmailInputBlock = {
     label: 'Email',
     defaultItem: {
+        name: 'Email',
         label: 'Email',
         inputType: 'text',
         autocomplete: 'email',
@@ -138,6 +141,7 @@ export const EmailInputBlock = {
 export const PhoneInputBlock = {
     label: 'Phone',
     defaultItem: {
+        name: 'Phone',
         label: 'Phone',
         inputType: 'text',
         autocomplete: 'tel',
@@ -149,6 +153,7 @@ export const PhoneInputBlock = {
 export const CompanyInputBlock = {
     label: 'Company',
     defaultItem: {
+        name: 'Company',
         label: 'Company',
         inputType: 'text',
         autocomplete: 'organization',
@@ -160,6 +165,7 @@ export const CompanyInputBlock = {
 export const MessageInputBlock = {
     label: 'Message',
     defaultItem: {
+        name: 'Message',
         label: 'Message',
         inputType: 'textarea',
         autocomplete: '',

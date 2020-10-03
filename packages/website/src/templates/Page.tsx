@@ -53,6 +53,7 @@ export const PageFragment = graphql`
             center
             recipient
             fields {
+                name
                 label
                 inputType
                 autocomplete
@@ -106,6 +107,7 @@ export type Hero = {
 }
 
 export type Field = {
+    name?: string
     label?: string
     inputType?: string
     autocomplete?: string
