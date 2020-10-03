@@ -83,7 +83,7 @@ export const Form: React.FC<FormProps> = ({ block }) => {
     }
 
     return (
-        <StyledForm name="contact" action={`https://formspree.io/${recipient}`} onSubmit={submitForm} method="POST">
+        <StyledForm name="contact" action={`https://formspree.io/f/${recipient}`} onSubmit={submitForm} method="POST">
             {fields.map((field: Field, index: number) => {
                 if (field.inputType === 'textarea') {
                     return <FormFieldTextArea key={'field-' + index} field={field} />
