@@ -38,6 +38,7 @@ module.exports = {
                             defaultCommitName: 'TinaCMS',
                             defaultCommitEmail: 'git@tinacms.org',
                             pushOnCommit: true,
+                            sshKey: process.env.SSH_KEY,
                         },
                     },
                     'gatsby-tinacms-remark',
