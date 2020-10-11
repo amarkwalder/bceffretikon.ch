@@ -1,0 +1,20 @@
+{
+  "blocks": [
+    {
+      "_template": "hero",
+      "background_color": "#051e26",
+      "text_color": "#fffaf4",
+      "headline": "Seite nicht gefunden",
+      "subtext": "Oops, Wir können die Seite nicht finden!",
+      "align": "center"
+    },
+    {
+      "_template": "paragraph",
+      "text": "Etwas ist schief gelaufen"
+    },
+    {
+      "_template": "paragraph",
+      "text": "Bitte kehre zur Startseite zurück und versuche es erneut."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "blocks": [
+    {
+      "_template": "hero",
+      "background_color": "#051e26",
+      "text_color": "#fffaf4",
+      "headline": "Page Not Found",
+      "subtext": "Oops, we couldn't find this page!",
+      "align": "center"
+    },
+    {
+      "_template": "paragraph",
+      "text": "Something went wrong"
+    },
+    {
+      "_template": "paragraph",
+      "text": "Please go back to the homepage and try again."
+    }
+  ]
+}
