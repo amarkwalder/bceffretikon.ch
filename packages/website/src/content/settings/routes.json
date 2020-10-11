@@ -4,7 +4,7 @@
     { "path": "/en", "data": "content/pages/home.en.json" }
   ],
   "pageNotFound": {
-    "default": "/de/404",
+    "defaultData": "content/pages/404.de.json",
     "routes": [
       {
         "pathMatch": "/de",
