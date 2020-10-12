@@ -1,4 +1,6 @@
 {
+  "title": "Startseite",
+  "language": "de",
   "blocks": [
     {
       "_template": "hero",

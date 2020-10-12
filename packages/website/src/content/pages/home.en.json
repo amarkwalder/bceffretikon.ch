@@ -1,4 +1,6 @@
 {
+  "title": "Home",
+  "language": "en",
   "blocks": [
     {
       "_template": "hero",

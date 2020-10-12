@@ -1,21 +1,10 @@
 {
   "routes": [
-    { "path": "/de", "data": "content/pages/home.de.json" },
-    { "path": "/en", "data": "content/pages/home.en.json" }
-  ],
-  "pageNotFound": {
-    "defaultData": "content/pages/404.de.json",
-    "routes": [
-      {
-        "pathMatch": "/de",
-        "path": "/de/404",
-        "data": "content/pages/404.de.json"
-      },
-      {
-        "pathMatch": "/en",
-        "path": "/en/404",
-        "data": "content/pages/404.en.json"
-      }
-    ]
-  }
+    { "path": "/de", "exact": true, "data": "content/pages/home.de.json" },
+    { "path": "/en", "exact": true, "data": "content/pages/home.en.json" },
+
+    { "path": "/de", "exact": false, "data": "content/pages/404.de.json" },
+    { "path": "/en", "exact": false, "data": "content/pages/404.en.json" },
+    { "path": "/", "exact": false, "data": "content/pages/404.de.json" }
+  ]
 }
