@@ -1,10 +1,30 @@
 {
   "routes": [
-    { "path": "/de", "exact": true, "data": "content/pages/home.de.json" },
-    { "path": "/en", "exact": true, "data": "content/pages/home.en.json" },
+    {
+      "path": "/de",
+      "exact": true,
+      "data": "content/pages/home.de.json"
+    },
+    {
+      "path": "/en",
+      "exact": true,
+      "data": "content/pages/home.en.json"
+    },
 
-    { "path": "/de", "exact": false, "data": "content/pages/404.de.json" },
-    { "path": "/en", "exact": false, "data": "content/pages/404.en.json" },
-    { "path": "/", "exact": false, "data": "content/pages/404.de.json" }
+    {
+      "path": "/de",
+      "exact": false,
+      "data": "content/pages/404.de.json"
+    },
+    {
+      "path": "/en",
+      "exact": false,
+      "data": "content/pages/404.en.json"
+    },
+    {
+      "path": "/",
+      "exact": false,
+      "data": "content/pages/404.de.json"
+    }
   ]
 }
