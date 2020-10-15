@@ -1,0 +1,24 @@
+{
+  "menuItems": [
+    {
+      "title": "Home",
+      "link": "/"
+    },
+    {
+      "link": "/training",
+      "title": "Training"
+    },
+    {
+      "title": "Interclub",
+      "link": "/interclub"
+    },
+    {
+      "title": "Contact",
+      "link": "/contact"
+    },
+    {
+      "title": "About",
+      "link": "/about"
+    }
+  ]
+}
