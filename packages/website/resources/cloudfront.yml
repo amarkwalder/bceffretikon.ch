@@ -23,6 +23,9 @@ Resources:
         ## Since the Single Page App is taking care of the routing we need to make sure ever path is served with index.html
         # Configure the caching behavior for our CDN
         CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
           - ErrorCode: 404
             ResponseCode: 200
             ResponsePagePath: /index.html
@@ -43,8 +46,16 @@ Resources:
               Forward: none
           ## The origin id defined above
           TargetOriginId: !Ref Website
-          #ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
-          ViewerProtocolPolicy: allow-all
+          ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
+        CacheBehaviors:
+          - PathPattern: /index.html
+            TargetOriginId: !Ref Website
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # Managed-CachingDisabled
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: /service-worker.js
+            TargetOriginId: !Ref Website
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # Managed-CachingDisabled
+            ViewerProtocolPolicy: redirect-to-https
         ## The certificate to use when viewers use HTTPS to request objects.
         ViewerCertificate:
           AcmCertificateArn: !Ref Certificate

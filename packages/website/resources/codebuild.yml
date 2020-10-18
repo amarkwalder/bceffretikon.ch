@@ -20,8 +20,8 @@ Resources:
           env:
             secrets-manager:
               REACT_APP_GITHUB_CLIENT_ID: "bceffretikon-ch-secrets:GitHubClientId"
-              REACT_APP_GITHUB_SOURCE_REPO_OWNER:  "bceffretikon-ch-secrets:SourceRepoOwner" 
-              REACT_APP_GITHUB_SOURCE_REPO_NAME:  "bceffretikon-ch-secrets:SourceRepoName" 
+              REACT_APP_GITHUB_SOURCE_REPO_OWNER: "bceffretikon-ch-secrets:SourceRepoOwner" 
+              REACT_APP_GITHUB_SOURCE_REPO_NAME: "bceffretikon-ch-secrets:SourceRepoName" 
               SIGNING_KEY: "bceffretikon-ch-secrets:SigningKey"
               GITHUB_CLIENT_SECRET: "bceffretikon-ch-secrets:GitHubClientSecret"
           phases:
