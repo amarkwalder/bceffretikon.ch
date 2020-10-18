@@ -1,8 +1,15 @@
 Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: "*.markwalder.eu"
   Distribution:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        PriceClass: PriceClass_100
+        Aliases:
+          - bceffretikon.markwalder.eu
         Origins:
           - # Use the Website as the CDN origin
             DomainName: !GetAtt Website.DomainName
@@ -36,7 +43,11 @@ Resources:
               Forward: none
           ## The origin id defined above
           TargetOriginId: !Ref Website
-          ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
+          #ViewerProtocolPolicy: "redirect-to-https" # we want to force HTTPS
+          ViewerProtocolPolicy: allow-all
         ## The certificate to use when viewers use HTTPS to request objects.
         ViewerCertificate:
-          CloudFrontDefaultCertificate: "true"
+          AcmCertificateArn: !Ref Certificate
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2019
+          #CloudFrontDefaultCertificate: "true"

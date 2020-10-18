@@ -27,14 +27,10 @@ Resources:
           phases:
             pre_build:
               commands:
-                - echo List directory files...
-                - ls
                 - echo Installing source NPM dependencies...
                 - yarn install
             build:
               commands:
-                - echo List active directory...
-                - ls
                 - echo Build started on `date`
                 - yarn website build
             post_build:
