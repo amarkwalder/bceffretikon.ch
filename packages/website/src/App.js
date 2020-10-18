@@ -20,13 +20,17 @@ import Page from "./templates/Page";
 import { Error } from "./components/Error";
 import { Loading } from "./components/Loading";
 
-import { BASE_REPO_FULL_NAME, GITHUB_CLIENT_ID } from "./constants";
+import {
+  GITHUB_CLIENT_ID,
+  GITHUB_SOURCE_REPO_OWNER,
+  GITHUB_SOURCE_REPO_NAME,
+} from "./constants";
 
 const githubClient = new GithubClient({
   proxy: "/api/proxy-github",
   authCallbackRoute: "/api/create-github-access-token",
   clientId: GITHUB_CLIENT_ID,
-  baseRepoFullName: BASE_REPO_FULL_NAME,
+  baseRepoFullName: GITHUB_SOURCE_REPO_OWNER + "/" + GITHUB_SOURCE_REPO_NAME,
 });
 
 const preview = process.env.REACT_APP_RUNTIME_ENV === "preview";

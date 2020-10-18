@@ -1,8 +1,11 @@
-exports.CSRF_TOKEN_KEY = "csrf_token";
-exports.WORKING_REPO_KEY = "working_repo_full_name";
-exports.HEAD_BRANCH_KEY = "head_branch";
+export const CSRF_TOKEN_KEY = "csrf_token";
+export const WORKING_REPO_KEY = "working_repo_full_name";
+export const HEAD_BRANCH_KEY = "head_branch";
 
-exports.GIT_CONTENT_ROOT = "packages/website/src/";
+export const GIT_CONTENT_ROOT = "packages/website/src/";
 
-exports.GITHUB_CLIENT_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
-exports.BASE_REPO_FULL_NAME = process.env.REACT_APP_BASE_REPO_FULL_NAME;
+const env = process.env;
+
+export const GITHUB_CLIENT_ID = env.REACT_APP_GITHUB_CLIENT_ID;
+export const GITHUB_SOURCE_REPO_OWNER = env.REACT_APP_GITHUB_SOURCE_REPO_OWNER;
+export const GITHUB_SOURCE_REPO_NAME = env.REACT_APP_GITHUB_SOURCE_REPO_NAME;

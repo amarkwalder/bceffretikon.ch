@@ -17,6 +17,13 @@ Resources:
         Type: CODEPIPELINE
         BuildSpec: !Sub |
           version: 0.2
+          env:
+            secrets-manager:
+              REACT_APP_GITHUB_CLIENT_ID: "bceffretikon-ch-secrets:GitHubClientId"
+              REACT_APP_GITHUB_SOURCE_REPO_OWNER:  "bceffretikon-ch-secrets:SourceRepoOwner" 
+              REACT_APP_GITHUB_SOURCE_REPO_NAME:  "bceffretikon-ch-secrets:SourceRepoName" 
+              SIGNING_KEY: "bceffretikon-ch-secrets:SigningKey"
+              GITHUB_CLIENT_SECRET: "bceffretikon-ch-secrets:GitHubClientSecret"
           phases:
             pre_build:
               commands:
@@ -28,7 +35,6 @@ Resources:
               commands:
                 - echo List active directory...
                 - ls
-                - ls packages/website
                 - echo Build started on `date`
                 - yarn website build
             post_build:
@@ -96,3 +102,8 @@ Resources:
                   - "cloudfront:CreateInvalidation"
                 Resource:
                   - "*"
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:GetSecretValue"
+                Resource:
+                  - "arn:aws:secretsmanager:*:*:secret:bceffretikon-ch-secrets-*"
