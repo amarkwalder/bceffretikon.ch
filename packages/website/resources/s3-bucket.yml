@@ -1,0 +1,13 @@
+Resources:
+  Website:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: bceffretikon-ch-website
+      WebsiteConfiguration:
+        ErrorDocument: index.html
+        IndexDocument: index.html
+Outputs:
+  WebSiteUrl:
+    Value: { "Fn::GetAtt": [Website, WebsiteURL] }
+  WebSiteBucket:
+    Value: { Ref: Website }

@@ -1,4 +1,0 @@
-{
-    "*.{js,svelte}": "echo TODO -- yarn eslint --fix",
-    "*.{json,md,html,css,scss,yml,yaml}": "echo TODO -- yarn prettier --write"
-}
