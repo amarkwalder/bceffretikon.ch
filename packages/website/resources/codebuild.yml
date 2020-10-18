@@ -28,6 +28,7 @@ Resources:
               commands:
                 - echo List active directory...
                 - ls
+                - ls packages/website
                 - echo Build started on `date`
                 - yarn website build
             post_build:
