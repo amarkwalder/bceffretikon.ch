@@ -1,10 +1,9 @@
 import React from "react";
 import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
+import { HiddenBlockFields } from "../utils/block-fields";
+
 import "../styles/paragraph.css";
 
-/**
- * 1. Define the Block Component
- */
 function Paragraph({ index }) {
   return (
     <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
@@ -15,13 +14,11 @@ function Paragraph({ index }) {
           </p>
         </div>
       </div>
+      <HiddenBlockFields />
     </BlocksControls>
   );
 }
 
-/**
- * 2. Define the Block
- */
 export const paragraphBlock = {
   Component: Paragraph,
   template: {

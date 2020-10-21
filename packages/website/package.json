@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tinacms/api-git": "^0.31.0",
+    "@tinacms/browser-storage": "^0.31.0",
     "@tinacms/git-client": "^0.31.0",
     "cookie": "^0.4.1",
     "dotenv": "^8.2.0",

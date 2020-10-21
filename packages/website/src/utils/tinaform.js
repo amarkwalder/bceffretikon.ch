@@ -1,7 +1,6 @@
-import { useGithubToolbarPlugins } from "react-tinacms-github";
 import { useForm, useFormScreenPlugin, usePlugin, useCMS } from "tinacms";
 
-export const useTinaForm = (content, formOptions) => {
+export const useTinaForm = (id, content, formOptions) => {
   const cms = useCMS();
 
   const formConfig = cms.enabled
@@ -14,13 +13,12 @@ export const useTinaForm = (content, formOptions) => {
       };
 
   const [data, form] = useForm({
+    id,
     ...formConfig,
     ...formOptions,
   });
 
   usePlugin(form);
-
-  useGithubToolbarPlugins();
 
   return { content, data, form };
 };

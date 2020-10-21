@@ -1,8 +1,10 @@
 import React from "react";
 import { BlocksControls, InlineBlocks } from "react-tinacms-inline";
-import "../styles/features.css";
 import { featureBlock } from "./Feature";
+import { HiddenBlockFields } from "../utils/block-fields";
+
 import styled from "styled-components";
+import "../styles/features.css";
 
 export function FeatureList({ index }) {
   return (
@@ -14,6 +16,7 @@ export function FeatureList({ index }) {
           direction="horizontal"
         />
       </div>
+      <HiddenBlockFields />
     </BlocksControls>
   );
 }

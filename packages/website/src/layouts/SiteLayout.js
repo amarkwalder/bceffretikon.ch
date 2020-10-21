@@ -104,11 +104,12 @@ const Header = ({ currentLanguage, menuItems, logo }) => {
       {menuItems &&
         menuItems.map((menuItem, index) => {
           return (
-            <p key={"nav-" + index}>
-              <NavLink to={"/" + currentLanguage + menuItem.link}>
-                {menuItem.title}
-              </NavLink>
-            </p>
+            <NavLink
+              key={"nav-" + index}
+              to={"/" + currentLanguage + menuItem.link}
+            >
+              {menuItem.title}
+            </NavLink>
           );
         })}
     </>

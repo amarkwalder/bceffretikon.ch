@@ -1,6 +1,7 @@
 import React from "react";
 import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
 import "../styles/features.css";
+import { HiddenBlockFields } from "../utils/block-fields";
 
 function Feature({ index }) {
   return (
@@ -13,6 +14,7 @@ function Feature({ index }) {
           <InlineTextarea name="supporting_copy" focusRing={false} />
         </p>
       </div>
+      <HiddenBlockFields />
     </BlocksControls>
   );
 }

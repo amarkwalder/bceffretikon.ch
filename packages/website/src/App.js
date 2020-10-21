@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { TinaProvider, TinaCMS } from "tinacms";
+import { BrowserStorageClient } from "@tinacms/browser-storage";
 import { HelmetProvider } from "react-helmet-async";
 import {
   GithubClient,
@@ -43,6 +44,7 @@ const App = () => {
     media: new GithubMediaStore(githubClient),
     apis: {
       github: githubClient,
+      storage: new BrowserStorageClient(window.localStorage),
     },
   };
 
