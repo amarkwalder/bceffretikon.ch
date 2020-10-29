@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const express = require("express");
 
@@ -19,6 +20,7 @@ const {
 const app = express();
 app.use(bodyParser.text());
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/proxy-github", ApiProxyRoute(SIGNING_KEY));
 

@@ -1,16 +1,13 @@
 import React from "react";
-import { InlineTextarea, BlocksControls } from "react-tinacms-inline";
+import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
 import { HiddenBlockFields } from "../utils/block-fields";
 
 import "../styles/hero.css";
 
-/**
- * 1. Define the style props
- */
-export function Hero({ text_color, background_color, align }) {
-  /**
-   * 2. Add dynamic inline styles on the 'hero' div
-   */
+const preview = process.env.RUNTIME_ENV === "preview";
+
+export const Hero = ({ data }) => {
+  const { headline, subtext, text_color, background_color, align } = data;
   return (
     <div
       className="hero"
@@ -23,15 +20,22 @@ export function Hero({ text_color, background_color, align }) {
     >
       <div className="wrapper wrapper--narrow">
         <h1>
-          <InlineTextarea name="headline" focusRing={false} />
+          <Textarea name="headline" focusRing={false} text={headline} />
         </h1>
         <p>
-          <InlineTextarea name="subtext" focusRing={false} />
+          <Textarea name="subtext" focusRing={false} text={subtext} />
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Hero;
+
+const Textarea = ({ text, ...props }) => {
+  if (preview) return <InlineTextarea {...props} />;
+  return text;
+};
 
 const fields = [
   {
@@ -58,7 +62,7 @@ const fields = [
 export const heroBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
-      <Hero {...data} />
+      <Hero data={data.blocks[index]} />
       <HiddenBlockFields fields={fields} />
     </BlocksControls>
   ),

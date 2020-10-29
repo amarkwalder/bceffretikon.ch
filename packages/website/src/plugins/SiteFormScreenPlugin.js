@@ -1,8 +1,8 @@
-import { useContent } from "../utils/content";
+//import { useContent } from "../utils/content";
 import { useTinaFormScreenPlugin } from "../utils/tinaform";
 
-export const useSiteFormScreenPlugin = () => {
-  const content = useContent("content/settings/site.json");
+export const useSiteFormScreenPlugin = (content) => {
+  //const content = useContent("content/settings/site.json");
   const result = useTinaFormScreenPlugin(content, SiteForm);
   return { site: result.data, ...result };
 };

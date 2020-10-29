@@ -1,39 +1,65 @@
 import React from "react";
 import { BlocksControls, InlineBlocks } from "react-tinacms-inline";
-import { featureBlock } from "./Feature";
+import { featureBlock, Feature } from "./Feature";
 import { HiddenBlockFields } from "../utils/block-fields";
+import { Error } from "./Error";
 
 import styled from "styled-components";
 import "../styles/features.css";
 
-export function FeatureList({ index }) {
-  return (
-    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
-      <div className="wrapper">
-        <StyledInlineBlocks
-          name="features"
-          blocks={FEATURE_BLOCKS}
-          direction="horizontal"
-        />
-      </div>
-      <HiddenBlockFields />
-    </BlocksControls>
-  );
-}
+const preview = process.env.RUNTIME_ENV === "preview";
 
-// Define a new 'styled' version of InlineBlocks
-const StyledInlineBlocks = styled(InlineBlocks)`
+export const FeatureList = ({ data }) => {
+  return (
+    <div className="wrapper">
+      <StyledBlocks
+        name="features"
+        blocks={FEATURE_BLOCKS}
+        direction="horizontal"
+        itemProps={{ data: data }}
+        data={data}
+      />
+    </div>
+  );
+};
+
+const Blocks = ({ data, className, ...props }) => {
+  if (preview) return <InlineBlocks className={className} {...props} />;
+  return (
+    <div className={className}>
+      {data?.features &&
+        data.features.map((block, index) => {
+          const props = { key: "feature-block-" + index, data: block };
+          switch (block._template) {
+            case "feature":
+              return <Feature {...props} />;
+            default:
+              return (
+                <Error
+                  key={"feature-block-" + index}
+                  message={"Unknown block element '" + block._template + "'"}
+                />
+              );
+          }
+        })}
+    </div>
+  );
+};
+
+const StyledBlocks = styled(Blocks)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 3rem;
   grid-template-rows: auto;
 `;
 
-/**
- * 2. Define the FeatureList Block
- */
 export const featureListBlock = {
-  Component: FeatureList,
+  Component: ({ index, data }) => (
+    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
+      <FeatureList data={data.blocks[index]} />
+      <HiddenBlockFields />
+    </BlocksControls>
+  ),
   template: {
     label: "Feature List",
     defaultItem: {
@@ -60,11 +86,6 @@ export const featureListBlock = {
   },
 };
 
-/**
- * 3. Define the block options
- * for FeatureList to render, we will add
- * a block to this next
- */
 const FEATURE_BLOCKS = {
   feature: featureBlock,
 };

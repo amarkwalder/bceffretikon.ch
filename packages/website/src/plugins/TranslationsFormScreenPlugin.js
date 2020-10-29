@@ -1,8 +1,8 @@
-import { useContent } from "../utils/content";
+//import { useContent } from "../utils/content";
 import { useTinaFormScreenPlugin } from "../utils/tinaform";
 
-export const useTranslationsFormScreenPlugin = () => {
-  const content = useContent("content/settings/translations.json");
+export const useTranslationsFormScreenPlugin = (content) => {
+  //const content = useContent("content/settings/translations.json");
   const result = useTinaFormScreenPlugin(content, TranslationsForm);
   return { translations: result.data, ...result };
 };

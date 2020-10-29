@@ -4,33 +4,42 @@ import { HiddenBlockFields } from "../utils/block-fields";
 
 import "../styles/images.css";
 
-function Images({ data, index }) {
+const preview = process.env.RUNTIME_ENV === "preview";
+
+export const Images = ({ data }) => {
+  const { left, right } = data;
   return (
-    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
-      <div className="wrapper">
-        <div className="image-diptych">
-          <InlineImage
-            name="left.src"
-            parse={(media) => `/${media.filename}`}
-            uploadDir={() => "/public"}
-            previewSrc={(src) => src}
-            focusRing={false}
-            alt={data.left.alt}
-          />
-          <InlineImage
-            name="right.src"
-            parse={(media) => `/${media.filename}`}
-            uploadDir={() => "/public"}
-            previewSrc={(src) => src}
-            focusRing={false}
-            alt={data.left.alt}
-          />
-        </div>
+    <div className="wrapper">
+      <div className="image-diptych">
+        <Image
+          name="left.src"
+          parse={(media) => `/${media.filename}`}
+          uploadDir={() => "/public"}
+          previewSrc={(src) => src}
+          focusRing={false}
+          src={left.src}
+          alt={left.alt}
+        />
+        <Image
+          name="right.src"
+          parse={(media) => `/${media.filename}`}
+          uploadDir={() => "/public"}
+          previewSrc={(src) => src}
+          focusRing={false}
+          src={right.src}
+          alt={right.alt}
+        />
       </div>
-      <HiddenBlockFields fields={fields} />
-    </BlocksControls>
+    </div>
   );
-}
+};
+
+export default Images;
+
+const Image = ({ src, alt, ...props }) => {
+  if (preview) return <InlineImage {...props} />;
+  return <img src={src} alt={alt} />;
+};
 
 const fields = [
   {
@@ -64,7 +73,12 @@ const fields = [
 ];
 
 export const imagesBlock = {
-  Component: Images,
+  Component: ({ index, data }) => (
+    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
+      <Images data={data.blocks[index]} />
+      <HiddenBlockFields fields={fields} />
+    </BlocksControls>
+  ),
   template: {
     label: "Image Diptych",
     defaultItem: {

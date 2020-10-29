@@ -1,6 +1,10 @@
 import React from "react";
-import { NavLink, useHistory, useLocation } from "react-router-dom";
+import { useSiteData } from "react-static";
+
 import { Helmet } from "react-helmet-async";
+import { Link, navigate, useLocation } from "../components/Router";
+
+import { useCurrentLanguage } from "../utils/language";
 
 import { useSiteFormScreenPlugin } from "../plugins/SiteFormScreenPlugin";
 import { useFooterFormScreenPlugin } from "../plugins/FooterFormScreenPlugin";
@@ -8,72 +12,105 @@ import { useMenuFormScreenPlugin } from "../plugins/MenuFormScreenPlugin";
 import { useThemeFormScreenPlugin } from "../plugins/ThemeFormScreenPlugin";
 import { useTranslationsFormScreenPlugin } from "../plugins/TranslationsFormScreenPlugin";
 
+const preview = process.env.RUNTIME_ENV === "preview";
+
 export const SiteLayout = ({ children }) => {
-  const { site } = useSiteFormScreenPlugin();
-  const { footer } = useFooterFormScreenPlugin();
-  const { menu } = useMenuFormScreenPlugin();
-  const { theme } = useThemeFormScreenPlugin();
-  const { translations } = useTranslationsFormScreenPlugin();
+  return preview ? (
+    <PreviewSiteLayout>{children}</PreviewSiteLayout>
+  ) : (
+    <StaticSiteLayout>{children}</StaticSiteLayout>
+  );
+};
+
+export default SiteLayout;
+
+const StaticSiteLayout = ({ children }) => {
+  const siteData = useSiteData();
+
+  const site = siteData.site.data;
+  const footer = siteData.footer.data;
+  const menu = siteData.menu.data;
+  const theme = siteData.theme.data;
+  const translations = siteData.translations.data;
+
+  const currentLanguage = useCurrentLanguage();
 
   return (
     <>
       {site && (
-        <Layout
-          site={site}
-          menu={menu}
-          footer={footer}
-          theme={theme}
+        <Translation
           translations={translations}
+          defaultLanguage={translations.defaultLanguage}
+          availableLanguages={translations.availableLanguages}
+          currentLanguage={currentLanguage}
         >
-          {children}
-        </Layout>
+          <Helmet>
+            <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.1.0/dist/focus-visible.min.js"></script>
+          </Helmet>
+          <Theme theme={theme}>
+            <CookieConsent />
+            <Site>
+              <Header
+                currentLanguage={currentLanguage}
+                defaultLanguage={translations.defaultLanguage}
+                availableLanguages={translations.availableLanguages}
+                menuItems={menu.menuItems}
+                logo={site.logo}
+              />
+              {children}
+              <Footer title={footer.title} links={footer.links} />
+            </Site>
+          </Theme>
+        </Translation>
       )}
     </>
   );
 };
 
-const getCurrentLanguage = (pathname) => {
-  pathname = pathname.endsWith("/") ? pathname : pathname + "/";
-  if (pathname.startsWith("/de/")) {
-    return "de";
-  } else if (pathname.startsWith("/en/")) {
-    return "en";
-  } else {
-    return "de";
-  }
-};
+const PreviewSiteLayout = ({ children }) => {
+  const siteData = useSiteData();
 
-const Layout = ({ site, menu, footer, theme, translations, children }) => {
-  const { pathname } = useLocation();
-  const currentLanguage = getCurrentLanguage(pathname);
+  const { site } = useSiteFormScreenPlugin(siteData.site);
+  const { footer } = useFooterFormScreenPlugin(siteData.footer);
+  const { menu } = useMenuFormScreenPlugin(siteData.menu);
+  const { theme } = useThemeFormScreenPlugin(siteData.theme);
+  const { translations } = useTranslationsFormScreenPlugin(
+    siteData.translations
+  );
+
+  const currentLanguage = useCurrentLanguage();
+
   return (
-    <Translation
-      translations={translations}
-      defaultLanguage={translations.defaultLanguage}
-      availableLanguages={translations.availableLanguages}
-      currentLanguage={currentLanguage}
-    >
-      <Helmet>
-        <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.1.0/dist/focus-visible.min.js"></script>
-      </Helmet>
-
-      <Theme theme={theme}>
-        <CookieConsent />
-        <Site>
-          <Header
-            currentLanguage={currentLanguage}
-            menuItems={menu.menuItems}
-            logo={site.logo}
-          />
-          {children}
-          <Footer title={footer.title} links={footer.links} />
-        </Site>
-      </Theme>
-    </Translation>
+    <>
+      {site && (
+        <Translation
+          translations={translations}
+          defaultLanguage={translations.defaultLanguage}
+          availableLanguages={translations.availableLanguages}
+          currentLanguage={currentLanguage}
+        >
+          <Helmet>
+            <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.1.0/dist/focus-visible.min.js"></script>
+          </Helmet>
+          <Theme theme={theme}>
+            <CookieConsent />
+            <Site>
+              <Header
+                currentLanguage={currentLanguage}
+                defaultLanguage={translations.defaultLanguage}
+                availableLanguages={translations.availableLanguages}
+                menuItems={menu.menuItems}
+                logo={site.logo}
+              />
+              {children}
+              <Footer title={footer.title} links={footer.links} />
+            </Site>
+          </Theme>
+        </Translation>
+      )}
+    </>
   );
 };
-
-export default SiteLayout;
 
 const Translation = ({ children }) => {
   // TODO -> react context
@@ -95,45 +132,54 @@ const Site = ({ theme, children }) => {
   return <>{children}</>;
 };
 
-const Header = ({ currentLanguage, menuItems, logo }) => {
+const Header = ({
+  currentLanguage,
+  availableLanguages,
+  defaultLanguage,
+  menuItems,
+  logo,
+}) => {
   // TODO -> react component
-  return (
-    <>
-      <h2>Header - {currentLanguage.toUpperCase()}</h2>
-      <LanguageSelector currentLanguage={currentLanguage} />
-      {menuItems &&
-        menuItems.map((menuItem, index) => {
-          return (
-            <NavLink
-              key={"nav-" + index}
-              to={"/" + currentLanguage + menuItem.link}
-            >
-              {menuItem.title}
-            </NavLink>
-          );
-        })}
-    </>
-  );
-};
-
-const removeTrailingSlash = (path) =>
-  path === `/` ? path : path.replace(/\/$/, ``);
-
-const onLanguageChange = (language, location, history) => {
-  const { pathname } = location;
-  const pathSuffix = pathname.length > 3 ? pathname.substr(3) : "";
-  history.push(removeTrailingSlash("/" + language.toLowerCase() + pathSuffix));
-};
-
-const LanguageSelector = ({ currentLanguage }) => {
+  //  const match = useMatch("/en/:url");
   const location = useLocation();
-  const history = useHistory();
-  const onClickDE = () => onLanguageChange("de", location, history);
-  const onClickEN = () => onLanguageChange("en", location, history);
+
+  const switchLanguage = (event, language) => {
+    var pathname = location.pathname;
+    pathname = pathname.endsWith("/") ? pathname : pathname + "/";
+
+    const result = availableLanguages.find((lang) =>
+      pathname.startsWith("/" + lang + "/")
+    );
+    if (!result) {
+      navigate("/" + defaultLanguage);
+    }
+
+    var suffix = pathname.substring(4, pathname.length - 1);
+    suffix = suffix === "/" ? "" : suffix;
+
+    var to = "/" + language + "/" + suffix;
+    to = to.endsWith("/") ? to.substring(0, to.length - 1) : to;
+
+    navigate(to);
+  };
   return (
     <>
-      <button onClick={onClickDE}>DE</button>
-      <button onClick={onClickEN}>EN</button>
+      <h2>Header</h2>
+      <button onClick={(e) => switchLanguage(e, "de")}>DE</button>
+      <button onClick={(e) => switchLanguage(e, "en")}>EN</button>
+      <div>
+        {menuItems &&
+          menuItems.map((menuItem, index) => {
+            return (
+              <Link
+                key={"link-" + currentLanguage + "-" + index}
+                to={"/" + currentLanguage + menuItem.link}
+              >
+                {menuItem.title}
+              </Link>
+            );
+          })}
+      </div>
     </>
   );
 };

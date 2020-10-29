@@ -7,7 +7,7 @@ export const PageLayout = ({ data, children }) => {
   // TODO -> Load Site from JSON
   const site = { title: "Badminton Club Effretikon" };
 
-  const { language } = data;
+  const language = data?.language || "de";
 
   return (
     <>

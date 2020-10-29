@@ -56,7 +56,6 @@ const PipelineStateInfo = () => {
   }
 
   if (pipelineState.message) {
-    console.log("Pipeline State", pipelineState.message);
     return (
       <FieldMeta name={"Pipeline"}>
         <MetaText>{pipelineState.message}</MetaText>

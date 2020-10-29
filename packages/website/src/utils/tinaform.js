@@ -1,22 +1,35 @@
-import { useForm, useFormScreenPlugin, usePlugin, useCMS } from "tinacms";
+//import { useCallback, useEffect } from "react";
+import { useForm, useFormScreenPlugin, usePlugin } from "tinacms";
+//import get from "lodash.get";
 
-export const useTinaForm = (id, content, formOptions) => {
-  const cms = useCMS();
+import { useGithubFile } from "react-tinacms-github";
 
-  const formConfig = cms.enabled
-    ? {
-        loadInitialValues: content.fetchFile,
-        onSubmit: (value) => content.commit(value, "TinaCMS update"),
-      }
-    : {
-        initialValues: content.data,
-      };
+const preview = process.env.RUNTIME_ENV === "preview";
+
+export const useTinaForm = (content, formOptions) => {
+  if (!preview)
+    throw new Error("Tina CMS forms can only be used in preview mode.");
+
+  console.log("content", content);
+
+  const { fetchFile, commit } = useGithubFile({
+    path: content.path,
+    parse: JSON.parse,
+    serialize: JSON.stringify,
+  });
+
+  const formConfig = {
+    id: content.path,
+    loadInitialValues: fetchFile,
+    onSubmit: commit,
+  };
 
   const [data, form] = useForm({
-    id,
     ...formConfig,
     ...formOptions,
   });
+
+  //useFormBrowserCache(form, cms.enabled);
 
   usePlugin(form);
 
@@ -24,16 +37,20 @@ export const useTinaForm = (id, content, formOptions) => {
 };
 
 export const useTinaFormScreenPlugin = (content, formOptions) => {
-  const cms = useCMS();
+  if (!preview)
+    throw new Error("Tina CMS forms can only be used in preview mode.");
 
-  const formConfig = cms.enabled
-    ? {
-        loadInitialValues: content.fetchFile,
-        onSubmit: (value) => content.commit(value, "TinaCMS update"),
-      }
-    : {
-        initialValues: content.data,
-      };
+  const { fetchFile, commit } = useGithubFile({
+    path: content.path,
+    parse: JSON.parse,
+    serialize: JSON.stringify,
+  });
+
+  const formConfig = {
+    id: content.path,
+    loadInitialValues: fetchFile,
+    onSubmit: commit,
+  };
 
   const [data, form] = useForm({
     ...formConfig,
@@ -44,3 +61,38 @@ export const useTinaFormScreenPlugin = (content, formOptions) => {
 
   return { content, data, form };
 };
+
+// const useFormBrowserCache = (form, editing) => {
+//   const cms = useCMS();
+
+//   const saveToStorage = useCallback(
+//     (_formData) => {
+//       cms.api.storage.save(form.id, _formData.values); //getFlattenedFormValues(form));
+//     },
+//     [cms.api.storage, form]
+//   );
+
+//   // save to storage on change
+//   useWatchFormValues(form, saveToStorage);
+
+//   // load from storage on boot
+//   useEffect(() => {
+//     if (!editing) return;
+
+//     const values = cms.api.storage.load(form.id);
+//     if (values) {
+//       form.updateValues(values);
+//     }
+//   }, [form, editing, cms.api.storage]);
+// };
+
+// const getFlattenedFormValues = (form) => {
+//   const flatData = {};
+//   const values = form.values;
+//   form.finalForm.getRegisteredFields().forEach((field) => {
+//     const data = get(values, field);
+//     if (typeof data === "object") return;
+//     flatData[field] = data;
+//   });
+//   return flatData;
+// };

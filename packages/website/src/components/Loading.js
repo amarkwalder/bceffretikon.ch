@@ -1,7 +1,7 @@
 import React from "react";
 
-export const Loading = () => {
-  return <p>Loading...</p>;
+export const Loading = ({ message = null }) => {
+  return <p>Loading{message && ":" + message.toString()}...</p>;
 };
 
 export default Loading;

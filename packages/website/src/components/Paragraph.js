@@ -4,23 +4,35 @@ import { HiddenBlockFields } from "../utils/block-fields";
 
 import "../styles/paragraph.css";
 
-function Paragraph({ index }) {
+const preview = process.env.RUNTIME_ENV === "preview";
+
+export const Paragraph = ({ data }) => {
+  const { text } = data;
   return (
-    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
-      <div className="paragraph__background">
-        <div className="wrapper wrapper--narrow">
-          <p className="paragraph__text">
-            <InlineTextarea name="text" focusRing={false} />
-          </p>
-        </div>
+    <div className="paragraph__background">
+      <div className="wrapper wrapper--narrow">
+        <p className="paragraph__text">
+          <Textarea name="text" focusRing={false} text={text} />
+        </p>
       </div>
-      <HiddenBlockFields />
-    </BlocksControls>
+    </div>
   );
-}
+};
+
+export default Paragraph;
+
+const Textarea = ({ text, ...props }) => {
+  if (preview) return <InlineTextarea {...props} />;
+  return text;
+};
 
 export const paragraphBlock = {
-  Component: Paragraph,
+  Component: ({ index, data }) => (
+    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
+      <Paragraph data={data.blocks[index]} />
+      <HiddenBlockFields />
+    </BlocksControls>
+  ),
   template: {
     label: "Paragraph",
     defaultItem: {

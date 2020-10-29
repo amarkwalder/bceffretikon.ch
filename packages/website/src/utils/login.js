@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useGithubClient } from "react-tinacms-github";
 
-const preview = process.env.REACT_APP_RUNTIME_ENV === "preview";
+const preview = process.env.RUNTIME_ENV === "preview";
 
-export const useCheckLogin = () => {
-  const githubClient = useGithubClient();
-
+export const useCheckLogin = (githubClient) => {
+  //const githubClient = useGithubClient();
   const [loggedIn, setLoggedIn] = useState();
   const [error, setError] = useState();
 
   useEffect(() => {
-    if (preview) {
+    if (!preview) return;
+
+    const token = localStorage.getItem("tinacms-github-token") || null;
+
+    const authenticate = () => {
+      githubClient
+        .authenticate()
+        .then(() => githubClient.isAuthenticated())
+        .then((user) => setLoggedIn(user !== undefined))
+        .catch((error) => setError(error));
+    };
+
+    if (token) {
       githubClient
         .isAuthenticated()
         .then((user) => {
-          if (user) {
-            setLoggedIn(true);
-            return;
-          }
-
-          githubClient
-            .authenticate()
-            .then(() => githubClient.isAuthenticated())
-            .then((user) => setLoggedIn(user !== undefined))
-            .catch((error) => setError(error));
+          if (user) setLoggedIn(true);
+          else authenticate();
         })
         .catch((error) => setError(error));
+    } else {
+      authenticate();
     }
   }, [githubClient]);
 

@@ -3,50 +3,49 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "@tinacms/api-git": "^0.31.0",
     "@tinacms/browser-storage": "^0.31.0",
     "@tinacms/git-client": "^0.31.0",
-    "cookie": "^0.4.1",
-    "dotenv": "^8.2.0",
-    "http-proxy-middleware": "^1.0.5",
-    "package.json": "^2.0.1",
-    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
     "react-helmet-async": "^1.0.7",
+    "react-hot-loader": "^4.13.0",
     "react-is": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-location": "^2.0.8",
+    "react-static": "^7.2.0",
+    "react-static-plugin-reach-router": "^7.2.0",
+    "react-static-plugin-react-location": "^7.4.2",
+    "react-static-plugin-sitemap": "^7.2.0",
+    "react-static-plugin-source-filesystem": "^7.2.0",
     "react-tinacms-github": "^0.31.0",
     "react-tinacms-inline": "^0.31.0",
-    "serve": "^11.3.2",
     "styled-components": "^5.1.1",
-    "tinacms": "^0.31.0-alpha.4",
-    "typescript": "^3.9.5",
-    "yarn.lock": "^0.0.1-security"
+    "tinacms": "^0.31.0-alpha.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-react-app": "^5.0.1",
+    "eslint-config-react-tools": "^1.1.7",
+    "eslint-plugin-flowtype": "^4.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^4.0.2",
+    "http-proxy-middleware": "^1.0.5",
+    "serve": "^11.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "start:preview": "REACT_APP_RUNTIME_ENV=preview react-scripts start",
-    "build:preview": "REACT_APP_RUNTIME_ENV=preview react-scripts build",
-    "serve": "serve -s build",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "start": "react-static start",
+    "start:preview": "RUNTIME_ENV=preview react-static start",
+    "stage": "react-static build --staging",
+    "stage:preview": "RUNTIME_ENV=preview react-static build --staging",
+    "build": "react-static build",
+    "build:preview": "RUNTIME_ENV=preview react-static build",
+    "analyze": "react-static build --analyze",
+    "serve": "serve dist -p 3000"
   }
 }
