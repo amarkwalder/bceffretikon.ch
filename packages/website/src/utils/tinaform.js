@@ -10,8 +10,6 @@ export const useTinaForm = (content, formOptions) => {
   if (!preview)
     throw new Error("Tina CMS forms can only be used in preview mode.");
 
-  console.log("content", content);
-
   const { fetchFile, commit } = useGithubFile({
     path: content.path,
     parse: JSON.parse,
@@ -21,7 +19,7 @@ export const useTinaForm = (content, formOptions) => {
   const formConfig = {
     id: content.path,
     loadInitialValues: fetchFile,
-    onSubmit: commit,
+    onSubmit: (value) => commit(value, "TinaCMS update"),
   };
 
   const [data, form] = useForm({
@@ -49,7 +47,7 @@ export const useTinaFormScreenPlugin = (content, formOptions) => {
   const formConfig = {
     id: content.path,
     loadInitialValues: fetchFile,
-    onSubmit: commit,
+    onSubmit: (value) => commit(value, "TinaCMS update"),
   };
 
   const [data, form] = useForm({
