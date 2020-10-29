@@ -15,7 +15,6 @@ import { PageLayout } from "../layouts/PageLayout";
 import { InlineGithubForm } from "../layouts/InlineGithubForm";
 
 import { useRouteData } from "react-static";
-import { Redirect, useMatch } from "@reach/router";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
