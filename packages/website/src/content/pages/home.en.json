@@ -3,7 +3,7 @@
   "language": "en",
   "blocks": [
     {
-      "headline": "English: Block in a Sunbeam",
+      "headline": "English: Block in a Sunbeam 1",
       "subtext": "Dispassionate extraterrestrial observer are creatures of the cosmos courage of our questions inconspicuous motes of rock and gas a mote of dust suspended in a sunbeam great turbulent clouds.",
       "_template": "hero",
       "background_color": "#051e26",
@@ -11,8 +11,14 @@
       "align": "center"
     },
     {
-      "left": { "src": "/ivan-bandura-unsplash-square.jpg", "alt": "ocean" },
-      "right": { "src": "/martin-sanchez-unsplash-square.jpg", "alt": "dunes" },
+      "left": {
+        "src": "/ivan-bandura-unsplash-square.jpg",
+        "alt": "ocean"
+      },
+      "right": {
+        "src": "/martin-sanchez-unsplash-square.jpg",
+        "alt": "dunes"
+      },
       "_template": "images"
     },
     {
