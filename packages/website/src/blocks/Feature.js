@@ -1,7 +1,8 @@
 import React from "react";
 import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
-import "../styles/features.css";
 import { HiddenBlockFields } from "../utils/block-fields";
+
+import "../styles/features.css";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
@@ -30,7 +31,7 @@ const Textarea = ({ text, ...props }) => {
   return text;
 };
 
-export const featureBlock = {
+export const FeatureBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index}>
       <Feature data={data.features[index]} />

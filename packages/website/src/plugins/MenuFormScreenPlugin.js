@@ -4,7 +4,7 @@ import { useTinaFormScreenPlugin } from "../utils/tinaform";
 export const useMenuFormScreenPlugin = (content) => {
   //const content = useContent("content/settings/menu.json");
   const result = useTinaFormScreenPlugin(content, MenuForm);
-  return { menu: result.data, ...result };
+  return { menu: result.content.data, ...result };
 };
 
 export default useMenuFormScreenPlugin;

@@ -1,10 +1,14 @@
 import React from "react";
 import { useSiteData } from "react-static";
+import styled, { css } from "styled-components";
 
 import { Helmet } from "react-helmet-async";
 import { Link, navigate, useLocation } from "../components/Router";
 
 import { useCurrentLanguage } from "../utils/language";
+
+import { Theme } from "../components/Theme";
+import { Header } from "../components/Header";
 
 import { useSiteFormScreenPlugin } from "../plugins/SiteFormScreenPlugin";
 import { useFooterFormScreenPlugin } from "../plugins/FooterFormScreenPlugin";
@@ -82,7 +86,7 @@ const PreviewSiteLayout = ({ children }) => {
 
   return (
     <>
-      {site && (
+      {site && footer && menu && theme && translations && (
         <Translation
           translations={translations}
           defaultLanguage={translations.defaultLanguage}
@@ -122,17 +126,43 @@ const CookieConsent = () => {
   return <></>;
 };
 
-const Theme = ({ theme, children }) => {
-  // TODO -> react component
-  return <>{children}</>;
-};
+const Site = styled.div`
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 
-const Site = ({ theme, children }) => {
-  // TODO -> styled component
-  return <>{children}</>;
-};
+  > ${Header} {
+    flex: 0 0 auto;
+  }
 
-const Header = ({
+  > ${Footer} {
+    flex: 0 0 auto;
+  }
+
+  > * {
+    flex: 1 0 auto;
+  }
+
+  ${(props) =>
+    props.theme.hero.parallax &&
+    css`
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      perspective: 1px;
+      perspective-origin: top;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    `}
+`;
+
+const Header2 = ({
   currentLanguage,
   availableLanguages,
   defaultLanguage,

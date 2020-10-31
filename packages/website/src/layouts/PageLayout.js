@@ -1,18 +1,41 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React, { useContext } from "react";
 
-export const PageLayout = ({ data, children }) => {
-  const pageTitle = data?.title;
+import { SEO } from "../components/SEO";
+import { Hero } from "../blocks/Hero";
+import { Wrapper, Main } from "../components/Style";
+import { ThemeContext } from "../components/Theme";
 
-  // TODO -> Load Site from JSON
-  const site = { title: "Badminton Club Effretikon" };
+import merge from "lodash.merge";
 
-  const language = data?.language || "de";
+const removeNull = (obj) =>
+  Object.keys(obj)
+    .filter((k) => obj[k] != null) // Remove undef. and null.
+    .reduce(
+      (newObj, k) =>
+        typeof obj[k] === "object"
+          ? { ...newObj, [k]: removeNull(obj[k]) } // Recurse.
+          : { ...newObj, [k]: obj[k] }, // Copy value.
+      {}
+    );
+
+export const PageLayout = ({ site, page, post, children }) => {
+  const language = page?.language || "de";
+
+  const { theme } = useContext(ThemeContext);
+
+  const pageTitle = page?.title || post?.frontmatter?.title;
+
+  const pageHero = page?.hero || post?.frontmatter?.hero;
+  const hero =
+    pageHero && theme
+      ? merge({}, theme.hero, removeNull(pageHero))
+      : theme?.hero;
 
   return (
     <>
       {pageTitle && <SEO site={site} language={language} title={pageTitle} />}
       <Main>
+        <Hero data={hero} />
         <Wrapper>{children}</Wrapper>
       </Main>
     </>
@@ -20,68 +43,3 @@ export const PageLayout = ({ data, children }) => {
 };
 
 export default PageLayout;
-
-const SEO = ({ site, description, language, meta, title }) => {
-  // TODO -> Translation Context
-  //const { tr } = useContext(TranslationContext);
-  const tr = (code) => code;
-
-  const metaDescription =
-    description || tr("SITE.Description") || site?.description;
-
-  if (!meta) meta = [];
-
-  return (
-    <Helmet
-      htmlAttributes={{
-        lang: language,
-      }}
-      title={title}
-      titleTemplate={`%s | ${site.title}`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:title`,
-          content: title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: site.author,
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-      ].concat(meta)}
-    />
-  );
-};
-
-const Main = ({ children }) => {
-  // TODO -> styled component
-  return <>{children}</>;
-};
-
-const Wrapper = ({ children }) => {
-  // TODO -> styled component
-  return <>{children}</>;
-};

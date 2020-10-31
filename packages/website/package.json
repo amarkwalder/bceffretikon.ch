@@ -7,6 +7,8 @@
     "@tinacms/api-git": "^0.31.0",
     "@tinacms/browser-storage": "^0.31.0",
     "@tinacms/git-client": "^0.31.0",
+    "lodash.merge": "^4.6.2",
+    "polished": "^4.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
@@ -21,7 +23,8 @@
     "react-static-plugin-source-filesystem": "^7.2.0",
     "react-tinacms-github": "^0.31.0",
     "react-tinacms-inline": "^0.31.0",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.1",
+    "styled-icons": "^10.22.0",
     "tinacms": "^0.31.0-alpha.4"
   },
   "devDependencies": {

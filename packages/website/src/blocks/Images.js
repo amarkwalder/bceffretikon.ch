@@ -72,7 +72,7 @@ const fields = [
   },
 ];
 
-export const imagesBlock = {
+export const ImagesBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
       <Images data={data.blocks[index]} />

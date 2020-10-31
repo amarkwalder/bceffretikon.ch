@@ -4,7 +4,7 @@ import { useTinaFormScreenPlugin } from "../utils/tinaform";
 export const useSiteFormScreenPlugin = (content) => {
   //const content = useContent("content/settings/site.json");
   const result = useTinaFormScreenPlugin(content, SiteForm);
-  return { site: result.data, ...result };
+  return { site: result.content.data, ...result };
 };
 
 export default useSiteFormScreenPlugin;

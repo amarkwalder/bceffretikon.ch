@@ -4,7 +4,7 @@ import { useTinaFormScreenPlugin } from "../utils/tinaform";
 export const useTranslationsFormScreenPlugin = (content) => {
   //const content = useContent("content/settings/translations.json");
   const result = useTinaFormScreenPlugin(content, TranslationsForm);
-  return { translations: result.data, ...result };
+  return { translations: result.content.data, ...result };
 };
 
 export default useTranslationsFormScreenPlugin;

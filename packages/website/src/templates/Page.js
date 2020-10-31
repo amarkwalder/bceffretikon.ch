@@ -3,17 +3,19 @@ import { InlineBlocks } from "react-tinacms-inline";
 
 import { useTinaForm } from "../utils/tinaform";
 
-import { Hero, heroBlock } from "../components/Hero";
-import { Images, imagesBlock } from "../components/Images";
-import { Paragraph, paragraphBlock } from "../components/Paragraph";
-import { FeatureList, featureListBlock } from "../components/FeatureList";
+import { Hero, HeroBlock } from "../blocks/Hero";
+import { Images, ImagesBlock } from "../blocks/Images";
+import { Paragraph, ParagraphBlock } from "../blocks/Paragraph";
+import { FeatureList, FeatureListBlock } from "../blocks/FeatureList";
 
 import { Error } from "../components/Error";
 
 import { PageLayout } from "../layouts/PageLayout";
 import { InlineGithubForm } from "../layouts/InlineGithubForm";
 
-import { useRouteData } from "react-static";
+import { useRouteData, useSiteData } from "react-static";
+
+import { Paper } from "../components/Style";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
@@ -24,39 +26,46 @@ export const Page = (props) => {
 export default Page;
 
 const StaticPage = () => {
+  const siteData = useSiteData();
+  const site = siteData.site.data;
+
   const routeData = useRouteData();
   const { content } = routeData;
 
   return (
-    <PageLayout data={content.data}>
-      {content?.data?.blocks &&
-        content.data.blocks.map((block, index) => {
-          const props = { key: "block-" + index, data: block };
-          switch (block._template) {
-            case "hero":
-              return <Hero {...props} />;
-            case "images":
-              return <Images {...props} />;
-            case "paragraph":
-              return <Paragraph {...props} />;
-            case "features":
-              return <FeatureList {...props} />;
-            default:
-              return (
-                <Error
-                  key={"block-" + index}
-                  message={"Unknown block element '" + block._template + "'"}
-                />
-              );
-          }
-        })}
+    <PageLayout site={site} page={content.data}>
+      <Paper>
+        {content?.data?.blocks &&
+          content.data.blocks.map((block, index) => {
+            const props = { key: "block-" + index, data: block };
+            switch (block._template) {
+              // case "hero":
+              //   return <Hero {...props} />;
+              case "images":
+                return <Images {...props} />;
+              case "paragraph":
+                return <Paragraph {...props} />;
+              case "features":
+                return <FeatureList {...props} />;
+              default:
+                return (
+                  <Error
+                    key={"block-" + index}
+                    message={"Unknown block element '" + block._template + "'"}
+                  />
+                );
+            }
+          })}
+      </Paper>
     </PageLayout>
   );
 };
 
 const PreviewPage = () => {
-  const routeData = useRouteData();
+  const siteData = useSiteData();
+  const site = siteData.site.data;
 
+  const routeData = useRouteData();
   const { content } = routeData;
   const { data, form } = useTinaForm(content);
 
@@ -64,12 +73,14 @@ const PreviewPage = () => {
     <>
       {form && data && (
         <InlineGithubForm form={form}>
-          <PageLayout data={data}>
-            <InlineBlocks
-              name="blocks"
-              blocks={HOME_BLOCKS}
-              itemProps={{ data: content.data }}
-            />
+          <PageLayout site={site} page={data}>
+            <Paper>
+              <InlineBlocks
+                name="blocks"
+                blocks={HOME_BLOCKS}
+                itemProps={{ data: data }}
+              />
+            </Paper>
           </PageLayout>
         </InlineGithubForm>
       )}
@@ -78,8 +89,8 @@ const PreviewPage = () => {
 };
 
 const HOME_BLOCKS = {
-  hero: heroBlock,
-  images: imagesBlock,
-  paragraph: paragraphBlock,
-  features: featureListBlock,
+  //hero: HeroBlock,
+  images: ImagesBlock,
+  paragraph: ParagraphBlock,
+  features: FeatureListBlock,
 };

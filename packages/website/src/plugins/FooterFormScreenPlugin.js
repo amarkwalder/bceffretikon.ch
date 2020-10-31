@@ -4,7 +4,7 @@ import { useTinaFormScreenPlugin } from "../utils/tinaform";
 export const useFooterFormScreenPlugin = (content) => {
   //const content = useContent("content/settings/footer.json");
   const result = useTinaFormScreenPlugin(content, FooterForm);
-  return { footer: result.data, ...result };
+  return { footer: result.content.data, ...result };
 };
 
 export default useFooterFormScreenPlugin;

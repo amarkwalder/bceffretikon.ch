@@ -1,8 +1,8 @@
 import React from "react";
 import { BlocksControls, InlineBlocks } from "react-tinacms-inline";
-import { featureBlock, Feature } from "./Feature";
+import { FeatureBlock, Feature } from "./Feature";
 import { HiddenBlockFields } from "../utils/block-fields";
-import { Error } from "./Error";
+import { Error } from "../components/Error";
 
 import styled from "styled-components";
 import "../styles/features.css";
@@ -53,7 +53,7 @@ const StyledBlocks = styled(Blocks)`
   grid-template-rows: auto;
 `;
 
-export const featureListBlock = {
+export const FeatureListBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
       <FeatureList data={data.blocks[index]} />
@@ -87,5 +87,5 @@ export const featureListBlock = {
 };
 
 const FEATURE_BLOCKS = {
-  feature: featureBlock,
+  feature: FeatureBlock,
 };

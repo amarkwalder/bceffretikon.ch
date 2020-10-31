@@ -26,7 +26,7 @@ const Textarea = ({ text, ...props }) => {
   return text;
 };
 
-export const paragraphBlock = {
+export const ParagraphBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
       <Paragraph data={data.blocks[index]} />
