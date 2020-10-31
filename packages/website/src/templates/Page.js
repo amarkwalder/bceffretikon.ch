@@ -56,12 +56,12 @@ const StaticPage = () => {
 };
 
 const PreviewPage = () => {
-  //const content = useContent(contentPath);
-
   const routeData = useRouteData();
 
   const { content } = routeData;
-  const { data, form } = useTinaForm(content, null);
+  const { data, form } = useTinaForm(content);
+
+  console.log("form", form.dirty, form);
 
   return (
     <>
