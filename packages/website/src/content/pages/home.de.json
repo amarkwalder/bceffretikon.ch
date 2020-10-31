@@ -26,14 +26,6 @@
 
   "blocks": [
     {
-      "headline": "Deutsch: Block in a Sunbeam 2",
-      "subtext": "Dispassionate extraterrestrial observer are creatures of the cosmos courage of our questions inconspicuous motes of rock and gas a mote of dust suspended in a sunbeam great turbulent clouds.",
-      "_template": "hero",
-      "background_color": "#051E26",
-      "text_color": "#fffaf4",
-      "align": "center"
-    },
-    {
       "left": {
         "src": "/ivan-bandura-unsplash-square.jpg",
         "alt": "ocean"
