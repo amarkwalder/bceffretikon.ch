@@ -1,7 +1,6 @@
 import React from "react";
 import { InlineBlocks } from "react-tinacms-inline";
 
-//import { useContent } from "../utils/content";
 import { useTinaForm } from "../utils/tinaform";
 
 import { Hero, heroBlock } from "../components/Hero";
@@ -60,8 +59,6 @@ const PreviewPage = () => {
 
   const { content } = routeData;
   const { data, form } = useTinaForm(content);
-
-  console.log("form", form.dirty, form);
 
   return (
     <>
