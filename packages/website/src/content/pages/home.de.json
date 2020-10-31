@@ -4,7 +4,7 @@
   "lang": "de",
   "displayTitle": false,
   "hero": {
-    "headline": "Willkommen beim Badminton Club Effretikon",
+    "headline": "Willkommen beim Badminton Club Effretikon 2",
     "textline": "Der Club mit Tradition",
     "ctas": [
       {
@@ -23,7 +23,6 @@
     "image": "../images/badminton-racket.png",
     "large": true
   },
-
   "blocks": [
     {
       "left": {
