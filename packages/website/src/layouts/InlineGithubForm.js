@@ -6,7 +6,7 @@ import { usePlugin } from "tinacms";
 import { PipelineStateToolbarWidget } from "../plugins/PipelineStatePlugin";
 
 export const InlineGithubForm = ({ form, children }) => {
-  //  usePlugin(PipelineStateToolbarWidget);
+  usePlugin(PipelineStateToolbarWidget);
   useGithubToolbarPlugins();
 
   return (
