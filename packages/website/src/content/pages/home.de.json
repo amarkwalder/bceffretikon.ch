@@ -1,6 +1,29 @@
 {
   "title": "Startseite",
-  "language": "de",
+  "path": "/de",
+  "lang": "de",
+  "displayTitle": false,
+  "hero": {
+    "headline": "Willkommen beim Badminton Club Effretikon",
+    "textline": "Der Club mit Tradition",
+    "ctas": [
+      {
+        "label": "Blog lesen",
+        "link": "/de/blog",
+        "primary": true,
+        "arrow": true
+      },
+      {
+        "label": "Kontakt",
+        "link": "/de/contact",
+        "arrow": false,
+        "primary": false
+      }
+    ],
+    "image": "../images/badminton-racket.png",
+    "large": true
+  },
+
   "blocks": [
     {
       "headline": "Deutsch: Block in a Sunbeam 2",
