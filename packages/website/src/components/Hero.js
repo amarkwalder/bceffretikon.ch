@@ -4,15 +4,56 @@ import { HiddenBlockFields } from "../utils/block-fields";
 
 import styled, { css } from "styled-components";
 import { transparentize } from "polished";
-import { Wrapper, Overlay, LinkButton, Image } from "../components/Style";
+import { Wrapper, Overlay, LinkButton, Image } from "./Style";
 import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
-export const Hero = ({ data }) => {
+export const Hero = (props) => {
+  return preview ? <PreviewHero {...props} /> : <StaticHero {...props} />;
+};
+
+export default Hero;
+
+const StaticHero = ({ data }) => {
   const { headline, textline, large, overlay, image, ctas } = data;
 
-  console.log("image", image);
+  return (
+    <HeroWrapper>
+      <HeroBackground>
+        {overlay && <Overlay />}
+        {image && <HeroImage src={image} />}
+      </HeroBackground>
+      {(headline || textline || ctas) && (
+        <HeroContent large={large}>
+          <Wrapper>
+            {headline && <Headline>{headline}</Headline>}
+            {textline && <Textline>{textline}</Textline>}
+            {ctas && (
+              <Actions>
+                {Object.values(ctas).map((cta, index) => {
+                  return (
+                    <LinkButton
+                      key={"cta-" + index}
+                      primary={cta.primary?.toString() || "false"}
+                      to={cta.link}
+                    >
+                      {cta.label}
+                      {cta.arrow && <span>&nbsp;&nbsp;→</span>}
+                    </LinkButton>
+                  );
+                })}
+              </Actions>
+            )}
+          </Wrapper>
+        </HeroContent>
+      )}
+    </HeroWrapper>
+  );
+};
+
+const PreviewHero = ({ data }) => {
+  const { large, overlay, image, ctas } = data;
 
   return (
     <HeroWrapper>
@@ -24,10 +65,10 @@ export const Hero = ({ data }) => {
         <Wrapper>
           <InlineGroup name="hero" fields={fields}>
             <Headline>
-              <Textarea name="headline" focusRing={false} text={headline} />
+              <InlineTextarea name="headline" focusRing={false} />
             </Headline>
             <Textline>
-              <Textarea name="textline" focusRing={false} text={textline} />
+              <InlineTextarea name="textline" focusRing={false} />
             </Textline>
             {ctas && (
               <Actions>
@@ -101,8 +142,6 @@ const fields = [
     component: "toggle",
   },
 ];
-
-export default Hero;
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -195,8 +234,3 @@ export const HeroImage = styled(Image)`
   background-size: cover;
   background-repeat: no-repeat;
 `;
-
-const Textarea = ({ text, ...props }) => {
-  if (preview) return <InlineTextarea {...props} />;
-  return text;
-};

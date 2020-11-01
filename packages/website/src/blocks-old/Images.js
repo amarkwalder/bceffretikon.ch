@@ -3,6 +3,7 @@ import { BlocksControls, InlineImage } from "react-tinacms-inline";
 import { HiddenBlockFields } from "../utils/block-fields";
 
 import "../styles/images.css";
+import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
@@ -13,19 +14,19 @@ export const Images = ({ data }) => {
       <div className="image-diptych">
         <Image
           name="left.src"
-          parse={(media) => `/${media.filename}`}
-          uploadDir={() => "/public"}
-          previewSrc={(src) => src}
           focusRing={false}
+          parse={(media) => `/images/${media.filename}`}
+          uploadDir={() => GIT_IMAGES_UPLOAD_DIR}
+          previewSrc={(src) => src}
           src={left.src}
           alt={left.alt}
         />
         <Image
           name="right.src"
-          parse={(media) => `/${media.filename}`}
-          uploadDir={() => "/public"}
-          previewSrc={(src) => src}
           focusRing={false}
+          parse={(media) => `/images/${media.filename}`}
+          uploadDir={() => GIT_IMAGES_UPLOAD_DIR}
+          previewSrc={(src) => src}
           src={right.src}
           alt={right.alt}
         />
@@ -46,8 +47,8 @@ const fields = [
     name: "left.src",
     label: "Left-Hand Image",
     component: "image",
-    parse: (media) => `/${media.filename}`,
-    uploadDir: () => "/public",
+    parse: (media) => `/images/${media.filename}`,
+    uploadDir: () => GIT_IMAGES_UPLOAD_DIR,
     previewSrc: (src) => src,
     focusRing: false,
   },
@@ -60,8 +61,8 @@ const fields = [
     name: "right.src",
     label: "Right-Hand Image",
     component: "image",
-    parse: (media) => `/${media.filename}`,
-    uploadDir: () => "/public",
+    parse: (media) => `/images/${media.filename}`,
+    uploadDir: () => GIT_IMAGES_UPLOAD_DIR,
     previewSrc: (src) => src,
     focusRing: false,
   },

@@ -3,10 +3,10 @@ import { InlineBlocks } from "react-tinacms-inline";
 
 import { useTinaForm } from "../utils/tinaform";
 
-import { Hero, HeroBlock } from "../blocks/Hero";
-import { Images, ImagesBlock } from "../blocks/Images";
-import { Paragraph, ParagraphBlock } from "../blocks/Paragraph";
-import { FeatureList, FeatureListBlock } from "../blocks/FeatureList";
+// import { Images, ImagesBlock } from "../blocks/Images";
+// import { Paragraph, ParagraphBlock } from "../blocks/Paragraph";
+// import { FeatureList, FeatureListBlock } from "../blocks/FeatureList";
+import { Content, ContentBlock } from "../blocks/Content";
 
 import { Error } from "../components/Error";
 
@@ -39,14 +39,15 @@ const StaticPage = () => {
           content.data.blocks.map((block, index) => {
             const props = { key: "block-" + index, data: block };
             switch (block._template) {
-              // case "hero":
-              //   return <Hero {...props} />;
-              case "images":
-                return <Images {...props} />;
-              case "paragraph":
-                return <Paragraph {...props} />;
-              case "features":
-                return <FeatureList {...props} />;
+              // case "images":
+              //   return <Images {...props} />;
+              // case "paragraph":
+              //   return <Paragraph {...props} />;
+              // case "features":
+              //   return <FeatureList {...props} />;
+
+              case "ContentBlock":
+                return <Content {...props} />;
               default:
                 return (
                   <Error
@@ -89,8 +90,8 @@ const PreviewPage = () => {
 };
 
 const HOME_BLOCKS = {
-  //hero: HeroBlock,
-  images: ImagesBlock,
-  paragraph: ParagraphBlock,
-  features: FeatureListBlock,
+  content: ContentBlock,
+  // images: ImagesBlock,
+  // paragraph: ParagraphBlock,
+  // features: FeatureListBlock,
 };

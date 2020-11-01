@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 
-import { SEO } from "../components/SEO";
-import { Hero } from "../blocks/Hero";
 import { Wrapper, Main } from "../components/Style";
+
+import { SEO } from "../components/SEO";
+import { Hero } from "../components/Hero";
 import { ThemeContext } from "../components/Theme";
 
 import merge from "lodash.merge";
