@@ -98,6 +98,8 @@ export const Form = ({ data }) => {
   );
 };
 
+export default Form;
+
 const Base = {
   name: "customInput",
   key: "label",
@@ -206,12 +208,16 @@ export const FormBlock = {
       <HiddenBlockFields fields={fields} />
     </BlocksControls>
   ),
-  defaultItem: {
-    name: "Form",
-    recipient: "",
-    fields: [],
+  template: {
+    label: "Form",
+    defaultItem: {
+      _template: "FormBlock",
+      name: "Form",
+      recipient: "",
+      fields: [],
+    },
+    fields: fields,
   },
-  fields: fields,
 };
 
 const StyledForm = styled.form`

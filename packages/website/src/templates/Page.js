@@ -3,10 +3,9 @@ import { InlineBlocks } from "react-tinacms-inline";
 
 import { useTinaForm } from "../utils/tinaform";
 
-// import { Images, ImagesBlock } from "../blocks/Images";
-// import { Paragraph, ParagraphBlock } from "../blocks/Paragraph";
-// import { FeatureList, FeatureListBlock } from "../blocks/FeatureList";
+import { Title, TitleBlock } from "../blocks/Title";
 import { Content, ContentBlock } from "../blocks/Content";
+import { Form, FormBlock } from "../blocks/Form";
 
 import { Error } from "../components/Error";
 
@@ -39,15 +38,12 @@ const StaticPage = () => {
           content.data.blocks.map((block, index) => {
             const props = { key: "block-" + index, data: block };
             switch (block._template) {
-              // case "images":
-              //   return <Images {...props} />;
-              // case "paragraph":
-              //   return <Paragraph {...props} />;
-              // case "features":
-              //   return <FeatureList {...props} />;
-
+              case "TitleBlock":
+                return <Title {...props} />;
               case "ContentBlock":
                 return <Content {...props} />;
+              case "FormBlock":
+                return <Form {...props} />;
               default:
                 return (
                   <Error
@@ -70,6 +66,8 @@ const PreviewPage = () => {
   const { content } = routeData;
   const { data, form } = useTinaForm(content);
 
+  console.log("routeData", routeData);
+
   return (
     <>
       {form && data && (
@@ -78,7 +76,7 @@ const PreviewPage = () => {
             <Paper>
               <InlineBlocks
                 name="blocks"
-                blocks={HOME_BLOCKS}
+                blocks={BLOCKS}
                 itemProps={{ data: data }}
               />
             </Paper>
@@ -89,9 +87,8 @@ const PreviewPage = () => {
   );
 };
 
-const HOME_BLOCKS = {
+const BLOCKS = {
   ContentBlock,
-  // images: ImagesBlock,
-  // paragraph: ParagraphBlock,
-  // features: FeatureListBlock,
+  FormBlock,
+  TitleBlock,
 };

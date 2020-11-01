@@ -1,59 +1,83 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { Block, PageSettings } from '../templates/Page'
+import React from "react";
+import styled, { css } from "styled-components";
+import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
+import { HiddenBlockFields } from "../utils/block-fields";
 
-type TitleProps = {
-    page: PageSettings
-    block: Block
-}
+const preview = process.env.RUNTIME_ENV === "preview";
 
-export const Title: React.FC<TitleProps> = ({ page, block }) => {
-    const centered = block?.center || false
-    return (
-        <>
-            <StyledTitle center={centered}>
-                {block && block.title ? block.title : page.title ? page.title : ''}
-            </StyledTitle>
-            {block && block.underline && <Hr center={centered} />}
-        </>
-    )
-}
+export const Title = (props) => {
+  return preview ? <PreviewTitle {...props} /> : <StaticTitle {...props} />;
+};
 
-const StyledTitle = styled.h2<{ center: boolean }>`
-    font-size: 2.2em;
-    line-height: 1.2;
-    word-spacing: 1px;
-    font-weight: 700;
+export default Title;
 
-    ${props =>
-        props.center &&
-        css`
-            text-align: center;
-        `};
-`
+const StaticTitle = ({ data }) => {
+  const centered = data?.center || false;
+  return (
+    <>
+      <StyledTitle center={centered}>{data?.title || ""}</StyledTitle>
+      {data?.underline && <Hr center={centered} />}
+    </>
+  );
+};
 
-const Hr = styled.hr<{ center: boolean }>`
-    margin: 2.2rem 0;
+const PreviewTitle = ({ data }) => {
+  const centered = data?.center || false;
+  return (
+    <>
+      <StyledTitle center={centered}>
+        <InlineTextarea name="title" />
+      </StyledTitle>
+      {data?.underline && <Hr center={centered} />}
+    </>
+  );
+};
 
-    ${props =>
-        props.center &&
-        css`
-            margin-left: auto;
-            margin-right: auto;
-        `};
-`
+const StyledTitle = styled.h2`
+  font-size: 2.2em;
+  line-height: 1.2;
+  word-spacing: 1px;
+  font-weight: 700;
+
+  ${(props) =>
+    props.center &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const Hr = styled.hr`
+  margin: 2.2rem 0;
+
+  ${(props) =>
+    props.center &&
+    css`
+      margin-left: auto;
+      margin-right: auto;
+    `};
+`;
+
+const fields = [
+  { name: "title", label: "Title", component: "text" },
+  { name: "center", label: "Center", component: "toggle" },
+  { name: "underline", label: "Underline", component: "toggle" },
+];
 
 export const TitleBlock = {
-    label: 'Title',
-    name: 'title',
+  Component: ({ index, data }) => (
+    <BlocksControls index={index}>
+      <Title data={data.blocks[index]} />
+      <HiddenBlockFields fields={fields} />
+    </BlocksControls>
+  ),
+  template: {
+    label: "Title",
     defaultItem: {
-        title: '',
-        center: false,
-        underline: true,
+      _template: "TitleBlock",
+      title: "",
+      center: false,
+      underline: true,
     },
-    fields: [
-        { name: 'title', label: 'Title', component: 'text' },
-        { name: 'center', label: 'Center', component: 'toggle' },
-        { name: 'underline', label: 'Underline', component: 'toggle' },
-    ],
-}
+    fields: fields,
+  },
+};
