@@ -90,7 +90,7 @@ const PreviewPage = () => {
 };
 
 const HOME_BLOCKS = {
-  content: ContentBlock,
+  ContentBlock,
   // images: ImagesBlock,
   // paragraph: ParagraphBlock,
   // features: FeatureListBlock,

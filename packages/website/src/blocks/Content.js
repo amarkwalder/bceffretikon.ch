@@ -46,7 +46,7 @@ const fields = [{ name: "center", label: "Center", component: "toggle" }];
 export const ContentBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index}>
-      <Content data={data.features[index]} />
+      <Content data={data.blocks[index]} />
       <HiddenBlockFields fields={fields} />
     </BlocksControls>
   ),

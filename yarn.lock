@@ -8705,6 +8705,11 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
+react-slugify@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-slugify/-/react-slugify-2.0.2.tgz#af59ebcb2989b8e80d1863bab598cfad87a43353"
+  integrity sha512-Q9k8rYh2FeSvXD9/p9g+Kk8zXjUpbmgpkZs/EdoVmV2crRMlcSYm7S31bXdnnCdbVGH9z73A0oD/vws1+AZHJQ==
+
 react-static-plugin-reach-router@^7.2.0:
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/react-static-plugin-reach-router/-/react-static-plugin-reach-router-7.4.2.tgz#65dcfb2a5c6f2a9ce80e9e18141ad2398aabd6b3"
