@@ -16,7 +16,7 @@ export default Image;
 export const StaticImage = ({ data }) => {
   return (
     <ImageWrapper>
-      {data?.image && <img src={data.image} alt="" />}
+      {data?.image && <img src={data.image} alt={data?.alt ? data.alt : ""} />}
     </ImageWrapper>
   );
 };
@@ -26,6 +26,7 @@ export const PreviewImage = ({ data }) => {
     <ImageWrapper>
       <InlineImage
         name="image"
+        alt={data?.alt ? data.alt : ""}
         focusRing={false}
         parse={(media) => `/images/${media.filename}`}
         uploadDir={() => GIT_IMAGES_UPLOAD_DIR}
