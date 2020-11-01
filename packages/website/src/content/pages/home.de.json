@@ -28,7 +28,8 @@
     {
       "_template": "TitleBlock",
       "title": "Seiten Titel",
-      "underline": true
+      "underline": true,
+      "center": false
     },
     {
       "_template": "ContentBlock",
@@ -37,8 +38,20 @@
     },
     {
       "_template": "TitleBlock",
+      "title": "Image",
+      "underline": true,
+      "center": false
+    },
+    {
+      "_template": "ImageBlock",
+      "image": "/images/badminton-net.png",
+      "alt": "badminton net"
+    },
+    {
+      "_template": "TitleBlock",
       "title": "Kontakt Formular",
-      "underline": true
+      "underline": true,
+      "center": false
     },
     {
       "_template": "FormBlock",

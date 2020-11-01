@@ -1,45 +1,73 @@
-import React from 'react'
-import styled from 'styled-components'
-import Img from 'gatsby-image'
-import get from 'lodash.get'
-import { Block } from '../templates/Page'
+import React from "react";
+import { BlocksControls, InlineImage } from "react-tinacms-inline";
+import styled from "styled-components";
 
-type ImageProps = {
-    block: Block
-}
+import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
+import { HiddenBlockFields } from "../utils/block-fields";
 
-export const Image: React.FC<ImageProps> = ({ block }) => {
-    return (
-        <ImageWrapper>
-            {block?.image?.childImageSharp && <Img fluid={block.image.childImageSharp.fluid} />}
-        </ImageWrapper>
-    )
-}
+const preview = process.env.RUNTIME_ENV === "preview";
+
+export const Image = (props) => {
+  return preview ? <PreviewImage {...props} /> : <StaticImage {...props} />;
+};
+
+export default Image;
+
+export const StaticImage = ({ data }) => {
+  return (
+    <ImageWrapper>
+      {data?.image && <img src={data.image} alt="" />}
+    </ImageWrapper>
+  );
+};
+
+export const PreviewImage = ({ data }) => {
+  return (
+    <ImageWrapper>
+      <InlineImage
+        name="image"
+        focusRing={false}
+        parse={(media) => `/images/${media.filename}`}
+        uploadDir={() => GIT_IMAGES_UPLOAD_DIR}
+        previewSrc={(src) => src}
+      />
+    </ImageWrapper>
+  );
+};
 
 const ImageWrapper = styled.div`
-    overflow: hidden;
-`
+  overflow: hidden;
+`;
+
+const fields = [
+  {
+    label: "Image",
+    name: "image",
+    component: "image",
+    parse: (media) => `/images/${media.filename}`,
+    uploadDir: () => GIT_IMAGES_UPLOAD_DIR,
+    previewSrc: (src) => src,
+  },
+  {
+    name: "alt",
+    label: "Image Alt Text",
+    component: "text",
+  },
+];
 
 export const ImageBlock = {
-    label: 'Image',
-    name: 'image',
-    key: 'test',
+  Component: ({ index, data }) => (
+    <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
+      <Image data={data.blocks[index]} />
+      <HiddenBlockFields fields={fields} />
+    </BlocksControls>
+  ),
+  template: {
+    label: "Image Diptych",
     defaultItem: {
-        image: '',
+      image: "",
+      alt: "",
     },
-    fields: [
-        {
-            label: 'Image',
-            name: 'image',
-            component: 'image',
-            parse: (filename: string): string => `../images/${filename}`,
-            uploadDir: (): string => `/content/images/`,
-            previewSrc: (formValues: unknown, fieldProps: { input: { name: string } }): string => {
-                const pathName = fieldProps.input.name.replace('rawJson', 'jsonNode')
-                const imageNode = get(formValues, pathName)
-                if (!imageNode || !imageNode.childImageSharp) return ''
-                return imageNode.childImageSharp.fluid.src
-            },
-        },
-    ],
-}
+  },
+  fields: fields,
+};

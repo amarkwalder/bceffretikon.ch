@@ -5,6 +5,7 @@ import { useTinaForm } from "../utils/tinaform";
 
 import { Title, TitleBlock } from "../blocks/Title";
 import { Content, ContentBlock } from "../blocks/Content";
+import { Image, ImageBlock } from "../blocks/Image";
 import { Form, FormBlock } from "../blocks/Form";
 
 import { Error } from "../components/Error";
@@ -42,6 +43,8 @@ const StaticPage = () => {
                 return <Title {...props} />;
               case "ContentBlock":
                 return <Content {...props} />;
+              case "ImageBlock":
+                return <Image {...props} />;
               case "FormBlock":
                 return <Form {...props} />;
               default:
@@ -91,4 +94,5 @@ const BLOCKS = {
   ContentBlock,
   FormBlock,
   TitleBlock,
+  ImageBlock,
 };
