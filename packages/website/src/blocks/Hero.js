@@ -1,19 +1,18 @@
 import React from "react";
-import {
-  BlocksControls,
-  InlineGroup,
-  InlineTextarea,
-} from "react-tinacms-inline";
+import { InlineGroup, InlineTextarea } from "react-tinacms-inline";
 import { HiddenBlockFields } from "../utils/block-fields";
 
 import styled, { css } from "styled-components";
 import { transparentize } from "polished";
 import { Wrapper, Overlay, LinkButton, Image } from "../components/Style";
+import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
 export const Hero = ({ data }) => {
   const { headline, textline, large, overlay, image, ctas } = data;
+
+  console.log("image", image);
 
   return (
     <HeroWrapper>
@@ -59,15 +58,9 @@ const fields = [
     label: "Image",
     name: "image",
     component: "image",
-    parse: (filename) => {
-      console.log("image", filename);
-      return `/images/${filename}`;
-    },
-    uploadDir: () => `/packages/website/src/content/images/`,
-    previewSrc: (formValues) => {
-      console.log("formValues", formValues);
-      return formValues?.hero?.image || "";
-    },
+    parse: (media) => `/images/${media.filename}`,
+    uploadDir: () => GIT_IMAGES_UPLOAD_DIR,
+    previewSrc: (src) => src,
   },
   {
     label: "Actions",

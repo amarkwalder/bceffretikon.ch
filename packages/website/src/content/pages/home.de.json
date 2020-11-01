@@ -27,12 +27,12 @@
   "blocks": [
     {
       "left": {
-        "src": "/ivan-bandura-unsplash-square.jpg",
-        "alt": "ocean"
+        "src": "/images/badminton-net.png",
+        "alt": "badminton net"
       },
       "right": {
-        "src": "/martin-sanchez-unsplash-square.jpg",
-        "alt": "dunes"
+        "src": "/images/badmint-shuttles.png",
+        "alt": "badminton shuttles"
       },
       "_template": "images"
     },
