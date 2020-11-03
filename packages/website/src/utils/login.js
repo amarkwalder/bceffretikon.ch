@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
 export const useCheckLogin = (githubClient) => {
-  //const githubClient = useGithubClient();
   const [loggedIn, setLoggedIn] = useState();
   const [error, setError] = useState();
 
@@ -38,14 +37,6 @@ export const useCheckLogin = (githubClient) => {
   }
 
   return { loggedIn, error };
-};
-
-export const CheckLogin = ({ children }) => {
-  const result = useCheckLogin();
-
-  if (!preview) return <>{children}</>;
-  if (!result.loggedIn) return <></>;
-  return <>{children}</>;
 };
 
 export default useCheckLogin;

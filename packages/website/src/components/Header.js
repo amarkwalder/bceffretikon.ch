@@ -4,22 +4,12 @@ import { Link } from "./Router";
 import styled, { css } from "styled-components";
 import { transparentize } from "polished";
 
-import { Wrapper, Image } from "./Style";
+import { Wrapper } from "./Style";
 import { Navbar } from "./Navbar";
 import { ThemeContext } from "./Theme";
 
-//import { EditToggle } from "./EditToggle";
-
 export const Header = styled(
-  ({
-    availableLanguages,
-    currentLanguage,
-    defaultLanguage,
-    location,
-    menuItems,
-    logo,
-    ...styleProps
-  }) => {
+  ({ currentLanguage, location, menuItems, logo, ...styleProps }) => {
     const { toggleDarkMode, isDarkMode } = useContext(ThemeContext);
 
     return (
@@ -34,13 +24,11 @@ export const Header = styled(
           <Navbar
             toggleDarkMode={toggleDarkMode}
             isDarkMode={isDarkMode}
-            availableLanguages={availableLanguages}
             currentLanguage={currentLanguage}
             location={location}
             menuItems={menuItems}
           />
         </HeaderWrapper>
-        {/* {process.env.NODE_ENV !== "production" && <EditToggle />} */}
       </header>
     );
   }

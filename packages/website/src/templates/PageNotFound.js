@@ -1,12 +1,11 @@
 import React from "react";
 import { useLocation, navigate } from "@reach/router";
-import { useCurrentLanguage } from "../utils/language";
 import Error from "../components/Error";
 
 export const PageNotFound = () => {
   const { pathname } = useLocation();
 
-  const currentLang = useCurrentLanguage();
+  const currentLang = "de"; //useCurrentLanguage();
   if (!currentLang) {
     return (
       <Error

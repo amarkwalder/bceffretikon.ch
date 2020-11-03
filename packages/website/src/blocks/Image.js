@@ -64,11 +64,12 @@ export const ImageBlock = {
     </BlocksControls>
   ),
   template: {
-    label: "Image Diptych",
+    label: "Image",
     defaultItem: {
+      _template: "ImageBlock",
       image: "",
       alt: "",
     },
+    fields: fields,
   },
-  fields: fields,
 };

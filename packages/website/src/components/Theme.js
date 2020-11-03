@@ -15,9 +15,7 @@ export const Theme = ({ children, theme }) => {
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
-
     setDarkMode(newMode);
-
     if (typeof window !== "undefined") {
       localStorage.setItem("isDarkMode", "" + newMode);
     }
@@ -28,7 +26,7 @@ export const Theme = ({ children, theme }) => {
     color: {
       black: darkMode ? theme.color.black : theme.color.black,
       white: darkMode ? theme.color.white : theme.color.white,
-      primary: theme.color.primary,
+      primary: theme.color.primary || "#007043",
       primaryContrast: bestContrast(
         theme.color.primary,
         theme.color.white,
@@ -69,15 +67,13 @@ export const Theme = ({ children, theme }) => {
     >
       <ThemeContext.Consumer>
         {({ theme }) => (
-          <ThemeProvider theme={theme}>
-            <>
-              <TinaOverrideGlobalStyle
-                primary={theme?.color?.primary || "#007043"}
-              />
+          <>
+            <ThemeProvider theme={theme}>
+              <TinaOverrideGlobalStyle primary={theme.color.primary} />
               <GlobalStyles />
               {children}
-            </>
-          </ThemeProvider>
+            </ThemeProvider>
+          </>
         )}
       </ThemeContext.Consumer>
     </ThemeContext.Provider>

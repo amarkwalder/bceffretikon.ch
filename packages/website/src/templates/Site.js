@@ -1,6 +1,5 @@
 import React from "react";
-import { Routes } from "react-static";
-import { Router } from "components/Router";
+import { Routes, useSiteData } from "react-static";
 
 import { TinaProvider, TinaCMS } from "tinacms";
 import { BrowserStorageClient } from "@tinacms/browser-storage";
@@ -26,8 +25,8 @@ import {
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
-export const Site = () => {
-  return preview ? <PreviewSite /> : <StaticSite />;
+export const Site = (props) => {
+  return preview ? <PreviewSite {...props} /> : <StaticSite {...props} />;
 };
 
 export default Site;
@@ -69,6 +68,9 @@ const PreviewSite = () => {
 
   const { loggedIn, error } = useCheckLogin(githubClient);
 
+  const siteData = useSiteData();
+  const { availableLanguages } = siteData.translations.data;
+
   if (preview && error) {
     return <Error message={error} />;
   }
@@ -81,23 +83,38 @@ const PreviewSite = () => {
     <TinaProvider cms={cms}>
       <TinacmsGithubProvider onLogin={enterEditMode} onLogout={exitEditMode}>
         <HelmetProvider>
-          <SiteLayout>
-            <Router>
-              <Routes path="*" />
-            </Router>
-          </SiteLayout>
+          {availableLanguages &&
+            availableLanguages.map((lang) => (
+              <SiteLayout
+                key={"site-" + lang}
+                currentLanguage={lang}
+                path={"/" + lang + "/*"}
+              >
+                <Routes path="*" />
+              </SiteLayout>
+            ))}
         </HelmetProvider>
       </TinacmsGithubProvider>
     </TinaProvider>
   );
 };
 
-const StaticSite = () => (
-  <HelmetProvider>
-    <SiteLayout>
-      <Router>
-        <Routes path="*" />
-      </Router>
-    </SiteLayout>
-  </HelmetProvider>
-);
+const StaticSite = () => {
+  const siteData = useSiteData();
+  const { availableLanguages } = siteData.translations.data;
+
+  return (
+    <HelmetProvider>
+      {availableLanguages &&
+        availableLanguages.map((lang) => (
+          <SiteLayout
+            key={"site-" + lang}
+            currentLanguage={lang}
+            path={"/" + lang + "/*"}
+          >
+            <Routes path="*" />
+          </SiteLayout>
+        ))}
+    </HelmetProvider>
+  );
+};

@@ -1,0 +1,12 @@
+{
+  "title": "Blog",
+  "path": "/en/blog",
+  "lang": "en",
+  "pageType": "list",
+  "listType": "post",
+  "hero": {
+    "image": "../images/badminton-racket.png",
+    "large": true,
+    "overlay": true
+  }
+}

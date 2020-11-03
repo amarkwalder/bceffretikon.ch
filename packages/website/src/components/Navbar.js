@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Moon, Sun } from "styled-icons/boxicons-regular";
 import { Menu, MenuOpen } from "styled-icons/material-outlined";
@@ -9,7 +9,8 @@ import { mix, transparentize } from "polished";
 import { navigate } from "./Router";
 import { Link } from "@reach/router";
 
-//import { TranslationContext } from "./Translation";
+import { TranslationContext } from "./Translation";
+import { ThemeContext } from "./Theme";
 
 const removeTrailingSlash = (path) =>
   path === `/` ? path : path.replace(/\/$/, ``);
@@ -17,14 +18,7 @@ const removeTrailingSlash = (path) =>
 const removeSuffixSlash = (path) =>
   !path.startsWith("/") ? path : path.substring(1);
 
-export const Navbar = ({
-  toggleDarkMode,
-  isDarkMode,
-  currentLanguage,
-  availableLanguages,
-  location,
-  menuItems,
-}) => {
+export const Navbar = ({ currentLanguage, menuItems }) => {
   const [navOpen, setNavOpen] = useState(false);
   const toggleNavOpen = () => {
     setNavOpen(!navOpen);
@@ -37,11 +31,19 @@ export const Navbar = ({
     navigate(removeTrailingSlash("/" + language.toLowerCase() + pathSuffix));
   };
 
-  //    const { tr, availableLanguages } = useContext(TranslationContext)
+  const { toggleDarkMode, isDarkMode } = useContext(ThemeContext);
+  const { tr, availableLanguages } = useContext(TranslationContext);
 
   return (
     <>
       <StyledNavbar navOpen={navOpen} isDarkMode={isDarkMode}>
+        <NavItem key="lang-de">
+          <StyledNavLink to={"/de"}>DE</StyledNavLink>
+        </NavItem>
+        <NavItem key="lang-en">
+          <StyledNavLink to={"/en"}>EN</StyledNavLink>
+        </NavItem>
+
         {menuItems.map((menuItem) => (
           <NavItem key={menuItem.title}>
             <StyledNavLink
@@ -78,8 +80,6 @@ export const Navbar = ({
     </>
   );
 };
-
-const tr = (code) => code;
 
 export const StyledNavbar = styled.ul`
   color: inherit;

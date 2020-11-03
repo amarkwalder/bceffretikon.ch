@@ -10,6 +10,8 @@ const CONTENT_SETTINGS_PATH = "src/content/settings/";
 const CONTENT_PAGE_PATH = "src/content/pages/";
 const TEMPLATE_PATH = "src/templates/";
 
+const preview = process.env.RUNTIME_ENV === "preview";
+
 export default {
   getSiteData: async () => {
     return await Promise.all([
@@ -22,26 +24,27 @@ export default {
   },
 
   getRoutes: async ({ dev }) => {
-    return await Promise.all([
-      redirect("/", "de"),
+    const result = [];
 
-      route("404", undefined, "PageNotFound.js"),
+    result.push(redirect("/", "/de"));
+    result.push(routeWithData("404", undefined, "PageNotFound.js"));
 
-      route("de", "home.de.json", "Page.js"),
-      route("de/about", "about.de.json", "Page.js"),
-      route("de/training", "training.de.json", "Page.js"),
-      route("de/interclub", "interclub.de.json", "Page.js"),
-      route("de/contact", "contact.de.json", "Page.js"),
-      route("de/about", "about.de.json", "Page.js"),
-      route("de/404", "404.de.json", "Page.js"),
+    if (preview)
+      result.push(
+        routeWithData("/github/authorizing", undefined, "Authorizing.js")
+      );
 
-      route("en", "home.en.json", "Page.js"),
-      route("en/about", "about.en.json", "Page.js"),
-      route("en/training", "training.en.json", "Page.js"),
-      route("en/interclub", "interclub.en.json", "Page.js"),
-      route("en/contact", "contact.en.json", "Page.js"),
-      route("en/404", "404.en.json", "Page.js"),
-    ]);
+    const createRoute = async (page) =>
+      await fetchPage(page)
+        .then((content) => routeWithData(content.data.path, content, "Page.js"))
+        .catch((err) => console.error(err));
+
+    const routes = await fetchPageList(CONTENT_PAGE_PATH)
+      .then((pages) => pages.map((page) => createRoute(page)))
+      .catch((err) => console.error(err));
+    result.push(...routes);
+
+    return await Promise.all(result);
   },
 
   devServer: {
@@ -49,6 +52,8 @@ export default {
       "/api": "http://localhost:4000",
     },
   },
+
+  maxThreads: 8,
 
   plugins: [
     [
@@ -59,6 +64,7 @@ export default {
     ],
     require.resolve("react-static-plugin-reach-router"),
     require.resolve("react-static-plugin-sitemap"),
+    require.resolve("react-static-plugin-styled-components"),
   ],
 };
 
@@ -69,14 +75,31 @@ const redirect = async (path, redirect) => {
   };
 };
 
-const route = async (path, json, template, children = [], props) => {
+const routeWithFile = async (path, file, template, children = [], props) => {
   return {
     path: path,
-    getData: json
+    getData: file
       ? async () => {
           return {
             path: path,
-            content: await fetchPage(json),
+            content: await fetchPage(file),
+            ...props,
+          };
+        }
+      : undefined,
+    template: TEMPLATE_PATH + template,
+    children: await Promise.all(children),
+  };
+};
+
+const routeWithData = async (path, data, template, children = [], props) => {
+  return {
+    path: path,
+    getData: data
+      ? async () => {
+          return {
+            path: path,
+            content: data,
             ...props,
           };
         }
@@ -102,6 +125,12 @@ const fetchFooterSettings = async () => {
 const fetchMenuSettings = async () => {
   return {
     menu: await fetchSettings("menu.json"),
+  };
+};
+
+const fetchRoutesSettings = async () => {
+  return {
+    routes: await fetchSettings("routes.json"),
   };
 };
 
@@ -135,6 +164,15 @@ const fetch = async (prefix, file) => {
     fs.readFile(prefix + file, "utf-8", (err, data) => {
       if (err) reject(err);
       resolve(JSON.parse(data.toString()));
+    });
+  });
+};
+
+const fetchPageList = async (dir) => {
+  return new Promise((resolve, reject) => {
+    fs.readdir(dir, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
     });
   });
 };

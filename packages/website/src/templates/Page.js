@@ -69,8 +69,6 @@ const PreviewPage = () => {
   const { content } = routeData;
   const { data, form } = useTinaForm(content);
 
-  console.log("routeData", routeData);
-
   return (
     <>
       {form && data && (

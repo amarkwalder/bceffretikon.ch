@@ -2,16 +2,26 @@
   "name": "@bceffretikon/website",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-static start",
+    "start:preview": "RUNTIME_ENV=preview react-static start",
+    "stage": "react-static build --staging",
+    "stage:preview": "RUNTIME_ENV=preview react-static build --staging",
+    "build": "react-static build",
+    "build:preview": "RUNTIME_ENV=preview react-static build",
+    "analyze": "react-static build --analyze",
+    "serve": "node ./src/serve.js"
+  },
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "@tinacms/api-git": "^0.31.0",
-    "@tinacms/browser-storage": "^0.31.0",
-    "@tinacms/git-client": "^0.31.0",
+    "@tinacms/browser-storage": "^0.32.0",
+    "@tinacms/git-client": "^0.32.0",
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
     "polished": "^4.0.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-dropzone": "^11.0.1",
     "react-helmet-async": "^1.0.7",
     "react-hot-loader": "^4.13.0",
@@ -21,15 +31,15 @@
     "react-slugify": "^2.0.2",
     "react-static": "^7.2.0",
     "react-static-plugin-reach-router": "^7.2.0",
-    "react-static-plugin-react-location": "^7.4.2",
     "react-static-plugin-sitemap": "^7.2.0",
     "react-static-plugin-source-filesystem": "^7.2.0",
+    "react-static-plugin-styled-components": "^7.3.0",
     "react-tinacms-editor": "^0.32.1",
     "react-tinacms-github": "^0.31.0",
     "react-tinacms-inline": "^0.31.0",
     "styled-components": "^5.2.1",
     "styled-icons": "^10.22.0",
-    "tinacms": "^0.31.0-alpha.4"
+    "tinacms": "^0.32.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
@@ -44,15 +54,5 @@
     "eslint-plugin-react-hooks": "^4.0.2",
     "http-proxy-middleware": "^1.0.5",
     "serve": "^11.1.0"
-  },
-  "scripts": {
-    "start": "react-static start",
-    "start:preview": "RUNTIME_ENV=preview react-static start",
-    "stage": "react-static build --staging",
-    "stage:preview": "RUNTIME_ENV=preview react-static build --staging",
-    "build": "react-static build",
-    "build:preview": "RUNTIME_ENV=preview react-static build",
-    "analyze": "react-static build --analyze",
-    "serve": "serve dist -p 3000"
   }
 }

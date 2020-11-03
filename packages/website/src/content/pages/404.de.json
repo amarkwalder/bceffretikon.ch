@@ -1,19 +1,35 @@
 {
   "title": "Seite nicht gefunden",
-  "language": "de",
+  "path": "/de/404",
+  "alias": "/404",
+  "lang": "de",
+  "hero": {
+    "headline": "Seite nicht gefunden",
+    "textline": "Oops, Wir können die Seite nicht finden!",
+    "ctas": [
+      {
+        "label": "Home",
+        "primary": true,
+        "link": "/de",
+        "arrow": true
+      }
+    ],
+    "image": "../images/badminton-racket.png",
+    "large": false
+  },
   "blocks": [
     {
-      "_template": "hero",
-      "background_color": "#051e26",
-      "text_color": "#fffaf4",
-      "headline": "Seite nicht gefunden",
-      "subtext": "Oops, Wir können die Seite nicht finden!",
-      "align": "center"
+      "title": "Etwas ist schief gelaufen",
+      "center": false,
+      "underline": true,
+      "_template": "TitleBlock",
+      "content": ""
     },
-    { "_template": "paragraph", "text": "Etwas ist schief gelaufen" },
     {
-      "_template": "paragraph",
-      "text": "Bitte kehre zur Startseite zurück und versuche es erneut."
+      "content": "Bitte kehre zur Startseite zurück und versuche es erneut.",
+      "center": false,
+      "_template": "ContentBlock"
     }
-  ]
+  ],
+  "displayTitle": true
 }
