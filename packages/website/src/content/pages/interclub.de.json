@@ -13,6 +13,9 @@
   "displayTitle": true,
   "hero": {
     "headline": "Interclub",
-    "textline": "Mannschaften und Spielplan"
+    "textline": "Mannschaften und Spielplan",
+    "image": "/images/badminton-shuttles.png",
+    "overlay": true,
+    "large": false
   }
 }
