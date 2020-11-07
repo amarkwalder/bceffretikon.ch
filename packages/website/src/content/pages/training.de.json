@@ -5,7 +5,7 @@
   "blocks": [
     {
       "_template": "TitleBlock",
-      "title": "Training",
+      "title": "Clubtraining (Aktive)",
       "underline": true,
       "content": ""
     },
@@ -14,5 +14,11 @@
       "_template": "ContentBlock"
     }
   ],
-  "displayTitle": true
+  "displayTitle": true,
+  "hero": {
+    "headline": "Club- und Juniorentraining",
+    "textline": "Ob Jung oder Alt, alle sind willkommen!",
+    "image": "/images/badminton-net.png",
+    "overlay": true
+  }
 }
