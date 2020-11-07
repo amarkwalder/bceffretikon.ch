@@ -21,7 +21,8 @@
     ],
     "image": "../images/badminton-racket.png",
     "overlay": true,
-    "large": true
+    "large": true,
+    "textline": "Deb Club mit Tradition!"
   },
   "blocks": [
     {
