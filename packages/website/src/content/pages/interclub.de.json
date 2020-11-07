@@ -4,8 +4,10 @@
   "lang": "de",
   "blocks": [
     {
-      "content": "> Dieses Jahr haben wir keine Interclub Mannschaft.",
-      "_template": "ContentBlock"
+      "_template": "ContentBlock",
+      "title": "Interclub",
+      "underline": true,
+      "content": "> Dieses Jahr haben wir keine Interclub Mannschaft."
     }
   ],
   "displayTitle": true,
