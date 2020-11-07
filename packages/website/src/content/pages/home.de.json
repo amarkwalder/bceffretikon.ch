@@ -26,6 +26,26 @@
   },
   "blocks": [
     {
+      "_template": "FeatureListBlock",
+      "features": [
+        {
+          "_template": "feature",
+          "heading": "Heading 1",
+          "content": "Content 1"
+        },
+        {
+          "_template": "feature",
+          "heading": "Heading 2",
+          "content": "Content 2"
+        },
+        {
+          "_template": "feature",
+          "heading": "Heading 3",
+          "content": "Content 3"
+        }
+      ]
+    },
+    {
       "_template": "TitleBlock",
       "title": "Badminton - Die schnellste Ballsportart der Welt",
       "center": false,
