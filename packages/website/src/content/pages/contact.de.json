@@ -5,16 +5,15 @@
   "displayTitle": true,
   "hero": {
     "headline": "Kontakt",
-    "textline": "Melde Dich bei uns!",
+    "textline": "Hast Du eine Frage oder willst Du Dich bei uns zu einem Probetraining anmelden?",
     "image": "../images/badminton-racket.png",
     "overlay": true,
     "large": false
   },
-
   "blocks": [
     {
       "_template": "TitleBlock",
-      "title": "",
+      "title": "Kontaktformular",
       "underline": true,
       "content": ""
     },
