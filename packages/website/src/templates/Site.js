@@ -2,15 +2,20 @@ import React from "react";
 import { Routes, useSiteData } from "react-static";
 
 import { TinaProvider, TinaCMS } from "tinacms";
-import { BrowserStorageClient } from "@tinacms/browser-storage";
-import { HelmetProvider } from "react-helmet-async";
+//import { BrowserStorageClient } from "@tinacms/browser-storage";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import {
   GithubClient,
   GithubMediaStore,
   TinacmsGithubProvider,
 } from "react-tinacms-github";
 
+import { useMatch } from "../components/Router";
+
 import { useCheckLogin } from "../utils/login";
+
+import { TranslationProvider } from "../components/Translation";
+import { ThemeProvider } from "../components/Theme";
 
 import { SiteLayout } from "../layouts/SiteLayout";
 
@@ -25,13 +30,7 @@ import {
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
-export const Site = (props) => {
-  return preview ? <PreviewSite {...props} /> : <StaticSite {...props} />;
-};
-
-export default Site;
-
-const PreviewSite = () => {
+export const Site = () => {
   const githubClient = React.useMemo(
     () =>
       new GithubClient({
@@ -58,10 +57,11 @@ const PreviewSite = () => {
     [githubClient]
   );
 
-  const isSSR = typeof document === "undefined";
-  if (!isSSR) {
-    cms.registerApi("storage", new BrowserStorageClient(window.localStorage));
-  }
+  // TODO Browser Cache
+  // const isSSR = typeof document === "undefined";
+  // if (!isSSR) {
+  //   cms.registerApi("storage", new BrowserStorageClient(window.localStorage));
+  // }
 
   const enterEditMode = async () => {};
   const exitEditMode = async () => {};
@@ -69,7 +69,13 @@ const PreviewSite = () => {
   const { loggedIn, error } = useCheckLogin(githubClient);
 
   const siteData = useSiteData();
-  const { availableLanguages } = siteData.translations.data;
+  const translations = siteData.translations.data;
+  const theme = siteData.theme.data;
+
+  const match = useMatch("/:currentLanguage/*");
+  const currentLanguage = match
+    ? match.currentLanguage
+    : translations.defaultLanguage;
 
   if (preview && error) {
     return <Error message={error} />;
@@ -82,39 +88,27 @@ const PreviewSite = () => {
   return (
     <TinaProvider cms={cms}>
       <TinacmsGithubProvider onLogin={enterEditMode} onLogout={exitEditMode}>
-        <HelmetProvider>
-          {availableLanguages &&
-            availableLanguages.map((lang) => (
-              <SiteLayout
-                key={"site-" + lang}
-                currentLanguage={lang}
-                path={"/" + lang + "/*"}
-              >
-                <Routes path="*" />
+        <TranslationProvider currentLanguage={currentLanguage}>
+          <ThemeProvider theme={theme}>
+            <HelmetProvider>
+              <Helmet>
+                <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.1.0/dist/focus-visible.min.js"></script>
+              </Helmet>
+              <CookieConsent />
+              <SiteLayout>
+                <Routes default />
               </SiteLayout>
-            ))}
-        </HelmetProvider>
+            </HelmetProvider>
+          </ThemeProvider>
+        </TranslationProvider>
       </TinacmsGithubProvider>
     </TinaProvider>
   );
 };
 
-const StaticSite = () => {
-  const siteData = useSiteData();
-  const { availableLanguages } = siteData.translations.data;
+export default Site;
 
-  return (
-    <HelmetProvider>
-      {availableLanguages &&
-        availableLanguages.map((lang) => (
-          <SiteLayout
-            key={"site-" + lang}
-            currentLanguage={lang}
-            path={"/" + lang + "/*"}
-          >
-            <Routes path="*" />
-          </SiteLayout>
-        ))}
-    </HelmetProvider>
-  );
+const CookieConsent = () => {
+  // TODO -> react component
+  return <></>;
 };

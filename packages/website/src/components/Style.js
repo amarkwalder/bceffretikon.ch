@@ -501,6 +501,10 @@ export const Overlay = styled.div`
 
 export const Image = styled.img``;
 
+export const HeaderImage = styled.img`
+  height: calc(${(props) => props.theme.header.height} / 3);
+`;
+
 export const Paper = styled.div`
   position: relative;
   background-color: ${(props) => props.theme.color.background};

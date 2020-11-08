@@ -1,10 +1,7 @@
-//import { useContent } from "../utils/content";
 import { useTinaFormScreenPlugin } from "../utils/tinaform";
 
 export const useMenuFormScreenPlugin = (content) => {
-  //const content = useContent("content/settings/menu.json");
-  const result = useTinaFormScreenPlugin(content, MenuForm);
-  return { menu: result.content.data, ...result };
+  return useTinaFormScreenPlugin(content, MenuForm);
 };
 
 export default useMenuFormScreenPlugin;

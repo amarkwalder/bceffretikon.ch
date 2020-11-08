@@ -1,27 +1,11 @@
 import React from "react";
 import { BlocksControls, InlineImage } from "react-tinacms-inline";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
 import { HiddenBlockFields } from "../utils/block-fields";
 
-const preview = process.env.RUNTIME_ENV === "preview";
-
-export const Image = (props) => {
-  return preview ? <PreviewImage {...props} /> : <StaticImage {...props} />;
-};
-
-export default Image;
-
-export const StaticImage = ({ data }) => {
-  return (
-    <ImageWrapper>
-      {data?.image && <img src={data.image} alt={data?.alt ? data.alt : ""} />}
-    </ImageWrapper>
-  );
-};
-
-export const PreviewImage = ({ data }) => {
+export const Image = ({ data }) => {
   return (
     <ImageWrapper>
       <InlineImage
@@ -36,8 +20,11 @@ export const PreviewImage = ({ data }) => {
   );
 };
 
+export default Image;
+
 const ImageWrapper = styled.div`
   overflow: hidden;
+  margin: 50px 0px 50px 0px;
 `;
 
 const fields = [

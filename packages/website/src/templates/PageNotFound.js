@@ -1,11 +1,22 @@
 import React from "react";
-import { useLocation, navigate } from "@reach/router";
+import { useLocation, useMatch, navigate } from "../components/Router";
 import Error from "../components/Error";
+import { useSiteData } from "react-static";
 
 export const PageNotFound = () => {
   const { pathname } = useLocation();
 
-  const currentLang = "de"; //useCurrentLanguage();
+  const siteData = useSiteData();
+  const { defaultLanguage, availableLanguages } = siteData.translations.data;
+
+  // TODO useContext(TranslationContext).currentLanguage --> maybe works
+  const match = useMatch("/:currentLanguage/*");
+  const language =
+    match &&
+    availableLanguages.find((value) => value === match.currentLanguage);
+
+  const currentLang = language || defaultLanguage;
+
   if (!currentLang) {
     return (
       <Error
@@ -27,6 +38,7 @@ export const PageNotFound = () => {
     );
   }
 
+  // TODO Redirect Path must be fully qualifed (most probably, try it out on AWS)
   navigate(redirectPath);
   return null;
 };

@@ -12,38 +12,28 @@ import { Link } from "@reach/router";
 import { TranslationContext } from "./Translation";
 import { ThemeContext } from "./Theme";
 
-const removeTrailingSlash = (path) =>
-  path === `/` ? path : path.replace(/\/$/, ``);
+import { removeTrailingSlash, removeSuffixSlash } from "../utils/helpers";
+import { NavSelect } from "./NavSelect";
 
-const removeSuffixSlash = (path) =>
-  !path.startsWith("/") ? path : path.substring(1);
-
-export const Navbar = ({ currentLanguage, menuItems }) => {
+export const Navbar = ({ menuItems }) => {
   const [navOpen, setNavOpen] = useState(false);
   const toggleNavOpen = () => {
     setNavOpen(!navOpen);
   };
 
   const onLanguageChange = (language) => {
-    const { pathname } = location;
-    const pathSuffix = pathname.length > 3 ? pathname.substr(3) : "";
     setNavOpen(false);
-    navigate(removeTrailingSlash("/" + language.toLowerCase() + pathSuffix));
+    navigate("/" + language.toLowerCase());
   };
 
   const { toggleDarkMode, isDarkMode } = useContext(ThemeContext);
-  const { tr, availableLanguages } = useContext(TranslationContext);
+  const { currentLanguage, tr, availableLanguages } = useContext(
+    TranslationContext
+  );
 
   return (
     <>
       <StyledNavbar navOpen={navOpen} isDarkMode={isDarkMode}>
-        <NavItem key="lang-de">
-          <StyledNavLink to={"/de"}>DE</StyledNavLink>
-        </NavItem>
-        <NavItem key="lang-en">
-          <StyledNavLink to={"/en"}>EN</StyledNavLink>
-        </NavItem>
-
         {menuItems.map((menuItem) => (
           <NavItem key={menuItem.title}>
             <StyledNavLink
@@ -344,7 +334,6 @@ export const StyledNavItemMixin = css`
 `;
 
 const StyledNavLink = styled(({ children, ...styleProps }) => (
-  // <Link activeClassName="active" {...styleProps}>
   <Link {...styleProps}>
     <span>{children}</span>
   </Link>
@@ -353,13 +342,14 @@ const StyledNavLink = styled(({ children, ...styleProps }) => (
 `;
 
 const StyledNavSelect = styled(
-  ({ items, selected, isDarkMode, ...styledProps }) => <>NavSelect</>
-  // <NavSelect
-  //   items={items}
-  //   selected={selected}
-  //   isDarkMode={isDarkMode}
-  //   {...styledProps}
-  // />
+  ({ items, selected, isDarkMode, ...styleProps }) => (
+    <NavSelect
+      items={items}
+      selected={selected}
+      isDarkMode={isDarkMode}
+      {...styleProps}
+    />
+  )
 )`
   ${StyledNavItemMixin};
 `;

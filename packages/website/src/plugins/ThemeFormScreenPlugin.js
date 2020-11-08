@@ -1,10 +1,7 @@
-//import { useContent } from "../utils/content";
 import { useTinaFormScreenPlugin } from "../utils/tinaform";
 
 export const useThemeFormScreenPlugin = (content) => {
-  //const content = useContent("content/settings/theme.json");
-  const result = useTinaFormScreenPlugin(content, ThemeForm);
-  return { theme: result.content.data, ...result };
+  return useTinaFormScreenPlugin(content, ThemeForm);
 };
 
 export default useThemeFormScreenPlugin;

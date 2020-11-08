@@ -20,6 +20,7 @@ const removeNull = (obj) =>
     );
 
 export const PageLayout = ({ site, page, post, children }) => {
+  // TODO get default language from translation context
   const language = page?.language || "de";
 
   const { theme } = useContext(ThemeContext);

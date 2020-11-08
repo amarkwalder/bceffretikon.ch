@@ -3,7 +3,7 @@ import { Button } from "../components/Style";
 import styled, { css } from "styled-components";
 import { mix } from "polished";
 import slugify from "react-slugify";
-import { HiddenBlockFields } from "../utils/block-fields";
+//import { HiddenBlockFields } from "../utils/block-fields";
 import { BlocksControls } from "react-tinacms-inline";
 
 export const Form = ({ data }) => {
@@ -201,11 +201,12 @@ const fields = [
   },
 ];
 
+// TODO Browser Cache
 export const FormBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index}>
       <Form data={data.blocks[index]} />
-      <HiddenBlockFields fields={fields} />
+      {/* <HiddenBlockFields fields={fields} /> */}
     </BlocksControls>
   ),
   template: {

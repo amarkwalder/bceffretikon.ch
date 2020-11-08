@@ -2,6 +2,13 @@
   "title": "Training",
   "path": "/en/training",
   "lang": "en",
+  "hero": {
+    "image": "../images/badminton-racket.png",
+    "large": false,
+    "overlay": true,
+    "overlap": "8rem",
+    "parallax": true
+  },
   "blocks": [
     {
       "_template": "TitleBlock",

@@ -5,15 +5,15 @@ import { Router } from "components/Router";
 import Loading from "./components/Loading";
 import Site from "./templates/Site";
 
-const preview = true; //process.env.RUNTIME_ENV === "preview";
+const preview = process.env.RUNTIME_ENV === "preview";
 
 const App = () => {
   return (
     <Root>
-      <React.Suspense fallback={<Loading />}>
+      <React.Suspense fallback={<Loading message="Loading Data" />}>
         <Router>
           {preview && <Routes path="/github/authorizing" />}
-          <Site path="*" />
+          <Site default />
         </Router>
       </React.Suspense>
     </Root>

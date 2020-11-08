@@ -3,25 +3,7 @@ import styled, { css } from "styled-components";
 import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
 import { HiddenBlockFields } from "../utils/block-fields";
 
-const preview = process.env.RUNTIME_ENV === "preview";
-
-export const Title = (props) => {
-  return preview ? <PreviewTitle {...props} /> : <StaticTitle {...props} />;
-};
-
-export default Title;
-
-const StaticTitle = ({ data }) => {
-  const centered = data?.center || false;
-  return (
-    <>
-      <StyledTitle center={centered}>{data?.title || ""}</StyledTitle>
-      {data?.underline && <Hr center={centered} />}
-    </>
-  );
-};
-
-const PreviewTitle = ({ data }) => {
+const Title = ({ data }) => {
   const centered = data?.center || false;
   return (
     <>
@@ -32,6 +14,8 @@ const PreviewTitle = ({ data }) => {
     </>
   );
 };
+
+export default Title;
 
 const StyledTitle = styled.h2`
   font-size: 2.2em;

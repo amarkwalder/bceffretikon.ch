@@ -7,52 +7,7 @@ import { transparentize } from "polished";
 import { Wrapper, Overlay, LinkButton, Image } from "./Style";
 import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
 
-const preview = process.env.RUNTIME_ENV === "preview";
-
-export const Hero = (props) => {
-  return preview ? <PreviewHero {...props} /> : <StaticHero {...props} />;
-};
-
-export default Hero;
-
-const StaticHero = ({ data }) => {
-  const { headline, textline, large, overlay, image, ctas } = data;
-
-  return (
-    <HeroWrapper>
-      <HeroBackground>
-        {overlay && <Overlay />}
-        {image && <HeroImage src={image} />}
-      </HeroBackground>
-      {(headline || textline || ctas) && (
-        <HeroContent large={large}>
-          <Wrapper>
-            {headline && <Headline>{headline}</Headline>}
-            {textline && <Textline>{textline}</Textline>}
-            {ctas && (
-              <Actions>
-                {Object.values(ctas).map((cta, index) => {
-                  return (
-                    <LinkButton
-                      key={"cta-" + index}
-                      primary={cta.primary?.toString() || "false"}
-                      to={cta.link}
-                    >
-                      {cta.label}
-                      {cta.arrow && <span>&nbsp;&nbsp;→</span>}
-                    </LinkButton>
-                  );
-                })}
-              </Actions>
-            )}
-          </Wrapper>
-        </HeroContent>
-      )}
-    </HeroWrapper>
-  );
-};
-
-const PreviewHero = ({ data }) => {
+export const Hero = ({ data }) => {
   const { large, overlay, image, ctas } = data;
 
   return (
@@ -93,6 +48,8 @@ const PreviewHero = ({ data }) => {
     </HeroWrapper>
   );
 };
+
+export default Hero;
 
 const fields = [
   {
@@ -184,6 +141,7 @@ const HeroBackground = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   padding: 0;
+  width: 100%;
 
   ${Overlay} {
     z-index: 1;

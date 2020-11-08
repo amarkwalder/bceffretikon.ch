@@ -1,10 +1,8 @@
-//import { useContent } from "../utils/content";
 import { useTinaFormScreenPlugin } from "../utils/tinaform";
+import { GIT_IMAGES_UPLOAD_DIR } from "../constants";
 
 export const useSiteFormScreenPlugin = (content) => {
-  //const content = useContent("content/settings/site.json");
-  const result = useTinaFormScreenPlugin(content, SiteForm);
-  return { site: result.content.data, ...result };
+  return useTinaFormScreenPlugin(content, SiteForm);
 };
 
 export default useSiteFormScreenPlugin;
@@ -16,8 +14,8 @@ const SiteForm = {
       label: "Image",
       name: "logo",
       component: "image",
-      parse: (filename) => `/images/${filename}`,
-      uploadDir: () => `/public/images`,
+      parse: (media) => `/images/${media.filename}`,
+      uploadDir: () => GIT_IMAGES_UPLOAD_DIR,
       previewSrc: (src) => src,
     },
     {

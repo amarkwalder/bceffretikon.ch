@@ -4,35 +4,26 @@ import { Link } from "./Router";
 import styled, { css } from "styled-components";
 import { transparentize } from "polished";
 
-import { Wrapper } from "./Style";
+import { HeaderImage, Image, Wrapper } from "./Style";
 import { Navbar } from "./Navbar";
-import { ThemeContext } from "./Theme";
+import { TranslationContext } from "./Translation";
 
-export const Header = styled(
-  ({ currentLanguage, location, menuItems, logo, ...styleProps }) => {
-    const { toggleDarkMode, isDarkMode } = useContext(ThemeContext);
+export const Header = styled(({ menuItems, logo, ...styleProps }) => {
+  const { currentLanguage } = useContext(TranslationContext);
 
-    return (
-      <header {...styleProps}>
-        <HeaderWrapper>
-          <SiteTitle>
-            <SiteLink to={"/" + currentLanguage}>
-              {/* <Image src={logo} /> */}
-              Logo
-            </SiteLink>
-          </SiteTitle>
-          <Navbar
-            toggleDarkMode={toggleDarkMode}
-            isDarkMode={isDarkMode}
-            currentLanguage={currentLanguage}
-            location={location}
-            menuItems={menuItems}
-          />
-        </HeaderWrapper>
-      </header>
-    );
-  }
-)`
+  return (
+    <header {...styleProps}>
+      <HeaderWrapper>
+        <SiteTitle>
+          <SiteLink to={"/" + currentLanguage}>
+            <HeaderImage src={logo} />
+          </SiteLink>
+        </SiteTitle>
+        <Navbar menuItems={menuItems} />
+      </HeaderWrapper>
+    </header>
+  );
+})`
   position: absolute;
   z-index: 100;
   width: 100%;

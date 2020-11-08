@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { mix } from "polished";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { GlobalStyles, bestContrast } from "./Style";
 import { createGlobalStyle } from "styled-components";
 
 export const ThemeContext = React.createContext();
 
-export const Theme = ({ children, theme }) => {
+export const ThemeProvider = ({ children, theme }) => {
   const isBrowser = typeof window !== "undefined";
   const userPrefDark = isBrowser ? localStorage.getItem("isDarkMode") : false;
   const initialDarkMode = userPrefDark === "true" ? true : false;
@@ -67,18 +67,18 @@ export const Theme = ({ children, theme }) => {
     >
       <ThemeContext.Consumer>
         {({ theme }) => (
-          <>
-            <ThemeProvider theme={theme}>
-              <TinaOverrideGlobalStyle primary={theme.color.primary} />
-              <GlobalStyles />
-              {children}
-            </ThemeProvider>
-          </>
+          <StyledThemeProvider theme={theme}>
+            <TinaOverrideGlobalStyle primary={theme.color.primary} />
+            <GlobalStyles />
+            {children}
+          </StyledThemeProvider>
         )}
       </ThemeContext.Consumer>
     </ThemeContext.Provider>
   );
 };
+
+export default ThemeProvider;
 
 const TinaOverrideGlobalStyle = createGlobalStyle`
     :root {

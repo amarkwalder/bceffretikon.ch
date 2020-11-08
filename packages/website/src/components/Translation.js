@@ -3,7 +3,7 @@ import { useSiteData } from "react-static";
 
 export const TranslationContext = React.createContext();
 
-export const Translation = ({ currentLanguage, children }) => {
+export const TranslationProvider = ({ currentLanguage, children }) => {
   const siteData = useSiteData();
 
   const {
@@ -18,6 +18,7 @@ export const Translation = ({ currentLanguage, children }) => {
   return (
     <TranslationContext.Provider
       value={{
+        currentLanguage: currentLanguage,
         defaultLanguage: defaultLanguage,
         availableLanguages: availableLanguages,
         translations: translations,

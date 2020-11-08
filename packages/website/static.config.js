@@ -80,9 +80,9 @@ const routeWithFile = async (path, file, template, children = [], props) => {
     path: path,
     getData: file
       ? async () => {
+          const page = await fetchPage(file);
           return {
-            path: path,
-            content: await fetchPage(file),
+            ...page,
             ...props,
           };
         }
