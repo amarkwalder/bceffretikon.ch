@@ -4,71 +4,57 @@
   "lang": "de",
   "displayTitle": false,
   "hero": {
-    "headline": "Willkommen beim Badminton Club Effretikon",
-    "ctas": [
-      {
-        "label": "Trainingsdaten",
-        "link": "/de/training",
-        "primary": true,
-        "arrow": true
-      },
-      {
-        "label": "Kontakt",
-        "link": "/de/contact",
-        "arrow": false,
-        "primary": false
-      }
-    ],
+    "headline": "Willkommen beim Badminton Club Effretikon 2",
+    "textline": "Der Badminton Club für Jung und Alt. Spass am Badminton Sport steht bei uns im Vordergrund.",
     "image": "../images/badminton-racket.png",
     "overlay": true,
-    "large": true,
-    "textline": "Der Badminton Club für Jung und Alt. Spass am Badminton Sport steht bei uns im Vordergrund."
+    "large": true
   },
   "blocks": [
     {
-      "_template": "FeatureListBlock",
       "features": [
         {
-          "_template": "FeatureBlock",
           "heading": "Heading 1",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
+          "_template": "FeatureBlock"
         },
         {
-          "_template": "FeatureBlock",
           "heading": "Heading 2",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
+          "_template": "FeatureBlock"
         },
         {
-          "_template": "FeatureBlock",
           "heading": "Heading 3",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
+          "_template": "FeatureBlock"
         }
-      ]
+      ],
+      "_template": "FeatureListBlock"
     },
     {
-      "_template": "TitleBlock",
       "title": "Badminton - Die schnellste Ballsportart der Welt",
+      "_template": "TitleBlock",
       "center": false,
       "underline": true
     },
     {
+      "content": "Badminton wird häufig mit dem landläufig bekannten Federball verwechselt, welches gleichfalls mit Schlägern (Rackets) und einem Federball (Shuttle) gespielt wird. Beim Badminton werden jedoch zusätzlich ein Netz und eine Spielfeld Bezeichnung benötigt. Im Gegensatz zum Federball, wo man versucht, den Ball möglichst lange im Spiel zu halten, wird beim Badminton versucht, den Gegner raschmöglichst auszuspielen und den Punkt zu machen, das heisst, den Shuttle auf den Boden des gegnerischen Spielfelds zu bringen. Dazu braucht ein Spieler vielerlei Fähigkeiten. Gute Reflexe, Kraft und Schnelligkeit, aber auch Ausdauer, Geschicklichkeit und Phantasie sind notwendig, will man diesen schnellen, abwechslungsreichen und anspruchsvollen Sport erfolgreich betreiben.\n\nHarte, gut platzierte Schläge - dabei kann der Shuttle Anfangsgeschwindigkeiten von bis zu 300 km/h erreichen - wie auch sanft gespielte Bälle knapp übers Netz, verlangen einen eingeübten Bewegungsablauf, viel Ballgefühl und eine hohe Konzentrationsfähigkeit.\n\nBadminton kann als Einzel-, Doppel oder Mixed (gemischtes Doppel) gespielt werden und gilt gemeinhin als sehr faire Sportart. In der Schweiz wird dieser Sport mittlerweile von tausenden begeisterten aktiven Spielerinnen und Spielern betrieben.",
       "_template": "ContentBlock",
-      "center": false,
-      "content": "Badminton wird häufig mit dem landläufig bekannten Federball verwechselt, welches gleichfalls mit Schlägern (Rackets) und einem Federball (Shuttle) gespielt wird. Beim Badminton werden jedoch zusätzlich ein Netz und eine Spielfeld Bezeichnung benötigt. Im Gegensatz zum Federball, wo man versucht, den Ball möglichst lange im Spiel zu halten, wird beim Badminton versucht, den Gegner raschmöglichst auszuspielen und den Punkt zu machen, das heisst, den Shuttle auf den Boden des gegnerischen Spielfelds zu bringen. Dazu braucht ein Spieler vielerlei Fähigkeiten. Gute Reflexe, Kraft und Schnelligkeit, aber auch Ausdauer, Geschicklichkeit und Phantasie sind notwendig, will man diesen schnellen, abwechslungsreichen und anspruchsvollen Sport erfolgreich betreiben.\n\nHarte, gut platzierte Schläge - dabei kann der Shuttle Anfangsgeschwindigkeiten von bis zu 300 km/h erreichen - wie auch sanft gespielte Bälle knapp übers Netz, verlangen einen eingeübten Bewegungsablauf, viel Ballgefühl und eine hohe Konzentrationsfähigkeit.\n\nBadminton kann als Einzel-, Doppel oder Mixed (gemischtes Doppel) gespielt werden und gilt gemeinhin als sehr faire Sportart. In der Schweiz wird dieser Sport mittlerweile von tausenden begeisterten aktiven Spielerinnen und Spielern betrieben."
-    },
-    {
-      "_template": "ImageBlock",
-      "image": "/images/badminton-net.png",
-      "alt": "Badminton Netz"
-    },
-    {
-      "_template": "ContentBlock",
-      "content": "## Interessiert?\n\nWir sind stets an aufgestellten Leuten in unseren Reihen interessiert. Auch Junioren und Jugendliche sind bei uns jederzeit herzlich willkommen",
       "center": false
     },
     {
+      "image": "/images/badminton-net.png",
       "_template": "ImageBlock",
+      "alt": "Badminton Netz"
+    },
+    {
+      "content": "## Interessiert?\n\nWir sind stets an aufgestellten Leuten in unseren Reihen interessiert. Auch Junioren und Jugendliche sind bei uns jederzeit herzlich willkommen",
+      "_template": "ContentBlock",
+      "center": false
+    },
+    {
       "image": "/images/badminton-shuttles.png",
+      "_template": "ImageBlock",
       "alt": "Badminton Shuttles"
     }
   ]
