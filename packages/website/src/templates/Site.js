@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, useSiteData } from "react-static";
 
 import { TinaProvider, TinaCMS } from "tinacms";
@@ -57,10 +57,16 @@ export const Site = () => {
     [githubClient]
   );
 
-  const isSSR = typeof document === "undefined";
-  if (!isSSR) {
-    cms.registerApi("storage", new BrowserStorageClient(window.localStorage));
-  }
+  const cacheNamespace = getCacheNamespace();
+  registerBrowserStorageApi(cms, cacheNamespace);
+
+  const [clearCache, setClearCache] = useState(true);
+  useEffect(() => {
+    if (clearCache) {
+      window.localStorage.removeItem(cacheNamespace);
+      setClearCache(false);
+    }
+  }, [clearCache]);
 
   const enterEditMode = async () => {};
   const exitEditMode = async () => {};
@@ -110,4 +116,20 @@ export default Site;
 const CookieConsent = () => {
   // TODO -> react component
   return <></>;
+};
+
+const getCacheNamespace = () => {
+  const isSSR = typeof document === "undefined";
+  if (isSSR) return `tina-local-storage:SSR`;
+  return `tina-local-storage:${window.location.hostname}`;
+};
+
+const registerBrowserStorageApi = (cms, cacheNamespace) => {
+  const isSSR = typeof document === "undefined";
+  if (isSSR) return;
+
+  cms.registerApi(
+    "storage",
+    new BrowserStorageClient(window.localStorage, cacheNamespace)
+  );
 };
