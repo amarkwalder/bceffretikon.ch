@@ -1,44 +1,22 @@
-import React from "react";
-import { useLocation, useMatch, navigate } from "../components/Router";
-import Error from "../components/Error";
+import React, { useContext } from "react";
 import { useSiteData } from "react-static";
+import { useLocation, useMatch, navigate } from "../components/Router";
+
+import Error from "../components/Error";
+import { TranslationContext } from "../components/Translation";
 
 export const PageNotFound = () => {
   const { pathname } = useLocation();
+  const { currentLanguage } = useContext(TranslationContext);
 
-  const siteData = useSiteData();
-  const { defaultLanguage, availableLanguages } = siteData.translations.data;
-
-  // TODO useContext(TranslationContext).currentLanguage --> maybe works
-  const match = useMatch("/:currentLanguage/*");
-  const language =
-    match &&
-    availableLanguages.find((value) => value === match.currentLanguage);
-
-  const currentLang = language || defaultLanguage;
-
-  if (!currentLang) {
-    return (
-      <Error
-        message={
-          "Current language cannot be extracted. This is a misconfiguration of the 404 pages."
-        }
-      />
-    );
-  }
-
-  const redirectPath = "/" + currentLang + "/404";
+  const redirectPath = "/" + currentLanguage + "/404";
   if (pathname === redirectPath) {
-    return (
-      <Error
-        message={
-          "Could not find localized 'PageNotFound' page. This is a misconfiguration of the 404 pages."
-        }
-      />
-    );
+    const message =
+      "Could not find localized 'PageNotFound' page. " +
+      "This is a misconfiguration of the 404 pages.";
+    return <Error message={message} />;
   }
 
-  // TODO Redirect Path must be fully qualifed (most probably, try it out on AWS)
   navigate(redirectPath);
   return null;
 };

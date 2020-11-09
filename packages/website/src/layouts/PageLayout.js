@@ -5,6 +5,7 @@ import { Wrapper, Main } from "../components/Style";
 import { SEO } from "../components/SEO";
 import { Hero } from "../components/Hero";
 import { ThemeContext } from "../components/Theme";
+import { TranslationContext } from "../components/Translation";
 
 import merge from "lodash.merge";
 
@@ -20,10 +21,10 @@ const removeNull = (obj) =>
     );
 
 export const PageLayout = ({ site, page, post, children }) => {
-  // TODO get default language from translation context
-  const language = page?.language || "de";
-
+  const { defaultLanguage } = useContext(TranslationContext);
   const { theme } = useContext(ThemeContext);
+
+  const language = page?.language || defaultLanguage;
 
   const pageTitle = page?.title || post?.frontmatter?.title;
 

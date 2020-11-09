@@ -21,6 +21,7 @@
     "polished": "^4.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
+    "react-cookie-consent": "^6.1.0",
     "react-dom": "^16.9.0",
     "react-dropzone": "^11.0.1",
     "react-helmet-async": "^1.0.7",

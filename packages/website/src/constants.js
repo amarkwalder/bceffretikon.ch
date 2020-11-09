@@ -7,3 +7,5 @@ export const GIT_IMAGES_UPLOAD_DIR = "packages/website/public/images";
 export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 export const GITHUB_SOURCE_REPO_OWNER = process.env.GITHUB_SOURCE_REPO_OWNER;
 export const GITHUB_SOURCE_REPO_NAME = process.env.GITHUB_SOURCE_REPO_NAME;
+
+export const GA_TRACKING_ID = process.env.GA_TRACKING_ID;

@@ -32,6 +32,6 @@ export const TranslationProvider = ({ currentLanguage, children }) => {
 
 const translate = (code, language, translations) => {
   const result = translations.find((value) => value.code === code);
-  if (!result || !result.translation) return undefined;
+  if (!result || !result.translation) return "!!" + code;
   return result.translation.find((value) => value.language === language)?.text;
 };

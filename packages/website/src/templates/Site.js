@@ -16,6 +16,7 @@ import { useCheckLogin } from "../utils/login";
 
 import { TranslationProvider } from "../components/Translation";
 import { ThemeProvider } from "../components/Theme";
+import { CookieConsent } from "../components/CookieConsent";
 
 import { SiteLayout } from "../layouts/SiteLayout";
 
@@ -74,13 +75,15 @@ export const Site = () => {
   const { loggedIn, error } = useCheckLogin(githubClient);
 
   const siteData = useSiteData();
-  const translations = siteData.translations.data;
+  const { availableLanguages, defaultLanguage } = siteData.translations.data;
   const theme = siteData.theme.data;
 
   const match = useMatch("/:currentLanguage/*");
-  const currentLanguage = match
-    ? match.currentLanguage
-    : translations.defaultLanguage;
+  const language =
+    match &&
+    availableLanguages.find((value) => value === match.currentLanguage);
+
+  const currentLanguage = language || defaultLanguage;
 
   if (preview && error) {
     return <Error message={error} />;
@@ -112,11 +115,6 @@ export const Site = () => {
 };
 
 export default Site;
-
-const CookieConsent = () => {
-  // TODO -> react component
-  return <></>;
-};
 
 const getCacheNamespace = () => {
   const isSSR = typeof document === "undefined";

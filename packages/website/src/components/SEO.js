@@ -1,13 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
-
 import { TranslationContext } from "./Translation";
 
-// TODO Translate Title
-const tr = (code) => code;
-
 export const SEO = ({ site, description, lang, meta, title }) => {
-  //  const { tr } = useContext(TranslationContext);
+  const { tr } = useContext(TranslationContext);
 
   const metaDescription =
     description || tr("SITE.Description") || site.description;

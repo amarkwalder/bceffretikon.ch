@@ -26,7 +26,7 @@ export default {
   getRoutes: async ({ dev }) => {
     const result = [];
 
-    result.push(redirect("/", "/de"));
+    result.push(redirect("/", "de"));
     result.push(routeWithData("404", undefined, "PageNotFound.js"));
 
     if (preview)
