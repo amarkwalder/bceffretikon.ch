@@ -1,6 +1,6 @@
 import React from "react";
 import { BlocksControls, InlineTextarea } from "react-tinacms-inline";
-//import { HiddenBlockFields } from "../utils/block-fields";
+import { HiddenBlockFields } from "../utils/block-fields";
 import styled from "styled-components";
 
 export const Feature = ({ data }) => {
@@ -20,12 +20,11 @@ export default Feature;
 
 const StyledFeature = styled.div``;
 
-// TODO Browser Cache
 export const FeatureBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index}>
       <Feature data={data.features[index]} />
-      {/* <HiddenBlockFields /> */}
+      <HiddenBlockFields />
     </BlocksControls>
   ),
   template: {

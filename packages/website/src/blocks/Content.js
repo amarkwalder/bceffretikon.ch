@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { InlineWysiwyg } from "react-tinacms-editor";
 import ReactMarkdown from "react-markdown";
 import { BlocksControls } from "react-tinacms-inline";
-//import { HiddenBlockFields } from "../utils/block-fields";
+import { HiddenBlockFields } from "../utils/block-fields";
 
 export const Content = ({ data }) => {
   const center = data?.center || false;
@@ -28,12 +28,11 @@ const StyledContent = styled.div`
 
 const fields = [{ name: "center", label: "Center", component: "toggle" }];
 
-// TODO Browser Cache
 export const ContentBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index}>
       <Content data={data.blocks[index]} />
-      {/* <HiddenBlockFields fields={fields} /> */}
+      <HiddenBlockFields fields={fields} />
     </BlocksControls>
   ),
   template: {

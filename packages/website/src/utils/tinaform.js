@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { useForm, useFormScreenPlugin, usePlugin } from "tinacms";
 import { useGithubFile } from "react-tinacms-github";
-//import { useFormBrowserCache } from "@tinacms/browser-storage";
+import { useFormBrowserCache } from "@tinacms/browser-storage";
 
 const preview = process.env.RUNTIME_ENV === "preview";
 
@@ -63,8 +62,7 @@ const useTinaFormPreview = (
     ...formOptions,
   });
 
-  // TODO Use Browser Cache for Tina Forms
-  //useFormBrowserCache(form, cms.enabled);
+  useFormBrowserCache(form, preview);
 
   if (screenPlugin) {
     useFormScreenPlugin(form);

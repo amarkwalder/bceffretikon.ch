@@ -1,7 +1,7 @@
 import React from "react";
 import { BlocksControls, InlineBlocks } from "react-tinacms-inline";
 import { FeatureBlock, Feature } from "./Feature";
-//import { HiddenBlockFields } from "../utils/block-fields";
+import { HiddenBlockFields } from "../utils/block-fields";
 import styled, { css } from "styled-components";
 
 export const FeatureList = ({ data }) => {
@@ -43,7 +43,7 @@ export const FeatureListBlock = {
   Component: ({ index, data }) => (
     <BlocksControls index={index} focusRing={{ offset: 0 }} insetControls>
       <FeatureList data={data.blocks[index]} />
-      {/* <HiddenBlockFields /> */}
+      <HiddenBlockFields />
     </BlocksControls>
   ),
   template: {

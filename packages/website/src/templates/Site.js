@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, useSiteData } from "react-static";
 
 import { TinaProvider, TinaCMS } from "tinacms";
-//import { BrowserStorageClient } from "@tinacms/browser-storage";
+import { BrowserStorageClient } from "@tinacms/browser-storage";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import {
   GithubClient,
@@ -57,11 +57,10 @@ export const Site = () => {
     [githubClient]
   );
 
-  // TODO Browser Cache
-  // const isSSR = typeof document === "undefined";
-  // if (!isSSR) {
-  //   cms.registerApi("storage", new BrowserStorageClient(window.localStorage));
-  // }
+  const isSSR = typeof document === "undefined";
+  if (!isSSR) {
+    cms.registerApi("storage", new BrowserStorageClient(window.localStorage));
+  }
 
   const enterEditMode = async () => {};
   const exitEditMode = async () => {};
