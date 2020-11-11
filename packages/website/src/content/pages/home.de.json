@@ -15,21 +15,22 @@
       "features": [
         {
           "heading": "Heading 1",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
+          "content": "TEST",
           "_template": "FeatureBlock"
         },
         {
-          "heading": "Heading 2",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
-          "_template": "FeatureBlock"
-        },
-        {
-          "heading": "Heading 3",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
-          "_template": "FeatureBlock"
+          "_template": "ImageBlock",
+          "image": "/images/badminton-net.png",
+          "alt": ""
         }
       ],
-      "_template": "FeatureListBlock"
+      "_template": "FeatureListBlock",
+      "grid_template": {
+        "columns": "1fr 2fr",
+        "rows": "auto",
+        "columns_small": "1fr",
+        "rows_small": "auto"
+      }
     },
     {
       "title": "Badminton - Die schnellste Ballsportart der Welt",
