@@ -33,6 +33,38 @@
       }
     },
     {
+      "_template": "Grid1Block",
+      "grid_template": {
+        "columns": "1fr 1fr 1fr",
+        "rows": "auto",
+        "columns_small": "1fr",
+        "rows_small": "auto"
+      },
+      "features": [
+        {
+          "_template": "FeatureBlock",
+          "horizontal": "center",
+          "vertical": "middle",
+          "heading": "Heading 1",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
+        },
+        {
+          "_template": "FeatureBlock",
+          "horizontal": "center",
+          "vertical": "middle",
+          "heading": "Heading 2",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
+        },
+        {
+          "_template": "FeatureBlock",
+          "horizontal": "center",
+          "vertical": "middle",
+          "heading": "Heading 3",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
+        }
+      ]
+    },
+    {
       "title": "Badminton - Die schnellste Ballsportart der Welt",
       "_template": "TitleBlock",
       "center": false,
