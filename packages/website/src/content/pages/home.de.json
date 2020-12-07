@@ -15,7 +15,7 @@
       "features": [
         {
           "heading": "Heading 1",
-          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus.",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
           "_template": "FeatureBlock"
         },
         {
@@ -43,7 +43,7 @@
       "features": [
         {
           "_template": "FeatureBlock",
-          "horizontal": "center",
+          "horizontal": "left",
           "vertical": "middle",
           "heading": "Heading 1",
           "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl nunc mi ipsum faucibus vitae aliquet. Sed turpis tincidunt id aliquet risus. Nunc sed id semper risus."
